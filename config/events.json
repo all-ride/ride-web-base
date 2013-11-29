@@ -1,0 +1,18 @@
+{
+    "app.exception": [
+        {
+            "interface": "pallo\\web\\base\\ApplicationListener",
+            "method": "handleException"
+        }
+    ],
+    "app.response.pre": [
+        {
+            "interface": "pallo\\web\\base\\ApplicationListener",
+            "method": "handleResponseMessages"
+        },
+        {
+            "interface": "pallo\\web\\base\\ApplicationListener",
+            "method": "prepareTemplateView"
+        }
+    ]
+}
