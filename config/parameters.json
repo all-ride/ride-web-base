@@ -1,0 +1,4 @@
+{
+    "app.default.action": ["pallo\\web\\base\\controller\\IndexController", "indexAction"],
+    "template.smarty.plugin.base": "%path%/src/pallo/web/base/template/smarty/plugin"
+}
