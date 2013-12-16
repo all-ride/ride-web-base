@@ -199,6 +199,11 @@ class ApplicationListener {
         $systemMenu->setTranslation('title.system');
 
         $menuItem = new MenuItem();
+        $menuItem->setTranslation('title.cache');
+        $menuItem->setRoute('system.cache');
+        $systemMenu->addMenuItem($menuItem);
+
+        $menuItem = new MenuItem();
         $menuItem->setTranslation('title.dependencies');
         $menuItem->setRoute('system.dependencies');
         $systemMenu->addMenuItem($menuItem);

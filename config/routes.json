@@ -7,6 +7,18 @@
             "id": "system"
         },
         {
+            "path": "/admin/system/cache",
+            "controller": "pallo\\web\\base\\controller\\CacheController",
+            "action": "indexAction",
+            "id": "system.cache"
+        },
+        {
+            "path": "/admin/system/cache/clear",
+            "controller": "pallo\\web\\base\\controller\\CacheController",
+            "action": "clearAction",
+            "id": "system.cache.clear"
+        },
+        {
             "path": "/admin/system/dependencies",
             "controller": "pallo\\web\\base\\controller\\DependencyController",
             "action": "indexAction",
