@@ -2,6 +2,7 @@
 
 namespace pallo\web\base\controller;
 
+use pallo\library\http\Header;
 use pallo\library\http\Response;
 use pallo\library\security\exception\AuthenticationException;
 use pallo\library\security\exception\SecurityModelNotSetException;
@@ -15,20 +16,24 @@ use pallo\library\validation\ValidationError;
 class AuthenticationController extends AbstractController {
 
     /**
+     * Session key for the referer when cancelling the login action
+     * @var string
+     */
+    const SESSION_REFERER_CANCEL = 'authentication.referer.cancel';
+
+    /**
+     * Session key for the referer when submitting the login action
+     * @var string
+     */
+    const SESSION_REFERER_REQUEST = 'authentication.referer.request';
+
+    /**
      * Action to login a user with username and password authentication
      * @param pallo\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */
     public function loginAction(SecurityManager $securityManager) {
-        $loginUrl = $this->getUrl('login');
-        $url = $this->request->getUrl();
-        if ($url == $loginUrl) {
-            $url = $this->request->getBaseUrl();
-        }
-
-        $referer = $this->request->getQueryParameter('referer', $url);
-
         $translator = $this->getTranslator();
 
         $form = $this->createFormBuilder();
@@ -55,7 +60,7 @@ class AuthenticationController extends AbstractController {
 
                 $securityManager->login($data['username'], $data['password']);
 
-                $this->response->setRedirect($referer);
+                $this->response->setRedirect($this->getSessionReferer(self::SESSION_REFERER_REQUEST));
 
                 return;
             } catch (AuthenticationException $exception) {
@@ -76,11 +81,19 @@ class AuthenticationController extends AbstractController {
 
                 $this->addError('error.validation');
             }
+        } else {
+            $this->setReferers();
+        }
+
+        $urls = $this->config->get('system.login.url', array());
+        foreach ($urls as $index => $id) {
+            $urls[$index] = $this->getUrl($id);
         }
 
         $this->setTemplateView('base/login', array(
         	'form' => $form->getView(),
-            'referer' => $referer,
+            'referer' => $this->getSessionReferer(self::SESSION_REFERER_CANCEL),
+            'urls' => $urls,
         ));
     }
 
@@ -94,6 +107,86 @@ class AuthenticationController extends AbstractController {
         $securityManager->logout();
 
         $this->response->setRedirect($this->request->getBaseUrl());
+    }
+
+    /**
+     * Sets the referer to redirect to when performing a login action
+     * @return null
+     */
+    private function setReferers() {
+        $loginUrl = $this->getUrl('login');
+
+        $cancelUrl = $this->getRequestReferer();
+        if ($cancelUrl == $loginUrl) {
+            $cancelUrl = $this->request->getBaseUrl();
+        }
+
+        $requestUrl = $this->request->getUrl();
+        if ($requestUrl == $loginUrl) {
+            if ($cancelUrl) {
+                $requestUrl = $cancelUrl;
+            } else {
+                $requestUrl = null;
+            }
+        }
+
+        $session = $this->request->getSession();
+        $session->set(self::SESSION_REFERER_CANCEL, $cancelUrl);
+        $session->set(self::SESSION_REFERER_REQUEST, $requestUrl);
+    }
+
+    /**
+     * Gets the referer of the current request
+     * @param string $default Default referer to return when there is no
+     * referer set
+     * @return string URL to the last page displayed
+     */
+    private function getRequestReferer($default = null) {
+        $referer = $this->request->getQueryParameter('referer');
+        if (!$referer) {
+            $referer = $this->request->getHeader(Header::HEADER_REFERER);
+        }
+
+        if ($referer) {
+            return $referer;
+        }
+
+        return $default;
+    }
+
+    /**
+     * Gets the referer to redirect to, when not set the base URL will be
+     * returned
+     * @return string URL to redirect to
+     */
+    private function getSessionReferer($name) {
+        $referer = null;
+
+        if ($this->request->hasSession()) {
+            $session = $this->request->getSession();
+
+            $referer = $session->get($name);
+        }
+
+        if (!$referer) {
+            $referer = $this->request->getBaseUrl();
+        }
+
+        return $referer;
+    }
+
+    /**
+     * Clears the referers from the session
+     * @return null
+     */
+    private function clearReferers() {
+        if (!$this->request->hasSession()) {
+            return;
+        }
+
+        $session = $this->request->getSession();
+        $session->set(self::SESSION_REFERER_CANCEL, null);
+        $session->set(self::SESSION_REFERER_REQUEST, null);
     }
 
 }
