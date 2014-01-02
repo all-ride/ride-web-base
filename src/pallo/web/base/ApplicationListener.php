@@ -15,6 +15,7 @@ use pallo\library\router\RouteContainer;
 use pallo\library\router\Router;
 use pallo\library\security\exception\UnauthorizedException;
 use pallo\library\security\SecurityManager;
+use pallo\library\template\TemplateFacade;
 
 use pallo\web\base\view\BaseTemplateView;
 use pallo\web\base\view\MenuItem;
@@ -111,6 +112,49 @@ class ApplicationListener {
         $app['messages'] = $messages;
 
         $template->set('app', $app);
+    }
+
+    /**
+     * Sets a error view to the response if a status code above 399 is set
+     * @return null
+     */
+    public function handleHttpError(Event $event, WebApplication $web, I18n $i18n, TemplateFacade $templateFacade) {
+        $response = $web->getResponse();
+
+        $statusCode = $response->getStatusCode();
+        if ($statusCode < 400 || $response->getView() || $response->getBody()) {
+            return;
+        }
+
+        $translator = $i18n->getTranslator();
+
+        $titleTranslationKey = 'error.' . $statusCode . '.title';
+        $title = $translator->translate($titleTranslationKey);
+
+        if ($title != '[' . $titleTranslationKey . ']') {
+            // translated
+            $messageTranslationKey = 'error.' . $statusCode . '.message';
+            $message = $translator->translate($messageTranslationKey);
+
+            if ($message == '[' . $messageTranslationKey . ']') {
+                $message = null;
+            }
+        } else {
+            // no translation available
+            $title = Response::getStatusPhrase($statusCode);
+            $message = null;
+        }
+
+        $template = $templateFacade->createTemplate('base/http.error', array(
+            'statusCode' => $statusCode,
+            'title' => $title,
+            'message' => $message,
+        ));
+
+        $view = new BaseTemplateView($template);
+        $view->setTemplateFacade($templateFacade);
+
+        $response->setView($view);
     }
 
     /**
