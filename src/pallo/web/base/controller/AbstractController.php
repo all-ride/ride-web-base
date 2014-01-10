@@ -100,11 +100,14 @@ abstract class AbstractController extends WebAbstractController {
      * @return pallo\library\form\FormBuilder Instance of a form builder
      */
     protected function createFormBuilder($data = null, $options = array()) {
-        $options['translator'] = $this->getTranslator();
-
         $reflectionHelper = $this->dependencyInjector->get('pallo\\library\\reflection\\ReflectionHelper');
         $fileBrowser = $this->dependencyInjector->get('pallo\\library\\system\\file\\browser\\FileBrowser');
         $validationFactory = $this->dependencyInjector->get('pallo\\library\\validation\\factory\\ValidationFactory');
+
+        $options['config'] = $this->config;
+        $options['dependencyInjector'] = $this->dependencyInjector;
+        $options['fileBrowser'] = $fileBrowser;
+        $options['translator'] = $this->getTranslator();
 
         $rowFactory = new GenericRowFactory();
         $rowFactory->setReflectionHelper($reflectionHelper);
