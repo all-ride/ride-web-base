@@ -24,6 +24,7 @@
     "label.class": "Class",
     "label.clear": "Clear",
     "label.calls": "Calls",
+    "label.date.description": "eg. %example%",
     "label.directories.include": "Include directories",
     "label.directory.application": "Application directory",
     "label.directory.public": "Public directory",

@@ -24,6 +24,7 @@
     "label.class": "Klasse",
     "label.clear": "Ledig",
     "label.calls": "Calls",
+    "label.date.description": "bv. %example%",
     "label.directories.include": "Include mappen",
     "label.directory.application": "Toepassingsmap",
     "label.directory.public": "Publieke map",
