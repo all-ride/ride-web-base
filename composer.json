@@ -2,7 +2,7 @@
     "name": "pallo/web-base",
     "description": "Base web application of the Pallo framework",
     "license": "MIT",
-    "version": "0.1.7",
+    "version": "0.1.8",
     "authors": [
         {
             "name": "Joris Vandeweerd",
