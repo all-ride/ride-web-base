@@ -33,6 +33,7 @@
     "label.id": "Id",
     "label.key": "Key",
     "label.methods": "Methods",
+    "label.multiselect": "Use CTRL to select more than one item or to deselect an item. Use SHIFT to select a range of items.",
     "label.no": "No",
     "label.parameter": "Parameter",
     "label.password": "Password",
