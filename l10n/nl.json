@@ -36,6 +36,7 @@
     "label.id": "Id",
     "label.key": "Sleutel",
     "label.methods": "Methoden",
+    "label.multiselect": "Gebruik CTRL om meer dan 1 item te selecteren/deselecteren. Gebruik SHIFT om een reeks van items te selecteren.",
     "label.no": "Nee",
     "label.parameter": "Parameter",
     "label.password": "Wachtwoord",
