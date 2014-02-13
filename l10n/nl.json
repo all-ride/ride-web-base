@@ -19,7 +19,7 @@
     "error.404.title": "Sorry, de opgevraagde pagina werd niet gevonden.",
     "error.404.message": "Gelieve het adres na te kijken. Als alles OK is en het probleem blijft zich voordoen, contacteer dan onze webmaster.",    
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
-    "error.unauthorized": "You are not authorized to view this page. Please login using the form below.", 
+    "error.unauthorized": "Je hebt geen toelating om deze pagina te bezichtingen. Gelieve in te loggen via het onderstaande formulier.", 
     "error.validation": "Validatiefouten opgetreden",
     "error.validation.date.format": "%value% is niet in het juiste formaat",
     "error.validation.image": "Opgelade bestand is geen ondersteunde afbeelding",
