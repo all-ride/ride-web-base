@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\router\exception\RouterException;
+use ride\library\router\exception\RouterException;
 
 /**
  * Dependencies information controller

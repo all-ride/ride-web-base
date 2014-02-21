@@ -1,10 +1,10 @@
 <?php
 
-namespace pallo\web\base\view;
+namespace ride\web\base\view;
 
-use pallo\library\i18n\translator\Translator;
-use pallo\library\router\RouteContainer;
-use pallo\library\security\SecurityManager;
+use ride\library\i18n\translator\Translator;
+use ride\library\router\RouteContainer;
+use ride\library\security\SecurityManager;
 
 /**
  * Data container for a menu
@@ -231,14 +231,14 @@ class Menu {
      * <p>The labels of the menu items will be translated if applicable. The
      * routes will be translated into URLs. All menu items for which the
      * current user has no permission will be filtered out.</p>
-     * @param pallo\library\i18n\translator\Translator $translator Translator
+     * @param ride\library\i18n\translator\Translator $translator Translator
      * to translate the labels
-     * @param pallo\library\security\SecurityManager $securityManager Security
+     * @param ride\library\security\SecurityManager $securityManager Security
      * manager to check the permissions of the routes
-     * @param pallo\library\router\RouteContainer $routeContainer Container of
+     * @param ride\library\router\RouteContainer $routeContainer Container of
      * the available routes
      * @param string $baseUrl To create routes from the URLs
-     * @param pallo\library\security\SecurityManager $securityManager Instance
+     * @param ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

@@ -1,14 +1,14 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\http\Header;
-use pallo\library\http\Response;
-use pallo\library\security\exception\AuthenticationException;
-use pallo\library\security\exception\SecurityModelNotSetException;
-use pallo\library\security\SecurityManager;
-use pallo\library\validation\exception\ValidationException;
-use pallo\library\validation\ValidationError;
+use ride\library\http\Header;
+use ride\library\http\Response;
+use ride\library\security\exception\AuthenticationException;
+use ride\library\security\exception\SecurityModelNotSetException;
+use ride\library\security\SecurityManager;
+use ride\library\validation\exception\ValidationException;
+use ride\library\validation\ValidationError;
 
 /**
  * Controller to authenticate a user with the system
@@ -29,7 +29,7 @@ class AuthenticationController extends AbstractController {
 
     /**
      * Action to login a user with username and password authentication
-     * @param pallo\library\security\SecurityManager $securityManager Instance
+     * @param ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */
@@ -99,7 +99,7 @@ class AuthenticationController extends AbstractController {
 
     /**
      * Action to logout the current user.
-     * @param pallo\library\security\SecurityManager $securityManager Instance
+     * @param ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

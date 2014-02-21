@@ -1,14 +1,14 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\form\component\Component;
-use pallo\library\form\row\factory\GenericRowFactory;
-use pallo\library\mvc\message\Message;
+use ride\library\form\component\Component;
+use ride\library\form\row\factory\GenericRowFactory;
+use ride\library\mvc\message\Message;
 
-use pallo\web\base\view\BaseTemplateView;
-use pallo\web\form\WebForm;
-use pallo\web\mvc\controller\AbstractController as WebAbstractController;
+use ride\web\base\view\BaseTemplateView;
+use ride\web\form\WebForm;
+use ride\web\mvc\controller\AbstractController as WebAbstractController;
 
 /**
  * Abstract implementation of a controller with base application support
@@ -17,10 +17,10 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the i18n facade
-     * @return pallo\library\i18n\I18n
+     * @return ride\library\i18n\I18n
      */
     public function getI18n() {
-        return $this->dependencyInjector->get('pallo\\library\\i18n\\I18n');
+        return $this->dependencyInjector->get('ride\\library\\i18n\\I18n');
     }
 
     /**
@@ -33,7 +33,7 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the translator
-     * @return pallo\library\i18n\translator\Translator
+     * @return ride\library\i18n\translator\Translator
      */
     protected function getTranslator($locale = null) {
         return $this->getI18n()->getTranslator($locale);
@@ -97,12 +97,12 @@ abstract class AbstractController extends WebAbstractController {
      * Creates an instance of a form builder
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
-     * @return pallo\library\form\FormBuilder Instance of a form builder
+     * @return ride\library\form\FormBuilder Instance of a form builder
      */
     protected function createFormBuilder($data = null, $options = array()) {
-        $reflectionHelper = $this->dependencyInjector->get('pallo\\library\\reflection\\ReflectionHelper');
-        $fileBrowser = $this->dependencyInjector->get('pallo\\library\\system\\file\\browser\\FileBrowser');
-        $validationFactory = $this->dependencyInjector->get('pallo\\library\\validation\\factory\\ValidationFactory');
+        $reflectionHelper = $this->dependencyInjector->get('ride\\library\\reflection\\ReflectionHelper');
+        $fileBrowser = $this->dependencyInjector->get('ride\\library\\system\\file\\browser\\FileBrowser');
+        $validationFactory = $this->dependencyInjector->get('ride\\library\\validation\\factory\\ValidationFactory');
 
         $options['config'] = $this->config;
         $options['dependencyInjector'] = $this->dependencyInjector;
@@ -125,11 +125,11 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Creates an instance of form
-     * @param pallo\library\form\component\Component $component Form component
+     * @param ride\library\form\component\Component $component Form component
      * to build your form
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
-     * @return pallo\library\form\Form Instance of the form
+     * @return ride\library\form\Form Instance of the form
      */
     protected function buildForm(Component $component, $data = null, array $options = array(), $method = null) {
         $formBuilder = $this->createFormBuilder($data, $options);
@@ -141,15 +141,15 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the security manager
-     * @return pallo\library\security\SecurityManager
+     * @return ride\library\security\SecurityManager
      */
     protected function getSecurityManager() {
-        return $this->dependencyInjector->get('pallo\\library\\security\\SecurityManager');
+        return $this->dependencyInjector->get('ride\\library\\security\\SecurityManager');
     }
 
     /**
      * Gets the current user
-     * @return pallo\library\security\model\User|null
+     * @return ride\library\security\model\User|null
      */
     protected function getUser() {
         return $this->getSecurityManager()->getUser();
@@ -168,10 +168,10 @@ abstract class AbstractController extends WebAbstractController {
      * Sets a template view to the response
      * @param string $resource Resource to the template
      * @param array $variables Variables for the template
-     * @return pallo\web\base\view\BaseTemplateView
+     * @return ride\web\base\view\BaseTemplateView
      */
     protected function setTemplateView($resource, array $variables = null) {
-        $templateFacade = $this->dependencyInjector->get('pallo\\library\\template\\TemplateFacade');
+        $templateFacade = $this->dependencyInjector->get('ride\\library\\template\\TemplateFacade');
 
         $template = $templateFacade->createTemplate($resource, $variables);
 

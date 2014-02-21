@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\web\base\view;
+namespace ride\web\base\view;
 
 /**
  * Data container for a menu item

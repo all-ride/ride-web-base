@@ -1,22 +1,22 @@
 {
     "app.exception": [
         {
-            "interface": "pallo\\web\\base\\ApplicationListener",
+            "interface": "ride\\web\\base\\ApplicationListener",
             "method": "handleException"
         }
     ],
     "app.response.pre": [
         {
-            "interface": "pallo\\web\\base\\ApplicationListener",
+            "interface": "ride\\web\\base\\ApplicationListener",
             "method": "handleResponseMessages"
         },
         {
-            "interface": "pallo\\web\\base\\ApplicationListener",
+            "interface": "ride\\web\\base\\ApplicationListener",
             "method": "handleHttpError",
             "weight": 40 
         },
         {
-            "interface": "pallo\\web\\base\\ApplicationListener",
+            "interface": "ride\\web\\base\\ApplicationListener",
             "method": "prepareTemplateView"
         }
     ]

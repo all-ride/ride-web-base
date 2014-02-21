@@ -2,79 +2,79 @@
     "routes": [
         {
             "path": "/admin/system",
-            "controller": "pallo\\web\\base\\controller\\SystemController",
+            "controller": "ride\\web\\base\\controller\\SystemController",
             "action": "indexAction",
             "id": "system"
         },
         {
             "path": "/admin/system/cache",
-            "controller": "pallo\\web\\base\\controller\\CacheController",
+            "controller": "ride\\web\\base\\controller\\CacheController",
             "action": "indexAction",
             "id": "system.cache"
         },
         {
             "path": "/admin/system/cache/clear",
-            "controller": "pallo\\web\\base\\controller\\CacheController",
+            "controller": "ride\\web\\base\\controller\\CacheController",
             "action": "clearAction",
             "id": "system.cache.clear"
         },
         {
             "path": "/admin/system/dependencies",
-            "controller": "pallo\\web\\base\\controller\\DependencyController",
+            "controller": "ride\\web\\base\\controller\\DependencyController",
             "action": "indexAction",
             "id": "system.dependencies"
         },
         {
             "path": "/admin/system/parameters",
-            "controller": "pallo\\web\\base\\controller\\ParameterController",
+            "controller": "ride\\web\\base\\controller\\ParameterController",
             "action": "indexAction",
             "id": "system.parameters"
         },
         {
             "path": "/admin/system/parameters/%key%",
-            "controller": "pallo\\web\\base\\controller\\ParameterController",
+            "controller": "ride\\web\\base\\controller\\ParameterController",
             "action": "indexAction",
             "id": "system.parameters.edit"
         },
         {
             "path": "/admin/system/php",
-            "controller": "pallo\\web\\base\\controller\\SystemController",
+            "controller": "ride\\web\\base\\controller\\SystemController",
             "action": "phpInfoAction",
             "id": "system.php"
         },
         {
             "path": "/admin/system/routes",
-            "controller": "pallo\\web\\base\\controller\\RouteController",
+            "controller": "ride\\web\\base\\controller\\RouteController",
             "action": "indexAction",
             "id": "system.routes"
         },
         {
             "path": "/admin/system/translations",
-            "controller": "pallo\\web\\base\\controller\\TranslationController",
+            "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
             "id": "system.translations"
         },
         {
             "path": "/admin/system/translations/%locale%",
-            "controller": "pallo\\web\\base\\controller\\TranslationController",
+            "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
             "id": "system.translations.locale"
         },
         {
             "path": "/admin/system/translations/%locale%/%key%",
-            "controller": "pallo\\web\\base\\controller\\TranslationController",
+            "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
             "id": "system.translations.edit"
         },
         {
             "path": "/login",
-            "controller": "pallo\\web\\base\\controller\\AuthenticationController",
+            "controller": "ride\\web\\base\\controller\\AuthenticationController",
             "action": "loginAction",
             "id": "login"
         },
         {
             "path": "/logout",
-            "controller": "pallo\\web\\base\\controller\\AuthenticationController",
+            "controller": "ride\\web\\base\\controller\\AuthenticationController",
             "action": "logoutAction",
             "id": "logout"
         }

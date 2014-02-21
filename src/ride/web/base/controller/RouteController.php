@@ -1,9 +1,9 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\router\RouteContainer;
-use pallo\library\router\Router;
+use ride\library\router\RouteContainer;
+use ride\library\router\Router;
 
 /**
  * Routes information controller
@@ -12,7 +12,7 @@ class RouteController extends AbstractController {
 
     /**
      * Action to show an overview of the routes
-     * @param pallo\library\router\Router $router
+     * @param ride\library\router\Router $router
      * @return null
      */
     public function indexAction(Router $router) {
@@ -27,7 +27,7 @@ class RouteController extends AbstractController {
 
     /**
      * Gets the routes from the container
-     * @param pallo\library\router\RouteContainer $routeContainer
+     * @param ride\library\router\RouteContainer $routeContainer
      * @param string $query Search query
      * @return array Array with the route as key and a Route object as value
      */

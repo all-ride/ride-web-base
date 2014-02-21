@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\web\base\view;
+namespace ride\web\base\view;
 
 /**
  * Taskbar for quick access to the different parts of your application

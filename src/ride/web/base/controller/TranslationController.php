@@ -1,11 +1,11 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\http\Response;
-use pallo\library\i18n\translator\Translator;
-use pallo\library\i18n\I18n;
-use pallo\library\validation\exception\ValidationException;
+use ride\library\http\Response;
+use ride\library\i18n\translator\Translator;
+use ride\library\i18n\I18n;
+use ride\library\validation\exception\ValidationException;
 
 /**
  * Controller to manage the translations
@@ -102,7 +102,7 @@ class TranslationController extends AbstractController {
 
     /**
      * Gets the translations
-     * @param pallo\library\i18n\translator\Translator $translator
+     * @param ride\library\i18n\translator\Translator $translator
      * @param string $query
      * @return array
      */

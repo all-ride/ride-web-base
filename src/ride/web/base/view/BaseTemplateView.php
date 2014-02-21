@@ -1,10 +1,10 @@
 <?php
 
-namespace pallo\web\base\view;
+namespace ride\web\base\view;
 
-use pallo\library\template\Template;
+use ride\library\template\Template;
 
-use pallo\web\mvc\view\TemplateView;
+use ride\web\mvc\view\TemplateView;
 
 /**
  * Base template view with a taskbar
@@ -13,7 +13,7 @@ class BaseTemplateView extends TemplateView {
 
     /**
      * Constructs a new template view
-     * @param pallo\library\template\Template $template
+     * @param ride\library\template\Template $template
      * @return null
      */
     public function __construct(Template $template) {
