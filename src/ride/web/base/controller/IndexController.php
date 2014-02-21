@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
 class IndexController extends AbstractController {
 

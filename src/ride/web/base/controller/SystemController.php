@@ -1,8 +1,8 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\application\system\System;
+use ride\application\system\System;
 
 /**
  * Controller for system information actions
@@ -11,7 +11,7 @@ class SystemController extends AbstractController {
 
     /**
      * Action to show general system information
-     * @param pallo\application\system\System $system
+     * @param ride\application\system\System $system
      * @return null
      */
     public function indexAction(System $system) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
 /**
  * Controller to manage the caches
@@ -18,7 +18,7 @@ class CacheController extends AbstractController {
      * @return boolean
      */
     public function preAction() {
-        $this->controls = $this->dependencyInjector->getAll('pallo\\application\\cache\\control\\CacheControl');
+        $this->controls = $this->dependencyInjector->getAll('ride\\application\\cache\\control\\CacheControl');
 
         return true;
     }
@@ -96,7 +96,7 @@ class CacheController extends AbstractController {
     /**
      * Creates the form
      * @param boolean $enableControls
-     * @return pallo\library\form\Form
+     * @return ride\library\form\Form
      */
     protected function createForm($enableControls) {
         $formBuilder = $this->createFormBuilder();

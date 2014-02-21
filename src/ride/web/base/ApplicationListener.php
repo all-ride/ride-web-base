@@ -1,29 +1,29 @@
 <?php
 
-namespace pallo\web\base;
+namespace ride\web\base;
 
-use pallo\application\system\System;
+use ride\application\system\System;
 
-use pallo\library\event\EventManager;
-use pallo\library\event\Event;
-use pallo\library\http\Response;
-use pallo\library\i18n\translator\Translator;
-use pallo\library\i18n\I18n;
-use pallo\library\mvc\message\MessageContainer;
-use pallo\library\mvc\message\Message;
-use pallo\library\router\RouteContainer;
-use pallo\library\router\Router;
-use pallo\library\security\exception\UnauthorizedException;
-use pallo\library\security\SecurityManager;
-use pallo\library\template\TemplateFacade;
+use ride\library\event\EventManager;
+use ride\library\event\Event;
+use ride\library\http\Response;
+use ride\library\i18n\translator\Translator;
+use ride\library\i18n\I18n;
+use ride\library\mvc\message\MessageContainer;
+use ride\library\mvc\message\Message;
+use ride\library\router\RouteContainer;
+use ride\library\router\Router;
+use ride\library\security\exception\UnauthorizedException;
+use ride\library\security\SecurityManager;
+use ride\library\template\TemplateFacade;
 
-use pallo\web\base\view\BaseTemplateView;
-use pallo\web\base\view\MenuItem;
-use pallo\web\base\view\Menu;
-use pallo\web\base\view\Taskbar;
-use pallo\web\mvc\view\ExceptionView;
-use pallo\web\mvc\view\TemplateView;
-use pallo\web\WebApplication;
+use ride\web\base\view\BaseTemplateView;
+use ride\web\base\view\MenuItem;
+use ride\web\base\view\Menu;
+use ride\web\base\view\Taskbar;
+use ride\web\mvc\view\ExceptionView;
+use ride\web\mvc\view\TemplateView;
+use ride\web\WebApplication;
 
 class ApplicationListener {
 
@@ -35,7 +35,7 @@ class ApplicationListener {
 
     /**
      * Act on a uncaught exception
-     * @param pallo\library\event\Event $event
+     * @param ride\library\event\Event $event
      * @return null
      */
     public function handleException(Event $event, I18n $i18n) {
@@ -64,7 +64,7 @@ class ApplicationListener {
      * Handles the response messages. If a redirect is detected, the messages
      * are stored to the session for a next request. If the view is a template
      * view, the messages will be set to the view in the app variable.
-     * @param pallo\library\event\Event $event
+     * @param ride\library\event\Event $event
      * @return null
      */
     public function handleResponseMessages(Event $event) {
@@ -159,12 +159,12 @@ class ApplicationListener {
 
     /**
      * Prepares the template view with the application variable
-     * @param pallo\library\event\Event $event
-     * @param pallo\application\system\System $system
-     * @param pallo\library\i18n\I18n $i18n
-     * @param pallo\library\security\SecurityManager $securityManager
-     * @param pallo\library\event\EventManager $eventManager
-     * @param pallo\library\router\Router $router
+     * @param ride\library\event\Event $event
+     * @param ride\application\system\System $system
+     * @param ride\library\i18n\I18n $i18n
+     * @param ride\library\security\SecurityManager $securityManager
+     * @param ride\library\event\EventManager $eventManager
+     * @param ride\library\router\Router $router
      * @return null
      */
     public function prepareTemplateView(Event $event, System $system, I18n $i18n, SecurityManager $securityManager, EventManager $eventManager, Router $router) {
@@ -213,13 +213,13 @@ class ApplicationListener {
 
     /**
      * Prepares the taskbar for rendering
-     * @param pallo\web\base\view\Taskbar $taskbar
-     * @param pallo\library\event\EventManager $eventManager
-     * @param pallo\library\i18n\translator\Translator $translator Instance of
+     * @param ride\web\base\view\Taskbar $taskbar
+     * @param ride\library\event\EventManager $eventManager
+     * @param ride\library\i18n\translator\Translator $translator Instance of
      * the translator in the current locale
-     * @param pallo\library\router\RouteContainer $routeContainer
+     * @param ride\library\router\RouteContainer $routeContainer
      * @param string $baseUrl Base script of the request
-     * @param pallo\library\security\SecurityManager $securityManager Instance
+     * @param ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

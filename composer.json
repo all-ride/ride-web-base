@@ -1,6 +1,6 @@
 {
-    "name": "pallo/web-base",
-    "description": "Base web application of the Pallo framework",
+    "name": "ride/web-base",
+    "description": "Base web application of the Ride framework",
     "license": "MIT",
     "version": "0.1.11",
     "authors": [
@@ -10,26 +10,26 @@
         }
     ],
     "require": {
-        "pallo/app": ">=0.4.0",
-        "pallo/app-validation": ">=0.1.0",
-        "pallo/lib-config": ">=0.2.3",
-        "pallo/lib-event": ">=0.3.0",
-        "pallo/lib-http": ">=0.2.2",
-        "pallo/lib-i18n": ">=0.1.0",
-        "pallo/lib-form": ">=0.1.0",
-        "pallo/lib-mvc": ">=0.2.0",
-        "pallo/lib-router": ">=0.1.0",
-        "pallo/lib-security": ">=0.1.0",
-        "pallo/lib-validation": ">=0.1.0",
-        "pallo/web": ">=0.2.4",
-        "pallo/web-form": ">=0.1.0",
-        "pallo/web-i18n": ">=0.1.0",
-        "pallo/web-template": ">=0.3.0",
-        "pallo/web-security": ">=0.1.0"
+        "ride/app": ">=0.4.0",
+        "ride/app-validation": ">=0.1.0",
+        "ride/lib-config": ">=0.2.3",
+        "ride/lib-event": ">=0.3.0",
+        "ride/lib-http": ">=0.2.2",
+        "ride/lib-i18n": ">=0.1.0",
+        "ride/lib-form": ">=0.1.0",
+        "ride/lib-mvc": ">=0.2.0",
+        "ride/lib-router": ">=0.1.0",
+        "ride/lib-security": ">=0.1.0",
+        "ride/lib-validation": ">=0.1.0",
+        "ride/web": ">=0.2.4",
+        "ride/web-form": ">=0.1.0",
+        "ride/web-i18n": ">=0.1.0",
+        "ride/web-template": ">=0.3.0",
+        "ride/web-security": ">=0.1.0"
     }, 
     "autoload": {
         "psr-0": {
-            "pallo\\web\\base\\": ["src/", "test/src/"]
+            "ride\\web\\base\\": ["src/", "test/src/"]
         }
     }
 }

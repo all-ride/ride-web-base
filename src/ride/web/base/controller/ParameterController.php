@@ -1,10 +1,10 @@
 <?php
 
-namespace pallo\web\base\controller;
+namespace ride\web\base\controller;
 
-use pallo\library\config\Config;
-use pallo\library\http\Response;
-use pallo\library\validation\exception\ValidationException;
+use ride\library\config\Config;
+use ride\library\http\Response;
+use ride\library\validation\exception\ValidationException;
 
 /**
  * Controller to manage the configuration parameters
