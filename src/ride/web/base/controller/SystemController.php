@@ -19,7 +19,7 @@ class SystemController extends AbstractController {
         $fileBrowser = $system->getFileBrowser();
 
         $this->setTemplateView('base/system', array(
-        	'environment' => $environment,
+            'environment' => $environment,
             'publicDirectory' => $fileBrowser->getPublicDirectory(),
             'applicationDirectory' => $fileBrowser->getApplicationDirectory(),
             'includeDirectories' => $fileBrowser->getIncludeDirectories(),
@@ -34,7 +34,7 @@ class SystemController extends AbstractController {
      */
     public function phpInfoAction() {
         $this->setTemplateView('base/phpinfo', array(
-        	'phpinfo' => $this->getPhpInfoHtml(),
+            'phpinfo' => $this->getPhpInfoHtml(),
         ));
     }
 

@@ -17,7 +17,7 @@ class DependencyController extends AbstractController {
         $query = $this->request->getQueryParameter('query');
         $urlClass = $this->getClassUrl();
 
-        $view = $this->setTemplateView('base/dependencies', array(
+        $this->setTemplateView('base/dependencies', array(
             'dependencies' => $this->getDependencies($query),
             'query' => $query,
             'urlClass' => $urlClass,

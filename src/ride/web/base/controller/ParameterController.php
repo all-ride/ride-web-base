@@ -35,7 +35,7 @@ class ParameterController extends AbstractController {
         	'filters' => array(
                 'trim' => array(),
             ),
-        	'validators' => array(
+            'validators' => array(
                 'required' => array(),
             )
         ));
@@ -76,7 +76,7 @@ class ParameterController extends AbstractController {
         $parameters = $this->getParameters($config, $query);
 
         $this->setTemplateView('base/parameters', array(
-        	'query' => $query,
+            'query' => $query,
             'parameters' => $parameters,
             'form' => $form->getView(),
         ));
