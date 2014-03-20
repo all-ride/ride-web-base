@@ -91,7 +91,7 @@ class AuthenticationController extends AbstractController {
         }
 
         $this->setTemplateView('base/login', array(
-        	'form' => $form->getView(),
+            'form' => $form->getView(),
             'referer' => $this->getSessionReferer(self::SESSION_REFERER_CANCEL),
             'urls' => $urls,
         ));

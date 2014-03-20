@@ -51,7 +51,7 @@ class CacheController extends AbstractController {
         }
 
         $this->setTemplateView('base/cache', array(
-        	'form' => $form->getView(),
+            'form' => $form->getView(),
             'controls' => $this->controls,
             'action' => 'enable',
         ));
@@ -87,7 +87,7 @@ class CacheController extends AbstractController {
         }
 
         $this->setTemplateView('base/cache', array(
-        	'form' => $form->getView(),
+            'form' => $form->getView(),
             'controls' => $this->controls,
             'action' => 'clear',
         ));

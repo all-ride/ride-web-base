@@ -92,7 +92,7 @@ class TranslationController extends AbstractController {
         $translations = $this->getTranslations($dataTranslator, $query);
 
         $this->setTemplateView('base/translations', array(
-        	'query' => $query,
+            'query' => $query,
             'translations' => $translations,
             'locale' => $locale,
             'locales' => $i18n->getLocales(),
