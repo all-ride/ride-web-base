@@ -3,8 +3,12 @@
 namespace ride\web\base\controller;
 
 use ride\library\form\component\Component;
+use ride\library\form\exception\FormException;
 use ride\library\form\row\factory\GenericRowFactory;
+use ride\library\form\Form;
+use ride\library\http\Response;
 use ride\library\mvc\message\Message;
+use ride\library\validation\exception\ValidationException;
 
 use ride\web\base\view\BaseTemplateView;
 use ride\web\form\WebForm;
@@ -162,6 +166,64 @@ abstract class AbstractController extends WebAbstractController {
      */
     protected function isPermissionGranted($permission) {
         return $this->getSecurityManager()->isPermissionGranted($permission);
+    }
+
+    /**
+     * Sets the validation exception to the response by adding errors for the
+     * fields and setting the status code
+     * @param \ride\library\validation\exception\ValidationException $exception
+     * @param \ride\library\form\Form $form Form which can display errors from
+     * the exception
+     * @param string $error Translation key for the general validation error
+     * @param integer $statusCode Override the 422 status code
+     * @return null
+     */
+    protected function setValidationException(ValidationException $exception, Form $form = null, $error = null, $statusCode = null) {
+        if (!$error) {
+            $error = 'error.validation';
+        }
+        $this->addError($error);
+
+        if (!$statusCode) {
+            $statusCode = Response::STATUS_CODE_UNPROCESSABLE_ENTITY;
+        }
+        $this->response->setStatusCode($statusCode);
+
+        $errors = $exception->getAllErrors();
+        if (!$form) {
+            foreach ($errors as $fieldName => $fieldErrors) {
+                foreach ($fieldErrors as $error) {
+                    $this->addError($error->getCode(), $error->getParameters());
+                }
+            }
+        } else {
+            foreach ($errors as $fieldName => $fieldErrors) {
+                // omit error if the form has the field
+                try {
+                    $row = $form;
+
+                    $tokens = explode('[', $fieldName);
+                    foreach ($tokens as $token) {
+                        $token = trim($token, ']');
+
+                        $row = $row->getRow($token);
+                    }
+
+                    if ($row->getType() == 'hidden') {
+                        throw new FormException();
+                    }
+
+                    continue;
+                } catch (FormException $e) {
+                    // field not in the form, add error as general error
+                    foreach ($fieldErrors as $error) {
+                        $this->addError($error->getCode(), $error->getParameters());
+                    }
+                }
+            }
+
+            $form->setValidationException($exception);
+        }
     }
 
     /**
