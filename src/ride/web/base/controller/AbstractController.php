@@ -21,7 +21,7 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the i18n facade
-     * @return ride\library\i18n\I18n
+     * @return \ride\library\i18n\I18n
      */
     public function getI18n() {
         return $this->dependencyInjector->get('ride\\library\\i18n\\I18n');
@@ -37,7 +37,7 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the translator
-     * @return ride\library\i18n\translator\Translator
+     * @return \ride\library\i18n\translator\Translator
      */
     protected function getTranslator($locale = null) {
         return $this->getI18n()->getTranslator($locale);
@@ -101,7 +101,7 @@ abstract class AbstractController extends WebAbstractController {
      * Creates an instance of a form builder
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
-     * @return ride\library\form\FormBuilder Instance of a form builder
+     * @return \ride\library\form\FormBuilder Instance of a form builder
      */
     protected function createFormBuilder($data = null, $options = array()) {
         $reflectionHelper = $this->dependencyInjector->get('ride\\library\\reflection\\ReflectionHelper');
@@ -129,11 +129,11 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Creates an instance of form
-     * @param ride\library\form\component\Component $component Form component
+     * @param \ride\library\form\component\Component $component Form component
      * to build your form
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
-     * @return ride\library\form\Form Instance of the form
+     * @return \ride\library\form\Form Instance of the form
      */
     protected function buildForm(Component $component, $data = null, array $options = array(), $method = null) {
         $formBuilder = $this->createFormBuilder($data, $options);
@@ -145,7 +145,7 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the security manager
-     * @return ride\library\security\SecurityManager
+     * @return \ride\library\security\SecurityManager
      */
     protected function getSecurityManager() {
         return $this->dependencyInjector->get('ride\\library\\security\\SecurityManager');
@@ -153,7 +153,7 @@ abstract class AbstractController extends WebAbstractController {
 
     /**
      * Gets the current user
-     * @return ride\library\security\model\User|null
+     * @return \ride\library\security\model\User|null
      */
     protected function getUser() {
         return $this->getSecurityManager()->getUser();
@@ -230,7 +230,7 @@ abstract class AbstractController extends WebAbstractController {
      * Sets a template view to the response
      * @param string $resource Resource to the template
      * @param array $variables Variables for the template
-     * @return ride\web\base\view\BaseTemplateView
+     * @return \ride\web\base\view\BaseTemplateView
      */
     protected function setTemplateView($resource, array $variables = null) {
         $templateFacade = $this->dependencyInjector->get('ride\\library\\template\\TemplateFacade');

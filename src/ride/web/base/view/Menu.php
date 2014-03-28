@@ -231,14 +231,14 @@ class Menu {
      * <p>The labels of the menu items will be translated if applicable. The
      * routes will be translated into URLs. All menu items for which the
      * current user has no permission will be filtered out.</p>
-     * @param ride\library\i18n\translator\Translator $translator Translator
+     * @param \ride\library\i18n\translator\Translator $translator Translator
      * to translate the labels
-     * @param ride\library\security\SecurityManager $securityManager Security
+     * @param \ride\library\security\SecurityManager $securityManager Security
      * manager to check the permissions of the routes
-     * @param ride\library\router\RouteContainer $routeContainer Container of
+     * @param \ride\library\router\RouteContainer $routeContainer Container of
      * the available routes
      * @param string $baseUrl To create routes from the URLs
-     * @param ride\library\security\SecurityManager $securityManager Instance
+     * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

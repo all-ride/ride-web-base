@@ -11,7 +11,7 @@ class SystemController extends AbstractController {
 
     /**
      * Action to show general system information
-     * @param ride\application\system\System $system
+     * @param \ride\application\system\System $system
      * @return null
      */
     public function indexAction(System $system) {
