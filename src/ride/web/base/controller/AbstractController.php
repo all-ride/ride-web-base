@@ -105,24 +105,12 @@ abstract class AbstractController extends WebAbstractController {
      * @return ride\library\form\FormBuilder Instance of a form builder
      */
     protected function createFormBuilder($data = null, $options = array(), $method = null) {
-        $reflectionHelper = $this->dependencyInjector->get('ride\\library\\reflection\\ReflectionHelper');
-        $fileBrowser = $this->dependencyInjector->get('ride\\library\\system\\file\\browser\\FileBrowser');
-        $validationFactory = $this->dependencyInjector->get('ride\\library\\validation\\factory\\ValidationFactory');
-
         $options['config'] = $this->config;
         $options['dependencyInjector'] = $this->dependencyInjector;
-        $options['fileBrowser'] = $fileBrowser;
+        $options['fileBrowser'] = $this->dependencyInjector->get('ride\\library\\system\\file\\browser\\FileBrowser');;
         $options['translator'] = $this->getTranslator();
 
-        $rowFactory = new GenericRowFactory();
-        $rowFactory->setReflectionHelper($reflectionHelper);
-        $rowFactory->setFileSystem($fileBrowser->getFileSystem());
-        $rowFactory->addAbsolutePath($fileBrowser->getPublicDirectory()->getPath());
-        $rowFactory->addAbsolutePath($fileBrowser->getApplicationDirectory()->getPath());
-
-        $formBuilder = new WebForm($reflectionHelper, $options);
-        $formBuilder->setRowFactory($rowFactory);
-        $formBuilder->setValidationFactory($validationFactory);
+        $formBuilder = $this->dependencyInjector->get('ride\\library\\form\\Form', 'web', array('options' => $options), true);
         $formBuilder->setData($data);
         $formBuilder->setRequest($this->request, $method);
 
