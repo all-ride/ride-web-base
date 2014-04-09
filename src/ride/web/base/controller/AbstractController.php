@@ -101,28 +101,18 @@ abstract class AbstractController extends WebAbstractController {
      * Creates an instance of a form builder
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
+     * @param string $method Method of the form (defaults to POST)
      * @return ride\library\form\FormBuilder Instance of a form builder
      */
-    protected function createFormBuilder($data = null, $options = array()) {
-        $reflectionHelper = $this->dependencyInjector->get('ride\\library\\reflection\\ReflectionHelper');
-        $fileBrowser = $this->dependencyInjector->get('ride\\library\\system\\file\\browser\\FileBrowser');
-        $validationFactory = $this->dependencyInjector->get('ride\\library\\validation\\factory\\ValidationFactory');
-
+    protected function createFormBuilder($data = null, $options = array(), $method = null) {
         $options['config'] = $this->config;
         $options['dependencyInjector'] = $this->dependencyInjector;
-        $options['fileBrowser'] = $fileBrowser;
+        $options['fileBrowser'] = $this->dependencyInjector->get('ride\\library\\system\\file\\browser\\FileBrowser');;
         $options['translator'] = $this->getTranslator();
 
-        $rowFactory = new GenericRowFactory();
-        $rowFactory->setReflectionHelper($reflectionHelper);
-        $rowFactory->setFileSystem($fileBrowser->getFileSystem());
-        $rowFactory->addAbsolutePath($fileBrowser->getPublicDirectory()->getPath());
-        $rowFactory->addAbsolutePath($fileBrowser->getApplicationDirectory()->getPath());
-
-        $formBuilder = new WebForm($reflectionHelper, $options);
-        $formBuilder->setRowFactory($rowFactory);
-        $formBuilder->setValidationFactory($validationFactory);
+        $formBuilder = $this->dependencyInjector->get('ride\\library\\form\\Form', 'web', array('options' => $options), true);
         $formBuilder->setData($data);
+        $formBuilder->setRequest($this->request, $method);
 
         return $formBuilder;
     }
@@ -133,12 +123,12 @@ abstract class AbstractController extends WebAbstractController {
      * to build your form
      * @param mixed $data Data to preset your form
      * @param array $options Extra options for the build
+     * @param string $method Method of the form (defaults to POST)
      * @return ride\library\form\Form Instance of the form
      */
     protected function buildForm(Component $component, $data = null, array $options = array(), $method = null) {
-        $formBuilder = $this->createFormBuilder($data, $options);
+        $formBuilder = $this->createFormBuilder($data, $options, $method);
         $formBuilder->setComponent($component);
-        $formBuilder->setRequest($this->request, $method);
 
         return $formBuilder->build();
     }
