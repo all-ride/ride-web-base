@@ -10,7 +10,6 @@ use ride\library\http\Response;
 use ride\library\mvc\message\Message;
 use ride\library\validation\exception\ValidationException;
 
-use ride\web\base\view\BaseTemplateView;
 use ride\web\form\WebForm;
 use ride\web\mvc\controller\AbstractController as WebAbstractController;
 
@@ -220,14 +219,19 @@ abstract class AbstractController extends WebAbstractController {
      * Sets a template view to the response
      * @param string $resource Resource to the template
      * @param array $variables Variables for the template
-     * @return ride\web\base\view\BaseTemplateView
+     * @param string $id Id of the template view in the dependency injector
+     * @return \ride\web\mvc\view\TemplateView
      */
-    protected function setTemplateView($resource, array $variables = null) {
+    protected function setTemplateView($resource, array $variables = null, $id = null) {
+        if ($id === null) {
+            $id = 'base';
+        }
+
         $templateFacade = $this->dependencyInjector->get('ride\\library\\template\\TemplateFacade');
 
         $template = $templateFacade->createTemplate($resource, $variables);
 
-        $view = new BaseTemplateView($template);
+        $view = $this->dependencyInjector->get('ride\\web\\mvc\\view\\TemplateView', $id, array('template' => $template), true);
         $view->setTemplateFacade($templateFacade);
 
         $this->response->setView($view);

@@ -229,6 +229,11 @@ class ApplicationListener {
 
         if ($securityManager->getUser()) {
             $menuItem = new MenuItem();
+            $menuItem->setTranslation('button.profile');
+            $menuItem->setRoute('profile');
+            $userMenu->addMenuItem($menuItem);
+
+            $menuItem = new MenuItem();
             $menuItem->setTranslation('button.logout');
             $menuItem->setRoute('logout');
             $userMenu->addMenuItem($menuItem);
