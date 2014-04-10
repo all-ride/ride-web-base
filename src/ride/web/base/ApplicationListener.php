@@ -35,7 +35,7 @@ class ApplicationListener {
 
     /**
      * Act on a uncaught exception
-     * @param ride\library\event\Event $event
+     * @param \ride\library\event\Event $event
      * @return null
      */
     public function handleException(Event $event, I18n $i18n) {
@@ -64,7 +64,7 @@ class ApplicationListener {
      * Handles the response messages. If a redirect is detected, the messages
      * are stored to the session for a next request. If the view is a template
      * view, the messages will be set to the view in the app variable.
-     * @param ride\library\event\Event $event
+     * @param \ride\library\event\Event $event
      * @return null
      */
     public function handleResponseMessages(Event $event) {
@@ -159,12 +159,12 @@ class ApplicationListener {
 
     /**
      * Prepares the template view with the application variable
-     * @param ride\library\event\Event $event
-     * @param ride\application\system\System $system
-     * @param ride\library\i18n\I18n $i18n
-     * @param ride\library\security\SecurityManager $securityManager
-     * @param ride\library\event\EventManager $eventManager
-     * @param ride\library\router\Router $router
+     * @param \ride\library\event\Event $event
+     * @param \ride\application\system\System $system
+     * @param \ride\library\i18n\I18n $i18n
+     * @param \ride\library\security\SecurityManager $securityManager
+     * @param \ride\library\event\EventManager $eventManager
+     * @param \ride\library\router\Router $router
      * @return null
      */
     public function prepareTemplateView(Event $event, System $system, I18n $i18n, SecurityManager $securityManager, EventManager $eventManager, Router $router) {
@@ -213,13 +213,13 @@ class ApplicationListener {
 
     /**
      * Prepares the taskbar for rendering
-     * @param ride\web\base\view\Taskbar $taskbar
-     * @param ride\library\event\EventManager $eventManager
-     * @param ride\library\i18n\translator\Translator $translator Instance of
+     * @param \ride\web\base\view\Taskbar $taskbar
+     * @param \ride\library\event\EventManager $eventManager
+     * @param \ride\library\i18n\translator\Translator $translator Instance of
      * the translator in the current locale
-     * @param ride\library\router\RouteContainer $routeContainer
+     * @param \ride\library\router\RouteContainer $routeContainer
      * @param string $baseUrl Base script of the request
-     * @param ride\library\security\SecurityManager $securityManager Instance
+     * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

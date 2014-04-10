@@ -29,7 +29,7 @@ class AuthenticationController extends AbstractController {
 
     /**
      * Action to login a user with username and password authentication
-     * @param ride\library\security\SecurityManager $securityManager Instance
+     * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */
@@ -99,7 +99,7 @@ class AuthenticationController extends AbstractController {
 
     /**
      * Action to logout the current user.
-     * @param ride\library\security\SecurityManager $securityManager Instance
+     * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */

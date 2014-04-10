@@ -102,7 +102,7 @@ class TranslationController extends AbstractController {
 
     /**
      * Gets the translations
-     * @param ride\library\i18n\translator\Translator $translator
+     * @param \ride\library\i18n\translator\Translator $translator
      * @param string $query
      * @return array
      */

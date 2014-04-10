@@ -96,7 +96,7 @@ class CacheController extends AbstractController {
     /**
      * Creates the form
      * @param boolean $enableControls
-     * @return ride\library\form\Form
+     * @return \ride\library\form\Form
      */
     protected function createForm($enableControls) {
         $formBuilder = $this->createFormBuilder();
