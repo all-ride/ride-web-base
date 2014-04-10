@@ -1,0 +1,64 @@
+{
+    "dependencies": [
+        {
+            "interfaces": "ride\\web\\base\\profile\\ProfileHook",
+            "class": "ride\\web\\base\\profile\\AccountProfileHook",
+            "id": "account",
+            "calls": [
+                "setSecurityManager",
+                "setTemplateFacade"
+            ]
+        },
+        {
+            "interfaces": "ride\\web\\base\\profile\\ProfileHook",
+            "class": "ride\\web\\base\\profile\\PasswordProfileHook",
+            "id": "password",
+            "calls": [
+                "setSecurityManager",
+                "setTemplateFacade"
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\form\\ProfileComponent",
+            "id": "base",
+            "calls": [
+                {
+                    "method": "addProfileHook",
+                    "arguments": [
+                        {
+                            "name": "profileHook",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\profile\\ProfileHook",
+                                "id": "account"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addProfileHook",
+                    "arguments": [
+                        {
+                            "name": "profileHook",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\profile\\ProfileHook",
+                                "id": "password"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "interfaces": "ride\\web\\mvc\\view\\TemplateView",
+            "class": "ride\\web\\base\\view\\BaseTemplateView",
+            "id": "base"
+        },
+        {
+            "interfaces": "ride\\web\\mvc\\view\\TemplateView",
+            "class": "ride\\web\\base\\view\\ProfileTemplateView",
+            "id": "profile"
+        }
+    ]
+}

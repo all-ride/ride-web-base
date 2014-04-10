@@ -13,7 +13,7 @@ class BaseTemplateView extends TemplateView {
 
     /**
      * Constructs a new template view
-     * @param ride\library\template\Template $template
+     * @param \ride\library\template\Template $template
      * @return null
      */
     public function __construct(Template $template) {

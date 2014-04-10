@@ -77,6 +77,12 @@
             "controller": "ride\\web\\base\\controller\\AuthenticationController",
             "action": "logoutAction",
             "id": "logout"
+        },
+        {
+            "path": "/profile",
+            "controller": "ride\\web\\base\\controller\\ProfileController",
+            "action": "indexAction",
+            "id": "profile"
         }
     ]
 }
