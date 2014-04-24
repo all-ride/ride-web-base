@@ -167,11 +167,10 @@ abstract class AbstractController extends WebAbstractController {
      * @param integer $statusCode Override the 422 status code
      * @return null
      */
-    protected function setValidationException(ValidationException $exception, Form $form = null, $error = null, $statusCode = null) {
-        if (!$error) {
-            $error = 'error.validation';
+    protected function setValidationException(ValidationException $exception, Form $form = null, $error = 'error.validation', $statusCode = null) {
+        if ($error) {
+            $this->addError($error);
         }
-        $this->addError($error);
 
         if (!$statusCode) {
             $statusCode = Response::STATUS_CODE_UNPROCESSABLE_ENTITY;
