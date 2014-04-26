@@ -1,10 +1,12 @@
 <?php
 
-namespace ride\web\base\view;
+namespace ride\web\base\menu;
 
 use ride\library\i18n\translator\Translator;
 use ride\library\router\RouteContainer;
 use ride\library\security\SecurityManager;
+
+use \InvalidArgumentException;
 
 /**
  * Data container for a menu
@@ -108,6 +110,28 @@ class Menu {
      */
     public function getTranslationParameters() {
         return $this->translationParameters;
+    }
+
+    /**
+     * Adds an item to this menu
+     * @param mixed $item Value can be a separator, a header string, a menu item
+     * or a menu
+     * @return null
+     * @throws \InvalidArgumentException when a unsupported argument has been
+     * provided
+     */
+    public function add($item) {
+        if ($item === self::SEPARATOR) {
+            $this->addSeparator();
+        } elseif (is_string($item)) {
+            $this->addHeader($item);
+        } elseif ($item instanceof MenuItem) {
+            $this->addMenuItem($item);
+        } elseif ($item instanceof Menu) {
+            $this->addMenu($item);
+        }
+
+        throw new InvalidArgumentException('Could not add item: unsupported argument');
     }
 
     /**
@@ -219,7 +243,8 @@ class Menu {
 
     /**
      * Get all the sub items of this menu
-     * @return array Array with all the sub items of this menu (Menu, MenuItem or a '-')
+     * @return array Array with all the sub items of this menu (Menu, MenuItem
+     * or a '-')
      */
     public function getItems() {
         return $this->items;
@@ -239,7 +264,7 @@ class Menu {
      * the available routes
      * @param string $baseUrl To create routes from the URLs
      * @param \ride\library\security\SecurityManager $securityManager Instance
-     * of the security manager
+     * of the security manager to filter out secured paths
      * @return null
      */
     public function process(Translator $translator, RouteContainer $routeContainer, $baseUrl, SecurityManager $securityManager = null) {
@@ -289,8 +314,10 @@ class Menu {
     }
 
     /**
-     * Order the items in this menu alphabetically. Separator will be removed by calling this method.
-     * @param boolean $recursive true to order the items recursivly, false to only order 1 level
+     * Orders the items in this menu alphabetically. Separators will be removed
+     * by calling this method.
+     * @param boolean $recursive True to order the items recursivly, false to
+     * only order 1 level
      * @return null
      */
     public function orderItems($recursive = true) {
@@ -330,10 +357,11 @@ class Menu {
     }
 
     /**
-     * Compare 2 items of a menu
+     * Compares 2 items of a menu
      * @param Menu|MenuItem $a
      * @param Menu|MenuItem $b
-     * @return 0 when $a and $b are the same, 1 when $a is bigger then $b, -1 otherwise
+     * @return 0 when $a and $b are the same, 1 when $a is bigger then $b, -1
+     * otherwise
      */
     public static function compareItems($a, $b) {
         $al = strtolower($a->getLabel());

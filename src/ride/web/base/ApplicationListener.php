@@ -4,7 +4,7 @@ namespace ride\web\base;
 
 use ride\application\system\System;
 
-use ride\library\event\EventManager;
+use ride\library\dependency\DependencyInjector;
 use ride\library\event\Event;
 use ride\library\http\Response;
 use ride\library\i18n\translator\Translator;
@@ -17,15 +17,25 @@ use ride\library\security\exception\UnauthorizedException;
 use ride\library\security\SecurityManager;
 use ride\library\template\TemplateFacade;
 
+use ride\web\base\menu\Taskbar;
 use ride\web\base\view\BaseTemplateView;
-use ride\web\base\view\MenuItem;
-use ride\web\base\view\Menu;
-use ride\web\base\view\Taskbar;
 use ride\web\mvc\view\ExceptionView;
 use ride\web\mvc\view\TemplateView;
 use ride\web\WebApplication;
 
 class ApplicationListener {
+
+    /**
+     * Event before the taskbar is processed
+     * @var string
+     */
+    const EVENT_TASKBAR_PRE = 'app.taskbar.pre';
+
+    /**
+     * Event after the taskbar is processed
+     * @var string
+     */
+    const EVENT_TASKBAR_POST = 'app.taskbar.post';
 
     /**
      * Session key to store the response messages
@@ -160,14 +170,10 @@ class ApplicationListener {
     /**
      * Prepares the template view with the application variable
      * @param \ride\library\event\Event $event
-     * @param \ride\application\system\System $system
-     * @param \ride\library\i18n\I18n $i18n
-     * @param \ride\library\security\SecurityManager $securityManager
-     * @param \ride\library\event\EventManager $eventManager
-     * @param \ride\library\router\Router $router
+     * @param \ride\library\dependency\DependencyInjector $dependencyInjector
      * @return null
      */
-    public function prepareTemplateView(Event $event, System $system, I18n $i18n, SecurityManager $securityManager, EventManager $eventManager, Router $router) {
+    public function prepareTemplateView(Event $event, DependencyInjector $dependencyInjector) {
         $web = $event->getArgument('web');
         $response = $web->getResponse();
         if (!$response) {
@@ -178,6 +184,10 @@ class ApplicationListener {
         if (!$view instanceof TemplateView) {
             return;
         }
+
+        $i18n = $dependencyInjector->get('ride\\library\\i18n\\I18n');
+        $system = $dependencyInjector->get('ride\\library\\system\\System');
+        $securityManager = $dependencyInjector->get('ride\\library\\security\\SecurityManager');
 
         $template = $view->getTemplate();
         $request = $web->getRequest();
@@ -190,9 +200,9 @@ class ApplicationListener {
 
         if ($request) {
             $app['url'] = array(
-            	'base' => $request->getBaseUrl(),
-            	'request' => $request->getUrl(),
-            	'script' => $request->getBaseScript(),
+                'base' => $request->getBaseUrl(),
+                'request' => $request->getUrl(),
+                'script' => $request->getBaseScript(),
             );
         }
 
@@ -204,7 +214,10 @@ class ApplicationListener {
                     $taskbar->setTitle($system->getName());
                 }
 
-                $app['taskbar'] = $this->handleTaskbar($taskbar, $eventManager, $i18n->getTranslator(), $router->getRouteContainer(), $request->getBaseScript(), $securityManager);
+                $translator = $i18n->getTranslator();
+                $baseUrl = $request->getBaseScript();
+
+                $app['taskbar'] = $this->handleTaskbar($taskbar, $dependencyInjector, $translator, $baseUrl, $securityManager);
             }
         }
 
@@ -213,65 +226,44 @@ class ApplicationListener {
 
     /**
      * Prepares the taskbar for rendering
-     * @param \ride\web\base\view\Taskbar $taskbar
-     * @param \ride\library\event\EventManager $eventManager
+     * @param \ride\web\base\menu\Taskbar $taskbar
+     * @param \ride\library\dependency\DependencyInjector $dependencyInjector
+     * Instance of the dependency injector
      * @param \ride\library\i18n\translator\Translator $translator Instance of
      * the translator in the current locale
-     * @param \ride\library\router\RouteContainer $routeContainer
      * @param string $baseUrl Base script of the request
      * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */
-    protected function handleTaskbar(Taskbar $taskbar, EventManager $eventManager, Translator $translator, RouteContainer $routeContainer, $baseUrl, SecurityManager $securityManager) {
-        $userMenu = new Menu();
-        $userMenu->setTranslation('title.user');
+    protected function handleTaskbar(Taskbar $taskbar, DependencyInjector $dependencyInjector, Translator $translator, $baseUrl, SecurityManager $securityManager) {
+        $applicationsMenu = $taskbar->getApplicationsMenu();
+        if (!$applicationsMenu->hasItems()) {
+            $applicationsMenu = $dependencyInjector->get('ride\\web\\base\\menu\\Menu', 'applications');
 
-        if ($securityManager->getUser()) {
-            $menuItem = new MenuItem();
-            $menuItem->setTranslation('button.profile');
-            $menuItem->setRoute('profile');
-            $userMenu->addMenuItem($menuItem);
-
-            $menuItem = new MenuItem();
-            $menuItem->setTranslation('button.logout');
-            $menuItem->setRoute('logout');
-            $userMenu->addMenuItem($menuItem);
-        } else {
-            $menuItem = new MenuItem();
-            $menuItem->setTranslation('button.login');
-            $menuItem->setRoute('login');
-            $userMenu->addMenuItem($menuItem);
+            $taskbar->setApplicationsMenu($applicationsMenu);
         }
 
-        $systemMenu = new Menu();
-        $systemMenu->setTranslation('title.system');
-
-        $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.cache');
-        $menuItem->setRoute('system.cache');
-        $systemMenu->addMenuItem($menuItem);
-
-        $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.system');
-        $menuItem->setRoute('system');
-        $systemMenu->addMenuItem($menuItem);
-
-        $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.translations');
-        $menuItem->setRoute('system.translations');
-        $systemMenu->addMenuItem($menuItem);
-
         $settingsMenu = $taskbar->getSettingsMenu();
-        $settingsMenu->addMenu($userMenu);
-        $settingsMenu->addMenu($systemMenu);
+        if (!$settingsMenu->hasItems()) {
+            $settingsMenu = $dependencyInjector->get('ride\\web\\base\\menu\\Menu', 'settings');
 
-        $eventManager->triggerEvent(Taskbar::EVENT_TASKBAR, array('taskbar' => $taskbar));
+            $taskbar->setSettingsMenu($settingsMenu);
+        }
+
+        $eventManager = $dependencyInjector->get('ride\\library\\event\\EventManager');
+        $eventManager->triggerEvent(self::EVENT_TASKBAR_PRE, array('taskbar' => $taskbar));
+
+        $router = $dependencyInjector->get('ride\\library\\router\\Router');
+        $routeContainer = $router->getRouteContainer();
 
         $applicationsMenu = $taskbar->getApplicationsMenu();
         $applicationsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
 
+        $settingsMenu = $taskbar->getSettingsMenu();
         $settingsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
+
+        $eventManager->triggerEvent(self::EVENT_TASKBAR_POST, array('taskbar' => $taskbar));
 
         return $taskbar;
     }

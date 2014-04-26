@@ -1,6 +1,6 @@
 <?php
 
-namespace ride\web\base\view;
+namespace ride\web\base\menu;
 
 /**
  * Data container for a menu item
@@ -45,11 +45,6 @@ class MenuItem {
 
     /**
      * Construct a new menu item
-     * @param string $label The label
-     * @param string $translationKey The translation key for the label
-     * @param array $translationParameters Parameters for the translation key
-     * @param string $routeId The id of the route
-     * @param array $routeParameters Parameters for the route
      * @return null
      */
     public function __construct() {
