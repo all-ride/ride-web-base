@@ -21,6 +21,7 @@
     "error.404.title": "Sorry, the page you are looking for could not be found",
     "error.404.message": "Please check your URL to ensure you are going where you intended. If everything looks OK and you still see this error page, please consider contacting the webmaster.",
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
+    "error.authentication": "Your credentials are invalid.",
     "error.unauthorized": "You are not authorized to view this page. Please login using the form below.",
     "error.validation": "Validation errors occured",
     "error.validation.date.format": "%value% is not in the right format",
