@@ -253,21 +253,6 @@ class ApplicationListener {
         $systemMenu->addMenuItem($menuItem);
 
         $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.dependencies');
-        $menuItem->setRoute('system.dependencies');
-        $systemMenu->addMenuItem($menuItem);
-
-        $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.parameters');
-        $menuItem->setRoute('system.parameters');
-        $systemMenu->addMenuItem($menuItem);
-
-        $menuItem = new MenuItem();
-        $menuItem->setTranslation('title.routes');
-        $menuItem->setRoute('system.routes');
-        $systemMenu->addMenuItem($menuItem);
-
-        $menuItem = new MenuItem();
         $menuItem->setTranslation('title.system');
         $menuItem->setRoute('system');
         $systemMenu->addMenuItem($menuItem);
