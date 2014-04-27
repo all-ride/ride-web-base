@@ -186,19 +186,6 @@
                             "type": "dependency",
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\MenuItem",
-                                "id": "user.login"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "method": "addMenuItem",
-                    "arguments": [
-                        {
-                            "name": "menuItem",
-                            "type": "dependency",
-                            "properties": {
-                                "interface": "ride\\web\\base\\menu\\MenuItem",
                                 "id": "user.profile"
                             }
                         }

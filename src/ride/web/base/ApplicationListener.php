@@ -248,6 +248,13 @@ class ApplicationListener {
         if (!$settingsMenu->hasItems()) {
             $settingsMenu = $dependencyInjector->get('ride\\web\\base\\menu\\Menu', 'settings');
 
+            if (!$securityManager->getUser()) {
+                $loginMenuItem = $dependencyInjector->get('ride\\web\\base\\menu\\MenuItem', 'user.login');
+
+                $userMenu = $settingsMenu->getItem('user.menu');
+                $userMenu->addMenuItem($loginMenuItem);
+            }
+
             $taskbar->setSettingsMenu($settingsMenu);
         }
 
