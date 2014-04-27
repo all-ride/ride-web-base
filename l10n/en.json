@@ -84,6 +84,7 @@
     "title.cache": "Cache",
     "title.dependencies": "Dependencies",
     "title.dependencies.query": "Dependencies Filtered By '%query%'",
+    "title.details": "Details",
     "title.login": "Login",
     "title.parameters": "Parameters",
     "title.parameters.query": "Parameters Filtered By '%query%'",

@@ -20,6 +20,11 @@ class Menu {
     const SEPARATOR = '-';
 
     /**
+     * Internal id of this menu
+     */
+    private $id;
+
+    /**
      * Display label
      * @var string
      */
@@ -48,6 +53,7 @@ class Menu {
      * @return null
      */
     public function __construct() {
+        $this->id = null;
         $this->label = null;
         $this->translationKey = null;
         $this->translationParameters = null;
@@ -59,13 +65,32 @@ class Menu {
      * @return string
      */
     public function __toString() {
-        if ($this->label) {
+        if ($this->id) {
+            return $this->id;
+        } elseif ($this->label) {
             return $this->label;
         } elseif ($this->translationKey) {
             return $this->translationKey;
         } else {
             return 'MenuItem';
         }
+    }
+
+    /**
+     * Sets the id of this menu
+     * @param string $id Id of this menu
+     * @return null
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    /**
+     * Gets the id of this menu
+     * @return string
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**
@@ -120,7 +145,7 @@ class Menu {
      * @throws \InvalidArgumentException when a unsupported argument has been
      * provided
      */
-    public function add($item) {
+    public function addItem($item) {
         if ($item === self::SEPARATOR) {
             $this->addSeparator();
         } elseif (is_string($item)) {
@@ -202,11 +227,19 @@ class Menu {
             return false;
         }
 
+        $subMenus = array();
+
         foreach ($this->items as $index => $i) {
             if ($i === $item) {
                 unset($this->items[$index]);
 
                 return true;
+            }
+        }
+
+        foreach ($subMenus as $subMenu) {
+            if ($subMenu->remoteItem($item)) {
+                return tru;
             }
         }
 
@@ -222,18 +255,31 @@ class Menu {
     }
 
     /**
-     * Get the sub item for a label
+     * Gets the sub item for a id or label
      * @param string $label String representation of the item
      * @return Menu|MenuItem|null the item with the provided string
      * representation when found, null otherwise
      */
     public function getItem($label) {
+        $subMenus = array();
+
         foreach ($this->items as $item) {
             if ($item === self::SEPARATOR) {
                 continue;
             }
 
             if ((string) $item == $label) {
+                return $item;
+            }
+
+            if ($item instanceof Menu) {
+                $subMenus[] = $item;
+            }
+        }
+
+        foreach ($subMenus as $subMenu) {
+            $item = $subMenu->getItem($label);
+            if ($item) {
                 return $item;
             }
         }
