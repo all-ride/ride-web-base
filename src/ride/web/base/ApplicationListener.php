@@ -247,12 +247,18 @@ class ApplicationListener {
         $settingsMenu = $taskbar->getSettingsMenu();
         if (!$settingsMenu->hasItems()) {
             $settingsMenu = $dependencyInjector->get('ride\\web\\base\\menu\\Menu', 'settings');
+            $userMenu = $settingsMenu->getItem('user.menu');
 
             if (!$securityManager->getUser()) {
                 $loginMenuItem = $dependencyInjector->get('ride\\web\\base\\menu\\MenuItem', 'user.login');
 
-                $userMenu = $settingsMenu->getItem('user.menu');
                 $userMenu->addMenuItem($loginMenuItem);
+            } else {
+                $profileMenuItem = $dependencyInjector->get('ride\\web\\base\\menu\\MenuItem', 'user.profile');
+                $logoutMenuItem = $dependencyInjector->get('ride\\web\\base\\menu\\MenuItem', 'user.logout');
+
+                $userMenu->addMenuItem($profileMenuItem);
+                $userMenu->addMenuItem($logoutMenuItem);
             }
 
             $taskbar->setSettingsMenu($settingsMenu);
