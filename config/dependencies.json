@@ -269,7 +269,7 @@
         },
         {
             "class": "ride\\web\\base\\menu\\MenuItem",
-            "id": "system.translations",
+            "id": "system.locales",
             "calls": [
                 {
                     "method": "setTranslation",
@@ -278,7 +278,7 @@
                             "name": "key",
                             "type": "scalar",
                             "properties": {
-                                "value": "title.translations"
+                                "value": "title.locales"
                             }
                         }
                     ]
@@ -290,7 +290,7 @@
                             "name": "id",
                             "type": "scalar",
                             "properties": {
-                                "value": "system.translations"
+                                "value": "system.locales"
                             }
                         }
                     ]
@@ -347,7 +347,7 @@
                             "type": "dependency",
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\MenuItem",
-                                "id": "system.translations"
+                                "id": "system.locales"
                             }
                         }
                     ]
