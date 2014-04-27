@@ -29,6 +29,13 @@
             "methods": ["GET", "HEAD", "POST"]
         },
         {
+            "path": "/admin/system/preferences",
+            "controller": "ride\\web\\base\\controller\\PreferenceController",
+            "action": "indexAction",
+            "id": "system.preferences",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
             "path": "/admin/system/parameters",
             "controller": "ride\\web\\base\\controller\\ParameterController",
             "action": "indexAction",
