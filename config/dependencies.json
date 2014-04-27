@@ -340,6 +340,36 @@
             ]
         },
         {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.security",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.security"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "class": "ride\\web\\base\\menu\\Menu",
             "id": "system",
             "calls": [
@@ -402,6 +432,19 @@
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\MenuItem",
                                 "id": "system.preferences"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.security"
                             }
                         }
                     ]

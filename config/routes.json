@@ -64,6 +64,13 @@
             "methods": ["GET", "HEAD", "POST"]
         },
         {
+            "path": "/admin/system/security",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "pathAction",
+            "id": "system.security",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
             "path": "/admin/system/locales",
             "controller": "ride\\web\\base\\controller\\LocaleController",
             "action": "indexAction",
