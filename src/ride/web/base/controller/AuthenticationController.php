@@ -37,14 +37,21 @@ class AuthenticationController extends AbstractController {
         $translator = $this->getTranslator();
 
         $form = $this->createFormBuilder();
+        $form->setId('form-login');
         $form->addRow('username', 'string', array(
             'label' => $translator->translate('label.username'),
+            'attributes' => array(
+                'placeholder' => $translator->translate('label.username'),
+            ),
             'validators' => array(
                 'required' => array(),
             )
         ));
         $form->addRow('password', 'password', array(
             'label' => $translator->translate('label.password'),
+            'attributes' => array(
+                'placeholder' => $translator->translate('label.password'),
+            ),
             'validators' => array(
                 'required' => array(),
             )
