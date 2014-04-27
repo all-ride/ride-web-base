@@ -8,6 +8,11 @@ namespace ride\web\base\menu;
 class MenuItem {
 
     /**
+     * Internal id of this menu
+     */
+    private $id;
+
+    /**
      * Display label
      * @var string
      */
@@ -48,6 +53,7 @@ class MenuItem {
      * @return null
      */
     public function __construct() {
+        $this->id = null;
         $this->label = null;
         $this->translationKey = null;
         $this->translationParameters = null;
@@ -61,13 +67,32 @@ class MenuItem {
      * @return string
      */
     public function __toString() {
-        if ($this->label) {
+        if ($this->id) {
+            return $this->id;
+        } elseif ($this->label) {
             return $this->label;
         } elseif ($this->translationKey) {
             return $this->translationKey;
         } else {
             return 'MenuItem';
         }
+    }
+
+    /**
+     * Sets the id of this menu item
+     * @param string $id Id of this menu item
+     * @return null
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    /**
+     * Gets the id of this menu item
+     * @return string
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**

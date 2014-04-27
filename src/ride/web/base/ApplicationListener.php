@@ -263,6 +263,11 @@ class ApplicationListener {
         $settingsMenu = $taskbar->getSettingsMenu();
         $settingsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
 
+        $systemMenu = $settingsMenu->getItem('system.menu');
+        if ($systemMenu) {
+            $systemMenu->orderItems();
+        }
+
         $eventManager->triggerEvent(self::EVENT_TASKBAR_POST, array('taskbar' => $taskbar));
 
         return $taskbar;
