@@ -21,7 +21,7 @@
         "ride/lib-router": ">=0.1.0",
         "ride/lib-security": ">=0.1.0",
         "ride/lib-validation": ">=0.1.0",
-        "ride/web": ">=0.2.4",
+        "ride/web": ">=0.4.4",
         "ride/web-form": ">=0.4.0",
         "ride/web-i18n": ">=0.1.0",
         "ride/web-template": ">=0.3.0",
