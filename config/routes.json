@@ -1,6 +1,13 @@
 {
     "routes": [
         {
+            "path": "/admin",
+            "controller": "ride\\web\\base\\controller\\IndexController",
+            "action": "indexAction",
+            "id": "admin",
+            "methods": ["GET", "HEAD"]
+        },
+        {
             "path": "/admin/system",
             "controller": "ride\\web\\base\\controller\\SystemController",
             "action": "indexAction",
@@ -68,6 +75,48 @@
             "controller": "ride\\web\\base\\controller\\SecurityController",
             "action": "pathAction",
             "id": "system.security",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "rolesAction",
+            "id": "system.security.role",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles/add",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "roleFormAction",
+            "id": "system.security.role.add",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles/%id%/edit",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "roleFormAction",
+            "id": "system.security.role.edit",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "usersAction",
+            "id": "system.security.user",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users/add",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "userFormAction",
+            "id": "system.security.user.add",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users/%id%/edit",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "userFormAction",
+            "id": "system.security.user.edit",
             "methods": ["GET", "HEAD", "POST"]
         },
         {

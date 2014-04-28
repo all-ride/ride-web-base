@@ -6,6 +6,7 @@ use ride\library\form\component\Component;
 use ride\library\form\exception\FormException;
 use ride\library\form\row\factory\GenericRowFactory;
 use ride\library\form\Form;
+use ride\library\html\table\FormTable;
 use ride\library\http\Response;
 use ride\library\mvc\message\Message;
 use ride\library\validation\exception\ValidationException;
@@ -130,6 +131,66 @@ abstract class AbstractController extends WebAbstractController {
         $formBuilder->setComponent($component);
 
         return $formBuilder->build();
+    }
+
+    /**
+     * Gets the table helper
+     * @return \ride\library\html\table\TableHelper
+     */
+    protected function getTableHelper() {
+        return $this->dependencyInjector->get('ride\\library\\html\\table\\TableHelper');
+    }
+
+    /**
+     * Processes a table
+     * @param \ride\library\html\table\FormTable $table
+     * @param string $baseUrl Base URL for the table
+     * @param integer $rowsPerPage Default number of rows per page
+     * @param string $orderMethod Default order method
+     * @param string $orderDirection Default order direction
+     * @return \ride\library\form\Form Instance of the table form
+     */
+    protected function processTable(FormTable $table, $baseUrl, $rowsPerPage = 10, $orderMethod = null, $orderDirection = null) {
+        $tableHelper = $this->getTableHelper();
+        $page = 1;
+        $searchQuery = null;
+
+        $parameters = $this->request->getQueryParameters();
+
+        $tableHelper->getArgumentsFromArray($parameters, $page, $rowsPerPage, $searchQuery, $orderMethod, $orderDirection);
+        $tableHelper->setArgumentsToTable($table, $page, $rowsPerPage, $searchQuery, $orderMethod, $orderDirection);
+
+        $form = $this->buildForm($table);
+
+        if (!$parameters && ($table->hasPaginationOptions() || $table->hasOrderMethods())) {
+            // make sure the page has the query parameters is displays
+            $url = $tableHelper->getUrlFromTable($table, $baseUrl);
+
+            $this->response->setRedirect($url);
+
+            return;
+        }
+
+        $this->processTableForm($table, $form);
+
+        $url = $tableHelper->getUrlFromTable($table, $baseUrl);
+        if ($tableHelper->isTableChanged($table, $page, $rowsPerPage, $searchQuery, $orderMethod, $orderDirection)) {
+            $this->response->setRedirect($url);
+        }
+
+        $tableHelper->setUrlToTable($table, $url);
+
+        return $form;
+    }
+
+    /**
+     * Hook into the table form processing
+     * @param \ride\library\html\table\FormTable $table
+     * @param \ride\library\form\Form $form
+     * @return null
+     */
+    protected function processTableForm(FormTable $table, Form $form) {
+        $table->processForm($form);
     }
 
     /**

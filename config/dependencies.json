@@ -331,6 +331,36 @@
             ]
         },
         {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.security.users",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.users"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security.user"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "class": "ride\\web\\base\\menu\\Menu",
             "id": "system",
             "calls": [
@@ -406,6 +436,19 @@
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\MenuItem",
                                 "id": "system.security"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.security.users"
                             }
                         }
                     ]
