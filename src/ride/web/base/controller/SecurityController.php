@@ -343,7 +343,7 @@ class SecurityController extends AbstractController {
 
         $referer = $this->request->getQueryParameter('referer');
         $translator = $this->getTranslator();
-        $permissions = $securityModel->getPermissions();
+        $permissions = $this->securityModel->getPermissions();
 
         $form = $this->createFormBuilder($data);
         $form->setId('form-role');
