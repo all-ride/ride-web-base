@@ -154,6 +154,11 @@ class SecurityController extends AbstractController {
         $referer = $this->request->getQueryParameter('referer');
         $translator = $this->getTranslator();
         $roles = $this->securityModel->getRoles();
+        $roleOptions = array();
+
+        foreach ($roles as $role) {
+            $roleOptions[$role->getId()] = $role->getName();
+        }
 
         $form = $this->createFormBuilder($data);
         $form->setId('form-user');
@@ -188,7 +193,7 @@ class SecurityController extends AbstractController {
         $form->addRow('roles', 'option', array(
             'label' => $translator->translate('label.roles'),
             'multiple' => true,
-            'options' => $roles,
+            'options' => $roleOptions,
         ));
         $form->addRow('active', 'option', array(
             'label' => $translator->translate('label.active'),
@@ -211,10 +216,6 @@ class SecurityController extends AbstractController {
                     $user->setPassword($data['password']);
                 }
 
-                foreach ($data['roles'] as $role) {
-                    $data['roles'][$role] = $roles[$role];
-                }
-
                 try {
                     $this->securityModel->saveUser($user);
                 } catch (UsernameExistsException $exception) {
@@ -233,7 +234,19 @@ class SecurityController extends AbstractController {
                     throw $validationException;
                 }
 
-                $this->securityModel->setRolesToUser($user, $roles);
+                if (isset($data['roles'])) {
+                    foreach ($data['roles'] as $dataRole) {
+                        foreach ($roles as $role) {
+                            if ($dataRole == $role->getId()) {
+                                $data['roles'][$dataRole] = $role;
+                            }
+                        }
+                    }
+                } else {
+                    $data['roles'] = array();
+                }
+
+                $this->securityModel->setRolesToUser($user, $data['roles']);
 
                 $this->addSuccess('success.data.saved', array('data' => $user->getDisplayName()));
 
@@ -383,7 +396,7 @@ class SecurityController extends AbstractController {
 
                 $data = $form->getData();
                 if ($data['allowed-paths']) {
-                    $data['allowed-paths'] = explode("\n", $data['allowed-paths']);
+                    $data['allowed-paths'] = explode("\n", str_replace("\r", "", $data['allowed-paths']));
                 } else {
                     $data['allowed-paths'] = array();
                 }
@@ -465,6 +478,7 @@ class SecurityController extends AbstractController {
             ),
         ));
 
+
         $form = $form->build();
         if ($form->isSubmitted()) {
             try {
@@ -475,7 +489,9 @@ class SecurityController extends AbstractController {
                 foreach ($roles as $role) {
                     $roleId = $role->getId();
                     if (isset($data['allowed-paths'][$roleId])) {
-                        $role->setPaths(explode("\n", $data['allowed-paths'][$roleId]));
+                        $paths = explode("\n", str_replace("\r", "", $data['allowed-paths'][$roleId]));
+
+                        $role->setPaths($paths);
                     } else {
                         $role->setPaths(array());
                     }
@@ -484,7 +500,11 @@ class SecurityController extends AbstractController {
                 }
 
                 if ($data['secured-paths']) {
-                    $this->securityModel->setSecuredPaths(explode("\n", $data['secured-paths']));
+                    $paths = explode("\n", str_replace("\r", "", $data['secured-paths']));
+
+                    $this->securityModel->setSecuredPaths($paths);
+                } else {
+                    $this->securityModel->setSecuredPaths(array());
                 }
 
                 $this->addSuccess('success.security.saved');
