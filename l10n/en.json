@@ -84,6 +84,7 @@
     "label.theme": "Theme",
     "label.title": "Title",
     "label.translation": "Translation",
+    "label.type": "Type",
     "label.unregister": "To remove your account and all your profile data from our database, click unregister.",
     "label.user.anonymous": "Anonymous user",
     "label.username": "Username",
