@@ -1,11 +1,16 @@
 <?php
 
-namespace ride\web\base\view;
+namespace ride\web\base\menu;
 
 /**
  * Data container for a menu item
  */
 class MenuItem {
+
+    /**
+     * Internal id of this menu
+     */
+    private $id;
 
     /**
      * Display label
@@ -45,14 +50,10 @@ class MenuItem {
 
     /**
      * Construct a new menu item
-     * @param string $label The label
-     * @param string $translationKey The translation key for the label
-     * @param array $translationParameters Parameters for the translation key
-     * @param string $routeId The id of the route
-     * @param array $routeParameters Parameters for the route
      * @return null
      */
     public function __construct() {
+        $this->id = null;
         $this->label = null;
         $this->translationKey = null;
         $this->translationParameters = null;
@@ -66,13 +67,32 @@ class MenuItem {
      * @return string
      */
     public function __toString() {
-        if ($this->label) {
+        if ($this->id) {
+            return $this->id;
+        } elseif ($this->label) {
             return $this->label;
         } elseif ($this->translationKey) {
             return $this->translationKey;
         } else {
             return 'MenuItem';
         }
+    }
+
+    /**
+     * Sets the id of this menu item
+     * @param string $id Id of this menu item
+     * @return null
+     */
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    /**
+     * Gets the id of this menu item
+     * @return string
+     */
+    public function getId() {
+        return $this->id;
     }
 
     /**

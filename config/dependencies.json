@@ -1,0 +1,508 @@
+{
+    "dependencies": [
+        {
+            "interfaces": "ride\\web\\base\\profile\\ProfileHook",
+            "class": "ride\\web\\base\\profile\\AccountProfileHook",
+            "id": "account",
+            "calls": [
+                "setSecurityManager",
+                "setTemplateFacade"
+            ]
+        },
+        {
+            "interfaces": "ride\\web\\base\\profile\\ProfileHook",
+            "class": "ride\\web\\base\\profile\\PasswordProfileHook",
+            "id": "password",
+            "calls": [
+                "setSecurityManager",
+                "setTemplateFacade"
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\form\\ProfileComponent",
+            "id": "base",
+            "calls": [
+                {
+                    "method": "addProfileHook",
+                    "arguments": [
+                        {
+                            "name": "profileHook",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\profile\\ProfileHook",
+                                "id": "account"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addProfileHook",
+                    "arguments": [
+                        {
+                            "name": "profileHook",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\profile\\ProfileHook",
+                                "id": "password"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "interfaces": "ride\\web\\mvc\\view\\TemplateView",
+            "class": "ride\\web\\base\\view\\BaseTemplateView",
+            "id": "base"
+        },
+        {
+            "interfaces": "ride\\web\\mvc\\view\\TemplateView",
+            "class": "ride\\web\\base\\view\\ProfileTemplateView",
+            "id": "profile"
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "user.login",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "button.login"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "login"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "user.profile",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "button.profile"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "profile"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "user.logout",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "button.logout"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "logout"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "user",
+            "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "user.menu"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.user"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.cache",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.cache"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.cache"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.details",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.details"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.locales",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.locales"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.locales"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.preferences",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.preferences"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.preferences"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.security",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.security"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.security.users",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.users"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security.user"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "system",
+            "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.menu"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.system"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.cache"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.details"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.preferences"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.security"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.security.users"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.locales"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "settings",
+            "calls": [
+                {
+                    "method": "addMenu",
+                    "arguments": [
+                        {
+                            "name": "menu",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\Menu",
+                                "id": "user"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenu",
+                    "arguments": [
+                        {
+                            "name": "menu",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\Menu",
+                                "id": "system"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "applications"
+        }
+    ]
+}

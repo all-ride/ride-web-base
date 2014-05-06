@@ -4,6 +4,7 @@ namespace ride\web\base\view;
 
 use ride\library\template\Template;
 
+use ride\web\base\menu\Taskbar;
 use ride\web\mvc\view\TemplateView;
 
 /**
@@ -24,7 +25,7 @@ class BaseTemplateView extends TemplateView {
 
     /**
      * Gets the taskbar
-     * @return Taskbar
+     * @return \ride\web\base\menu\Taskbar
      */
     public function getTaskbar() {
         return $this->taskbar;

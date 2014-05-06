@@ -27,6 +27,7 @@ class TranslationController extends AbstractController {
             return;
         }
 
+        $referer = $this->request->getQueryParameter('referer');
         $dataTranslator = $this->getTranslator($locale);
 
         if ($key) {
@@ -58,7 +59,6 @@ class TranslationController extends AbstractController {
                 'trim' => array(),
             ),
         ));
-        $form->setRequest($this->request);
 
         $form = $form->build();
         if ($form->isSubmitted()) {
@@ -78,7 +78,12 @@ class TranslationController extends AbstractController {
 
                 $this->addSuccess('success.translation.saved', array('key' => $data['key']));
 
-                $this->response->setRedirect($this->getUrl('system.translations.locale', array('locale' => $locale)));
+                $url = $this->getUrl('system.translations.locale', array('locale' => $locale));
+                if ($referer) {
+                    $url .= '?referer=' . urlencode($referer);
+                }
+
+                $this->response->setRedirect($url);
 
                 return;
             } catch (ValidationException $exception) {
@@ -97,6 +102,7 @@ class TranslationController extends AbstractController {
             'locale' => $locale,
             'locales' => $i18n->getLocales(),
             'form' => $form->getView(),
+            'referer' => $referer
         ));
     }
 

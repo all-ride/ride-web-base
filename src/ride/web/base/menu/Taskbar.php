@@ -1,17 +1,11 @@
 <?php
 
-namespace ride\web\base\view;
+namespace ride\web\base\menu;
 
 /**
  * Taskbar for quick access to the different parts of your application
  */
 class Taskbar {
-
-    /**
-     * Event to process the taskbar
-     * @var string
-     */
-    const EVENT_TASKBAR = 'app.taskbar';
 
     /**
      * Title of the taskbar
@@ -20,13 +14,13 @@ class Taskbar {
     protected $title;
 
     /**
-     * The applications menu
+     * Applications menu
      * @var Menu
      */
     protected $applicationsMenu;
 
     /**
-     * The settings menu
+     * Settings menu
      * @var Menu
      */
     protected $settingsMenu;
@@ -51,7 +45,7 @@ class Taskbar {
     }
 
     /**
-     * Get the title of the taskbar
+     * Gets the title of the taskbar
      * @return string
      */
     public function getTitle() {
@@ -59,7 +53,15 @@ class Taskbar {
     }
 
     /**
-     * Get the applications menu
+     * Sets the applications menu
+     * @param Menu $applicationsMenu
+     */
+    public function setApplicationsMenu(Menu $applicationsMenu) {
+        $this->applicationsMenu = $applicationsMenu;
+    }
+
+    /**
+     * Gets the applications menu
      * @return Menu
      */
     public function getApplicationsMenu() {
@@ -67,7 +69,15 @@ class Taskbar {
     }
 
     /**
-     * Get the settings menu
+     * Sets the settings menu
+     * @param Menu $settingsMenu
+     */
+    public function setSettingsMenu(Menu $settingsMenu) {
+        $this->settingsMenu = $settingsMenu;
+    }
+
+    /**
+     * Gets the settings menu
      * @return Menu
      */
     public function getSettingsMenu() {

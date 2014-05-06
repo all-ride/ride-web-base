@@ -1,82 +1,179 @@
 {
     "routes": [
         {
+            "path": "/admin",
+            "controller": "ride\\web\\base\\controller\\IndexController",
+            "action": "indexAction",
+            "id": "admin",
+            "methods": ["GET", "HEAD"]
+        },
+        {
             "path": "/admin/system",
             "controller": "ride\\web\\base\\controller\\SystemController",
             "action": "indexAction",
-            "id": "system"
+            "id": "system",
+            "methods": ["GET", "HEAD"]
         },
         {
             "path": "/admin/system/cache",
             "controller": "ride\\web\\base\\controller\\CacheController",
             "action": "indexAction",
-            "id": "system.cache"
+            "id": "system.cache",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/admin/system/cache/clear",
             "controller": "ride\\web\\base\\controller\\CacheController",
             "action": "clearAction",
-            "id": "system.cache.clear"
+            "id": "system.cache.clear",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/admin/system/dependencies",
             "controller": "ride\\web\\base\\controller\\DependencyController",
             "action": "indexAction",
-            "id": "system.dependencies"
+            "id": "system.dependencies",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/preferences",
+            "controller": "ride\\web\\base\\controller\\PreferenceController",
+            "action": "indexAction",
+            "id": "system.preferences",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/admin/system/parameters",
             "controller": "ride\\web\\base\\controller\\ParameterController",
             "action": "indexAction",
-            "id": "system.parameters"
+            "id": "system.parameters",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/admin/system/parameters/%key%",
             "controller": "ride\\web\\base\\controller\\ParameterController",
             "action": "indexAction",
-            "id": "system.parameters.edit"
+            "id": "system.parameters.edit",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/admin/system/php",
             "controller": "ride\\web\\base\\controller\\SystemController",
             "action": "phpInfoAction",
-            "id": "system.php"
+            "id": "system.php",
+            "methods": ["GET", "HEAD"]
         },
         {
             "path": "/admin/system/routes",
             "controller": "ride\\web\\base\\controller\\RouteController",
             "action": "indexAction",
-            "id": "system.routes"
+            "id": "system.routes",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "pathAction",
+            "id": "system.security",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "rolesAction",
+            "id": "system.security.role",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles/add",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "roleFormAction",
+            "id": "system.security.role.add",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/roles/%id%/edit",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "roleFormAction",
+            "id": "system.security.role.edit",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "usersAction",
+            "id": "system.security.user",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users/add",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "userFormAction",
+            "id": "system.security.user.add",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/users/%id%/edit",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "userFormAction",
+            "id": "system.security.user.edit",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/locales",
+            "controller": "ride\\web\\base\\controller\\LocaleController",
+            "action": "indexAction",
+            "id": "system.locales",
+            "methods": ["GET", "HEAD"]
+        },
+        {
+            "path": "/admin/system/locales/order",
+            "controller": "ride\\web\\base\\controller\\LocaleController",
+            "action": "orderAction",
+            "id": "system.locales.order",
+            "methods": "POST"
         },
         {
             "path": "/admin/system/translations",
             "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
-            "id": "system.translations"
+            "id": "system.translations",
+            "methods": ["GET", "HEAD"]
         },
         {
-            "path": "/admin/system/translations/%locale%",
+            "path": "/admin/system/locales/%locale%/translations",
             "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
-            "id": "system.translations.locale"
+            "id": "system.translations.locale",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
-            "path": "/admin/system/translations/%locale%/%key%",
+            "path": "/admin/system/locales/%locale%/translations/%key%",
             "controller": "ride\\web\\base\\controller\\TranslationController",
             "action": "indexAction",
-            "id": "system.translations.edit"
+            "id": "system.translations.edit",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/login",
             "controller": "ride\\web\\base\\controller\\AuthenticationController",
             "action": "loginAction",
-            "id": "login"
+            "id": "login",
+            "methods": ["GET", "HEAD", "POST"]
         },
         {
             "path": "/logout",
             "controller": "ride\\web\\base\\controller\\AuthenticationController",
             "action": "logoutAction",
-            "id": "logout"
+            "id": "logout",
+            "methods": ["GET", "HEAD"]
+        },
+        {
+            "path": "/profile",
+            "controller": "ride\\web\\base\\controller\\ProfileController",
+            "action": "indexAction",
+            "id": "profile",
+            "methods": ["GET", "HEAD", "POST"]
         }
     ]
 }
