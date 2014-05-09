@@ -182,36 +182,6 @@
         },
         {
             "class": "ride\\web\\base\\menu\\MenuItem",
-            "id": "system.cache",
-            "calls": [
-                {
-                    "method": "setTranslation",
-                    "arguments": [
-                        {
-                            "name": "key",
-                            "type": "scalar",
-                            "properties": {
-                                "value": "title.cache"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "method": "setRoute",
-                    "arguments": [
-                        {
-                            "name": "id",
-                            "type": "scalar",
-                            "properties": {
-                                "value": "system.cache"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "class": "ride\\web\\base\\menu\\MenuItem",
             "id": "system.details",
             "calls": [
                 {
@@ -384,19 +354,6 @@
                             "type": "scalar",
                             "properties": {
                                 "value": "title.system"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "method": "addMenuItem",
-                    "arguments": [
-                        {
-                            "name": "menuItem",
-                            "type": "dependency",
-                            "properties": {
-                                "interface": "ride\\web\\base\\menu\\MenuItem",
-                                "id": "system.cache"
                             }
                         }
                     ]
