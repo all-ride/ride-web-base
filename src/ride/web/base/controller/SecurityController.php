@@ -490,13 +490,11 @@ class SecurityController extends AbstractController {
                     $roleId = $role->getId();
                     if (isset($data['allowed-paths'][$roleId])) {
                         $paths = explode("\n", str_replace("\r", "", $data['allowed-paths'][$roleId]));
-
-                        $role->setPaths($paths);
                     } else {
-                        $role->setPaths(array());
+                        $paths = array();
                     }
 
-                    $this->securityModel->saveRole($role);
+                    $this->securityModel->setAllowedPathsToRole($role, $paths);
                 }
 
                 if ($data['secured-paths']) {
