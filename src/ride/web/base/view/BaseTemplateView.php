@@ -31,4 +31,12 @@ class BaseTemplateView extends TemplateView {
         return $this->taskbar;
     }
 
+    /**
+     * Removes the taskbar from the view
+     * @return null
+     */
+    public function removeTaskbar() {
+        $this->taskbar = null;
+    }
+
 }
