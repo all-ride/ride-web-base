@@ -15,6 +15,7 @@
     "cache.control.dependencies": "Dependency container cache",
     "cache.control.events": "Events configuration",
     "cache.control.image": "Image cache",
+    "cache.control.orm": "ORM cache",
     "cache.control.parameters": "Parameter cache",
     "cache.control.router": "Route cache",
     "cache.control.security": "Security model cache",
