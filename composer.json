@@ -17,11 +17,11 @@
         "ride/lib-http": ">=0.2.2",
         "ride/lib-html": ">=0.2.0",
         "ride/lib-i18n": ">=0.1.0",
-        "ride/lib-form": ">=0.8.0",
+        "ride/lib-form": ">=0.10.0",
         "ride/lib-mvc": ">=0.2.0",
         "ride/lib-router": ">=0.1.0",
-        "ride/lib-security": ">=0.3.1",
-        "ride/lib-validation": ">=0.1.0",
+        "ride/lib-security": ">=0.4.0",
+        "ride/lib-validation": ">=0.4.0",
         "ride/web": ">=0.4.4",
         "ride/web-form": ">=0.4.0",
         "ride/web-i18n": ">=0.1.0",
@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ride\\web\\base\\": ["src/", "test/src/"]
+            "ride\\web\\base\\": ["src/"]
         }
     }
 }
