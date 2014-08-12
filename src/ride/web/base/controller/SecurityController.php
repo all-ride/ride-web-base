@@ -10,11 +10,13 @@ use ride\library\http\Response;
 use ride\library\image\ImageUrlGenerator;
 use ride\library\reflection\ReflectionHelper;
 use ride\library\security\exception\EmailExistsException;
+use ride\library\security\exception\UnauthorizedException;
 use ride\library\security\exception\UsernameExistsException;
 use ride\library\system\file\browser\FileBrowser;
 use ride\library\validation\exception\ValidationException;
 use ride\library\validation\ValidationError;
 
+use ride\web\base\table\decorator\UserLockDecorator;
 use ride\web\base\table\RoleTable;
 use ride\web\base\table\UserTable;
 
@@ -59,6 +61,8 @@ class SecurityController extends AbstractController {
      * @return null
      */
     public function usersAction(ReflectionHelper $reflectionHelper, ImageUrlGenerator $imageUrlGenerator) {
+        $userWeight = $this->getUserWeight();
+
         $detailAction = $this->getUrl('system.security.user.edit', array('id' => '%id%'));
         $detailAction .= '?referer=' . urlencode($this->request->getUrl());
 
@@ -73,6 +77,7 @@ class SecurityController extends AbstractController {
         $table->addDecorator($detailDecorator);
         $table->addDecorator(new ValueDecorator('email', null, $reflectionHelper));
         $table->addDecorator(new ValueDecorator('roles', null, $reflectionHelper));
+        $table->addDecorator(new UserLockDecorator($userWeight, $translator->translate('label.locked'), 'disabled'));
         $table->setPaginationOptions(array(5, 10, 25, 50, 100, 250, 500));
         $table->addAction(
             $translator->translate('button.delete'),
@@ -104,16 +109,11 @@ class SecurityController extends AbstractController {
             return;
         }
 
-        $referer = $this->request->getHeader(Header::HEADER_REFERER);
-        if (!$referer) {
-            $referer = $this->request->getUrl();
-        }
-
-        $this->response->setRedirect($referer);
+        $userWeight = $this->getUserWeight();
 
         foreach ($data as $id) {
             $user = $this->securityModel->getUserById($id);
-            if (!$user) {
+            if (!$user || $user->getRoleWeight() > $userWeight) {
                 continue;
             }
 
@@ -121,6 +121,13 @@ class SecurityController extends AbstractController {
 
             $this->addSuccess('success.data.deleted', array('data' => $user->getDisplayName()));
         }
+
+        $referer = $this->request->getHeader(Header::HEADER_REFERER);
+        if (!$referer) {
+            $referer = $this->request->getUrl();
+        }
+
+        $this->response->setRedirect($referer);
     }
 
     /**
@@ -130,12 +137,16 @@ class SecurityController extends AbstractController {
      * @return null
      */
     public function userFormAction(FileBrowser $fileBrowser, $id = null) {
+        $userWeight = $this->getUserWeight();
+
         if ($id) {
             $user = $this->securityModel->getUserById($id);
             if (!$user) {
                 $this->response->setStatusCode(Response::STATUS_CODE_NOT_FOUND);
 
                 return;
+            } elseif ($user->getRoleWeight() > $userWeight) {
+                throw new UnauthorizedException();
             }
 
             $data = array(
@@ -144,11 +155,15 @@ class SecurityController extends AbstractController {
                 'email' => $user->getEmail(),
                 'image' => $user->getImage(),
                 'roles' => $user->getRoles(),
+                'email-confirmed' => $user->isEmailConfirmed(),
                 'active' => $user->isActive(),
             );
+
+            $passwordValidators = array();
         } else {
             $user = $this->securityModel->createUser();
             $data = array();
+            $passwordValidators = array('required' => array());
         }
 
         $referer = $this->request->getQueryParameter('referer');
@@ -157,8 +172,13 @@ class SecurityController extends AbstractController {
         $roleOptions = array();
 
         foreach ($roles as $role) {
+            if ($role->getWeight() > $userWeight) {
+                continue;
+            }
+
             $roleOptions[$role->getId()] = $role->getName();
         }
+        asort($roleOptions);
 
         $form = $this->createFormBuilder($data);
         $form->setId('form-user');
@@ -173,6 +193,10 @@ class SecurityController extends AbstractController {
         ));
         $form->addRow('password', 'password', array(
             'label' => $translator->translate('label.password'),
+            'attributes' => array(
+                'autocomplete' => 'off',
+            ),
+            'validators' => $passwordValidators,
         ));
         $form->addRow('name', 'string', array(
             'label' => $translator->translate('label.name.profile'),
@@ -186,17 +210,22 @@ class SecurityController extends AbstractController {
                 'trim' => array(),
             ),
         ));
+        $form->addRow('email-confirmed', 'option', array(
+            'label' => $translator->translate('label.confirmed'),
+            'description' => $translator->translate('label.confirmed.email.description'),
+        ));
         $form->addRow('image', 'image', array(
             'label' => $translator->translate('label.image'),
             'path' => $fileBrowser->getApplicationDirectory()->getChild('data/upload/profile')->getAbsolutePath(),
+        ));
+        $form->addRow('active', 'option', array(
+            'label' => $translator->translate('label.active'),
+            'description' => $translator->translate('label.active.user.description'),
         ));
         $form->addRow('roles', 'option', array(
             'label' => $translator->translate('label.roles'),
             'multiple' => true,
             'options' => $roleOptions,
-        ));
-        $form->addRow('active', 'option', array(
-            'label' => $translator->translate('label.active'),
         ));
 
         $form = $form->build();
@@ -209,6 +238,7 @@ class SecurityController extends AbstractController {
                 $user->setUserName($data['username']);
                 $user->setDisplayName($data['name']);
                 $user->setEmail($data['email']);
+                $user->setIsEmailConfirmed($data['email-confirmed']);
                 $user->setImage($data['image']);
                 $user->setIsActive($data['active']);
 
@@ -278,8 +308,11 @@ class SecurityController extends AbstractController {
         $detailAction = $this->getUrl('system.security.role.edit', array('id' => '%id%'));
         $detailAction .= '?referer=' . urlencode($this->request->getUrl());
 
+        $detailDecorator = new DataDecorator($reflectionHelper, $detailAction);
+        $detailDecorator->mapProperty('teaser', 'weight');
+
         $table = new RoleTable($this->securityModel, $reflectionHelper);
-        $table->addDecorator(new DataDecorator($reflectionHelper, $detailAction));
+        $table->addDecorator($detailDecorator);
         $table->setPaginationOptions(array(5, 10, 25, 50, 100, 250, 500));
         $table->addAction(
             $translator->translate('button.delete'),
@@ -346,6 +379,7 @@ class SecurityController extends AbstractController {
 
             $data = array(
                 'name' => $role->getName(),
+                'weight' => $role->getWeight(),
                 'allowed-paths' => $this->getPathsString($role->getPaths()),
                 'allowed-permissions' => $role->getPermissions(),
             );
@@ -369,8 +403,19 @@ class SecurityController extends AbstractController {
                 'required' => array(),
             ),
         ));
+        $form->addRow('weight', 'integer', array(
+            'label' => $translator->translate('label.weight'),
+            'description' => $translator->translate('label.weight.role.description'),
+            'filters' => array(
+                'trim' => array(),
+            ),
+            'validators' => array(
+                'numeric' => array(),
+            ),
+        ));
         $form->addRow('allowed-paths', 'text', array(
             'label' => $translator->translate('label.paths.allowed'),
+            'description' => $translator->translate('label.path.security.description'),
             'attributes' => array(
                 'rows' => 5,
             ),
@@ -402,6 +447,7 @@ class SecurityController extends AbstractController {
                 }
 
                 $role->setName($data['name']);
+                $role->setWeight($data['weight']);
                 $this->securityModel->saveRole($role);
                 $this->securityModel->setAllowedPathsToRole($role, $data['allowed-paths']);
                 if ($permissions) {
@@ -522,11 +568,24 @@ class SecurityController extends AbstractController {
     }
 
     /**
+     * Gets the role weight of the current user
+     * @return integer
+     */
+    protected function getUserWeight() {
+        $user = $this->getUser();
+        if (!$user) {
+            return -1;
+        }
+
+        return $user->getRoleWeight();
+    }
+
+    /**
      * Gets a path string for an array of routes
      * @param array $paths Array with a path as value
      * @return string
      */
-    private function getPathsString(array $paths) {
+    protected function getPathsString(array $paths) {
         sort($paths);
 
         $string = '';

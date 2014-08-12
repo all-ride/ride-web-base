@@ -460,6 +460,42 @@
         {
             "class": "ride\\web\\base\\menu\\Menu",
             "id": "applications"
+        },
+        {
+            "class": "ride\\web\\base\\service\\security\\EmailConfirmService",
+            "calls": [
+                {
+                    "method": "__construct",
+                    "arguments": [
+                        {
+                            "name": "secretKey",
+                            "type": "call",
+                            "properties": {
+                                "interface": "ride\\application\\system\\System",
+                                "method": "getSecretKey"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\service\\security\\PasswordResetService",
+            "calls": [
+                {
+                    "method": "__construct",
+                    "arguments": [
+                        {
+                            "name": "secretKey",
+                            "type": "call",
+                            "properties": {
+                                "interface": "ride\\application\\system\\System",
+                                "method": "getSecretKey"
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
