@@ -4,7 +4,12 @@ namespace ride\web\base\profile;
 
 use ride\library\form\FormBuilder;
 use ride\library\mvc\controller\Controller;
+use ride\library\security\exception\EmailExistsException;
 use ride\library\security\SecurityManager;
+use ride\library\validation\exception\ValidationException;
+use ride\library\validation\ValidationError;
+
+use ride\web\base\service\security\EmailConfirmService;
 
 /**
  * Profile hook implementation to update general account settings
@@ -22,6 +27,15 @@ class AccountProfileHook extends AbstractProfileHook {
      * @var string
      */
     const TEMPLATE = 'base/profile.account';
+
+    /**
+     * Constructs a new profile hook
+     * @param \ride\web\base\service\security\EmailConfirmService $service
+     * @return null
+     */
+    public function __construct(EmailConfirmService $service) {
+        $this->service = $service;
+    }
 
     /**
      * Prepares the form by adding row definitions
@@ -94,13 +108,33 @@ class AccountProfileHook extends AbstractProfileHook {
                 }
             }
 
+            $isEmailChanged = false;
+            if ($data['email'] != $user->getEmail()) {
+                $isEmailChanged = true;
+            }
+
             $user->setDisplayName($data['name']);
             $user->setEmail($data['email']);
             $user->setImage($data['image']);
 
-            $this->securityManager->getSecurityModel()->saveUser($user);
+            try {
+                $this->securityManager->getSecurityModel()->saveUser($user);
+            } catch (EmailExistsException $exception) {
+                $error = new ValidationError('error.user.email.exists', 'This email address is already in use');
+
+                $exception = new ValidationException();
+                $exception->addError('email', $error);
+
+                throw $exception;
+            }
 
             $controller->addSuccess('success.profile.account.saved');
+
+            if ($isEmailChanged && !$user->isEmailConfirmed()) {
+                $this->service->sendConfirmation($user);
+
+                $controller->addWarning('warning.user.email.confirm');
+            }
         } elseif ($data['submit-unregister']) {
             $user = $this->securityManager->getUser();
 
