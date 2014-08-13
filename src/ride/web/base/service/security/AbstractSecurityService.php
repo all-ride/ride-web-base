@@ -98,10 +98,10 @@ abstract class AbstractSecurityService {
             return $email;
         }
 
-        $error = new ValidationError('error.user.no.email', 'No email address set for the user profile');
+        $error = new ValidationError('error.user.email.none', 'No email address set for the user profile');
 
         $exception = new ValidationException();
-        $exception->addErrors($errorField, array($error));
+        $exception->addErrors('unexistant', array($error));
 
         throw $exception;
     }
