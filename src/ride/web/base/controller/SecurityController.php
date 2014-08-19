@@ -451,7 +451,7 @@ class SecurityController extends AbstractController {
                 $this->securityModel->saveRole($role);
                 $this->securityModel->setAllowedPathsToRole($role, $data['allowed-paths']);
                 if ($permissions) {
-                    $this->securityModel->setGrantedPermissionsToRole($role, $data['allowed-permissions']);
+                    $this->securityModel->setGrantedPermissionsToRole($role, $data['granted-permissions']);
                 }
 
                 $this->addSuccess('success.data.saved', array('data' => $role->getName()));
