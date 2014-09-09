@@ -377,11 +377,17 @@ class SecurityController extends AbstractController {
                 return;
             }
 
+            $permissions = $role->getPermissions();
+            foreach ($permissions as $index => $permission) {
+                unset($permissions[$index]);
+                $permissions[$permission->getCode()] = $permission->getCode();
+            }
+
             $data = array(
                 'name' => $role->getName(),
                 'weight' => $role->getWeight(),
                 'allowed-paths' => $this->getPathsString($role->getPaths()),
-                'allowed-permissions' => $role->getPermissions(),
+                'granted-permissions' => $permissions,
             );
         } else {
             $role = $this->securityModel->createRole();
