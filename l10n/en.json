@@ -28,6 +28,7 @@
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
     "error.authentication": "Your credentials are invalid.",
     "error.authentication.email": "Your email address is not confirmed. <a href=\"%url%\">Resend the confirmation mail.</a>",
+    "error.translation.empty": "%data% is not valid translation to remove for this language",
     "error.unauthorized": "You are not authorized to view this page. Please login using the form below.",
     "error.user.found.email": "Could not find a user with email address %email%",
     "error.user.found.username": "Could not find a user with username %username%",

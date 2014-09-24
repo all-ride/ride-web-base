@@ -28,6 +28,7 @@
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
     "error.authentication": "Je gebruikersgegevens zijn ongeldig.",
     "error.authentication.email": "Je e-mailadres werd nog niet bevestigd. <a href=\"%url%\">Verstuur de bevestigingsmail</a>.",
+    "error.translation.empty": "%data% is geen geldige vertaling in deze taal.",
     "error.unauthorized": "Je hebt geen toelating om deze pagina te bezichtingen. Gelieve in te loggen via het onderstaande formulier.",
     "error.user.found.email": "Kon geen gebruiker vinden met e-mailadres %email%",
     "error.user.found.username": "Kon geen gebruiker vinden met gebruikersnaam %username%",
