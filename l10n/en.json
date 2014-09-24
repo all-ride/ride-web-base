@@ -24,6 +24,7 @@
     "error.403.title": "You are not allowed to view this page",
     "error.404.title": "Sorry, the page you are looking for could not be found",
     "error.404.message": "Please check your URL to ensure you are going where you intended. If everything looks OK and you still see this error page, please consider contacting the webmaster.",
+    "error.honeypot": "Your submission is suspected of being spam. Please reload the page and try again.",
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
     "error.authentication": "Your credentials are invalid.",
     "error.authentication.email": "Your email address is not confirmed. <a href=\"%url%\">Resend the confirmation mail.</a>",
