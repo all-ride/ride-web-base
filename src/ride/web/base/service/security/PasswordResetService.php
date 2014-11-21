@@ -19,25 +19,17 @@ class PasswordResetService extends AbstractSecurityService {
 
     /**
      * Lookups the user with the username or email address
-     * @param string $username
-     * @param string $email
-     * @return \ride\library\security\model\User|null
+     * @param string $email Email address or username to lookup
+     * @param string $errorField Name of the field for the validation exception
+     * @return \ride\library\security\model\User
+     * @throws \ride\library\validation\exception\ValidationException
      */
-    public function lookupUser($username = null, $email = null) {
-        $user = null;
+    public function lookupUser($email, $errorField = 'email') {
         $error = null;
 
-        if ($username) {
-            $errorField = 'username';
-
+        $user = $this->securityManager->getSecurityModel()->getUserByEmail($email);
+        if (!$user) {
             $user = $this->securityManager->getSecurityModel()->getUserByUsername($username);
-            if (!$user) {
-                $error = new ValidationError('error.user.found.username', 'Could not find the profile for username %username%', array('username' => $username));
-            }
-        } elseif ($email) {
-            $errorField = 'email';
-
-            $user = $this->securityManager->getSecurityModel()->getUserByEmail($email);
             if (!$user) {
                 $error = new ValidationError('error.user.found.email', 'Could not find the profile for email address %email%', array('email' => $email));
             }
