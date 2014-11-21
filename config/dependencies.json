@@ -462,6 +462,44 @@
             "id": "applications"
         },
         {
+            "interfaces": "ride\\web\\base\\service\\security\\mail\\MailRenderer",
+            "class": "ride\\web\\base\\service\\security\\mail\\TemplateMailRenderer",
+            "id": "email.confirm",
+            "calls": [
+                {
+                    "method": "__construct",
+                    "arguments": [
+                        {
+                            "name": "template",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "base/user.mail.email"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "interfaces": "ride\\web\\base\\service\\security\\mail\\MailRenderer",
+            "class": "ride\\web\\base\\service\\security\\mail\\TemplateMailRenderer",
+            "id": "password.reset",
+            "calls": [
+                {
+                    "method": "__construct",
+                    "arguments": [
+                        {
+                            "name": "template",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "base/user.mail.password"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "class": "ride\\web\\base\\service\\security\\EmailConfirmService",
             "calls": [
                 {
@@ -473,6 +511,14 @@
                             "properties": {
                                 "interface": "ride\\application\\system\\System",
                                 "method": "getSecretKey"
+                            }
+                        },
+                        {
+                            "name": "mailRenderer",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\service\\security\\mail\\MailRenderer",
+                                "id": "email.confirm"
                             }
                         }
                     ]
@@ -491,6 +537,14 @@
                             "properties": {
                                 "interface": "ride\\application\\system\\System",
                                 "method": "getSecretKey"
+                            }
+                        },
+                        {
+                            "name": "mailRenderer",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\service\\security\\mail\\MailRenderer",
+                                "id": "password.reset"
                             }
                         }
                     ]

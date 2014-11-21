@@ -123,9 +123,11 @@ class ProfileController extends AbstractController {
     public function passwordRequestAction(PasswordResetService $service) {
         $form = $this->createFormBuilder();
         $form->setId('form-password-request');
-        $form->addRow('user', 'component', array(
-            'component' => new PasswordRequestComponent(),
-            'embed' => true,
+        $form->addRow('email', 'email', array(
+            'label' => $this->getTranslator()->translate('label.email'),
+            'validators' => array(
+                'required' => array(),
+            ),
         ));
         $form = $form->build();
 
@@ -135,7 +137,7 @@ class ProfileController extends AbstractController {
 
                 $data = $form->getData();
 
-                $user = $service->lookupUser($data['user']['username'], $data['user']['email']);
+                $user = $service->lookupUser($data['email']);
                 if ($user) {
                     $service->requestPasswordReset($user);
 

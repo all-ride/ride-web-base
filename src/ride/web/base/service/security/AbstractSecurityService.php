@@ -9,7 +9,7 @@ use ride\library\security\SecurityManager;
 use ride\library\validation\exception\ValidationException;
 use ride\library\validation\ValidationError;
 
-use ride\web\base\service\TemplateService;
+use ride\web\base\service\security\mail\MailRenderer;
 
 /**
  * Abstract base implementation for a security service
@@ -38,19 +38,13 @@ abstract class AbstractSecurityService {
      * Instance of the mail transport
      * @var \ride\library\mail\transport\Transport
      */
-    protected $transport;
+    protected $mailTransport;
 
     /**
-     * Instance of the template facade
-     * @var \ride\library\template\Template
+     * Instance of the mail renderer
+     * @var \ride\web\base\service\security\mail\MailRenderer
      */
-    protected $templateFacade;
-
-    /**
-     * Path to the template for the mail message of the user
-     * @var string
-     */
-    protected $template;
+    protected $mailRenderer;
 
     /**
      * Constructs a new password reset service
@@ -62,27 +56,30 @@ abstract class AbstractSecurityService {
      * @param string $template
      * @return null
      */
-    public function __construct(SecurityManager $securityManager, Cipher $cipher, $secretKey, Transport $transport, TemplateService $templateService, $template = null) {
-        if ($template === null) {
-            $template = static::TEMPLATE;
-        }
-
+    public function __construct(SecurityManager $securityManager, Cipher $cipher, $secretKey, Transport $mailTransport, MailRenderer $mailRenderer = null) {
         $this->securityManager = $securityManager;
         $this->cipher = $cipher;
         $this->secretKey = $secretKey;
 
-        $this->transport = $transport;
-
-        $this->templateService = $templateService;
-        $this->template = $template;
+        $this->mailTransport = $mailTransport;
+        $this->mailRenderer = $mailRenderer;
     }
 
     /**
-     * Gets the template for the mail message of the user
-     * @return string Path to the template resource
+     * Sets the renderer for the mail message
+     * @param \ride\web\base\service\security\mail\MailRenderer $mailRenderer
+     * @return null
      */
-    public function getTemplate() {
-        return $this->template;
+    public function setMailRenderer($mailRenderer) {
+        $this->mailRenderer = $mailRenderer;
+    }
+
+    /**
+     * Gets the renderer for the mail message
+     * @return \ride\web\base\service\security\mail\MailRenderer
+     */
+    public function getMailRenderer() {
+        return $this->mailRenderer;
     }
 
     /**
@@ -98,7 +95,7 @@ abstract class AbstractSecurityService {
             return $email;
         }
 
-        $error = new ValidationError('error.user.email.none', 'No email address set for the user profile');
+        $error = new ValidationError('error.user.email.none', 'No email address set in the user profile');
 
         $exception = new ValidationException();
         $exception->addErrors('unexistant', array($error));
@@ -114,16 +111,19 @@ abstract class AbstractSecurityService {
      * @return null
      */
     protected function sendMail($email, $subject, array $variables) {
-        $messageTemplate = $this->templateService->createTemplate($this->getTemplate(), $variables);
-        $message = $this->templateService->render($messageTemplate);
+        if (!$this->mailRenderer) {
+            throw new Exception('Could not send the mail: no mail renderer set');
+        }
 
-        $mail = $this->transport->createMessage();
+        $message = $this->mailRenderer->renderMail($variables);
+
+        $mail = $this->mailTransport->createMessage();
         $mail->setTo($email);
         $mail->setSubject($subject);
         $mail->setMessage($message);
         $mail->setIsHtmlMessage(true);
 
-        $this->transport->send($mail);
+        $this->mailTransport->send($mail);
     }
 
 }
