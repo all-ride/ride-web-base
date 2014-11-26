@@ -103,7 +103,10 @@ class PasswordResetService extends AbstractSecurityService {
         $user->setPreference('password.reset', null);
 
         $this->securityManager->getSecurityModel()->saveUser($user);
-        $this->securityManager->setUser($user);
+
+        if ($user->isActive()) {
+            $this->securityManager->setUser($user);
+        }
     }
 
 }
