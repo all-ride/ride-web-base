@@ -13,6 +13,7 @@ use ride\library\mvc\message\MessageContainer;
 use ride\library\mvc\message\Message;
 use ride\library\router\RouteContainer;
 use ride\library\router\Router;
+use ride\library\security\exception\AuthenticationException;
 use ride\library\security\exception\UnauthorizedException;
 use ride\library\security\SecurityManager;
 use ride\library\template\TemplateFacade;
@@ -196,7 +197,11 @@ class ApplicationListener {
         $app = $template->get('app', array());
         $app['system'] = $system;
         $app['locale'] = $locale->getCode();
-        $app['user'] = $securityManager->getUser();
+        try {
+            $app['user'] = $securityManager->getUser();
+        } catch (AuthenticationException $exception) {
+            $app['user'] = null;
+        }
 
         if ($request) {
             $app['url'] = array(

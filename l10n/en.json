@@ -26,6 +26,7 @@
     "error.404.message": "Please check your URL to ensure you are going where you intended. If everything looks OK and you still see this error page, please consider contacting the webmaster.",
     "error.authentication": "Your credentials are invalid.",
     "error.authentication.email": "Your email address is not confirmed. <a href=\"%url%\">Resend the confirmation mail.</a>",
+    "error.authentication.inactive": "Your profile is not activated.",
     "error.honeypot": "Your submission is suspected of being spam. Please reload the page and try again.",
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
     "error.unauthorized": "You are not authorized to view this page. Please login using the form below.",
