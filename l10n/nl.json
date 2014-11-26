@@ -26,6 +26,7 @@
     "error.404.message": "Gelieve het adres na te kijken. Als alles OK is en het probleem blijft zich voordoen, contacteer dan onze webmaster.",
     "error.authentication": "Je gebruikersgegevens zijn ongeldig.",
     "error.authentication.email": "Je e-mailadres werd nog niet bevestigd. <a href=\"%url%\">Verstuur de bevestigingsmail</a>.",
+    "error.authentication.inactive": "Je profiel is niet geactiveerd.",
     "error.honeypot": "Je ingave wordt als spam verdacht. Gelieve de pagina opnieuw te laden alvorens opnieuw te proberen.",
     "error.security.model.not.set": "Could not perform the requested security action. There is no security model installed",
     "error.unauthorized": "Je hebt geen toelating om deze pagina te bezichtingen. Gelieve in te loggen via het onderstaande formulier.",

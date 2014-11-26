@@ -6,6 +6,7 @@ use ride\library\http\Header;
 use ride\library\http\Response;
 use ride\library\security\exception\AuthenticationException;
 use ride\library\security\exception\EmailAuthenticationException;
+use ride\library\security\exception\InactiveAuthenticationException;
 use ride\library\security\exception\SecurityModelNotSetException;
 use ride\library\security\SecurityManager;
 use ride\library\validation\exception\ValidationException;
@@ -71,14 +72,18 @@ class AuthenticationController extends AbstractController {
                 $this->response->setRedirect($this->getSessionReferer(self::SESSION_REFERER_REQUEST));
 
                 return;
+            } catch (InactiveAuthenticationException $exception) {
+                $this->response->setStatusCode(Response::STATUS_CODE_UNPROCESSABLE_ENTITY);
+
+                $this->addError('error.authentication.inactive');
             } catch (EmailAuthenticationException $exception) {
+                $this->response->setStatusCode(Response::STATUS_CODE_UNPROCESSABLE_ENTITY);
+                
                 $username = $this->request->getBodyParameter('username');
 
                 $url = $this->getUrl('profile.email') . '?username=' . urlencode($username) . '&referer=' . urlencode($this->request->getUrl());
 
                 $this->addError('error.authentication.email', array('url' => $url));
-
-                $this->response->setStatusCode(Response::STATUS_CODE_UNPROCESSABLE_ENTITY);
             } catch (AuthenticationException $exception) {
                 $this->response->setStatusCode(Response::STATUS_CODE_UNPROCESSABLE_ENTITY);
 

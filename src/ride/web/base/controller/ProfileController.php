@@ -109,7 +109,12 @@ class ProfileController extends AbstractController {
 
         $referer = $this->request->getQueryParameter('referer');
         if (!$referer) {
-            $url = $this->getUrl('profile');
+            $user = $this->getUser();
+            if ($user) {
+                $url = $this->getUrl('profile');
+            } else {
+                $url = $this->getUrl('login');
+            }
         }
 
         $this->response->setRedirect($url);
