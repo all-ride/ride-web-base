@@ -29,7 +29,7 @@ class PasswordResetService extends AbstractSecurityService {
 
         $user = $this->securityManager->getSecurityModel()->getUserByEmail($email);
         if (!$user) {
-            $user = $this->securityManager->getSecurityModel()->getUserByUsername($username);
+            $user = $this->securityManager->getSecurityModel()->getUserByUsername($email);
             if (!$user) {
                 $error = new ValidationError('error.user.found.email', 'Could not find the profile for email address %email%', array('email' => $email));
             }
