@@ -276,6 +276,16 @@ abstract class AbstractController extends WebAbstractController {
     }
 
     /**
+     * Gets the name of the current theme
+     * @return string
+     */
+    public function getTheme() {
+        $templateFacade = $this->dependencyInjector->get('ride\\library\\template\\TemplateFacade');
+
+        return $templateFacade->getDefaultTheme();
+    }
+
+    /**
      * Sets a template view to the response
      * @param string $resource Resource to the template
      * @param array $variables Variables for the template
