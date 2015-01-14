@@ -194,6 +194,14 @@ abstract class AbstractController extends WebAbstractController {
     }
 
     /**
+     * Gets the log
+     * @return \ride\library\log\Log
+     */
+    protected function getLog() {
+        return $this->dependencyInjector->get('ride\\library\\log\\Log');
+    }
+
+    /**
      * Gets the security manager
      * @return \ride\library\security\SecurityManager
      */
