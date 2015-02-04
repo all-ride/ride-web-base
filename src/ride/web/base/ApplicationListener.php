@@ -204,6 +204,7 @@ class ApplicationListener {
         }
 
         if ($request) {
+            $app['request'] = $request;
             $app['url'] = array(
                 'base' => $request->getBaseUrl(),
                 'request' => $request->getUrl(),
