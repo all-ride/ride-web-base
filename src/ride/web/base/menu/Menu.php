@@ -43,6 +43,12 @@ class Menu {
     private $translationParameters;
 
     /**
+     * Weight to order inside a menu
+     * @var integer
+     */
+    private $weight;
+
+    /**
      * Array with the sub menu items
      * @var array
      */
@@ -57,6 +63,7 @@ class Menu {
         $this->label = null;
         $this->translationKey = null;
         $this->translationParameters = null;
+        $this->weight = 0;
         $this->items = array();
     }
 
@@ -135,6 +142,24 @@ class Menu {
      */
     public function getTranslationParameters() {
         return $this->translationParameters;
+    }
+
+    /**
+     * Sets the weight of this menu item
+     * @param integer $weight Value to compare with other menu items when
+     * ordering, weight has more priority then label
+     * @return null
+     */
+    public function setWeight($weight) {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Gets the weight of this menu item
+     * @return integer
+     */
+    public function getWeight() {
+        return $this->weight;
     }
 
     /**
@@ -410,12 +435,20 @@ class Menu {
      * otherwise
      */
     public static function compareItems($a, $b) {
+        $aw = strtolower($a->getWeight());
+        $bw = strtolower($b->getWeight());
+
+        if ($aw !== $bw) {
+            return ($aw > $bw) ? +1 : -1;
+        }
+
         $al = strtolower($a->getLabel());
         $bl = strtolower($b->getLabel());
 
         if ($al == $bl) {
             return 0;
         }
+
         return ($al > $bl) ? +1 : -1;
     }
 
