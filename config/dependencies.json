@@ -459,7 +459,119 @@
         },
         {
             "class": "ride\\web\\base\\menu\\Menu",
-            "id": "applications"
+            "id": "content",
+            "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "content.menu"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.content"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": -100
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "tools",
+            "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "tools.menu"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.tools"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": 100
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
+            "id": "applications",
+            "calls": [
+                {
+                    "method": "addMenu",
+                    "arguments": [
+                        {
+                            "name": "menu",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\Menu",
+                                "id": "content"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenu",
+                    "arguments": [
+                        {
+                            "name": "menu",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\Menu",
+                                "id": "tools"
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "interfaces": "ride\\web\\base\\service\\security\\mail\\MailRenderer",

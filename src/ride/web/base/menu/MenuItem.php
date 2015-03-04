@@ -49,6 +49,12 @@ class MenuItem {
     private $routeParameters;
 
     /**
+     * Weight to order inside a menu
+     * @var integer
+     */
+    private $weight;
+
+    /**
      * Construct a new menu item
      * @return null
      */
@@ -60,6 +66,7 @@ class MenuItem {
         $this->url = null;
         $this->routeId = null;
         $this->routeParameters = null;
+        $this->weight = 0;
     }
 
     /**
@@ -181,6 +188,24 @@ class MenuItem {
      */
     public function getRouteParameters() {
         return $this->routeParameters;
+    }
+
+    /**
+     * Sets the weight of this menu item
+     * @param integer $weight Value to compare with other menu items when
+     * ordering, weight has more priority then label
+     * @return null
+     */
+    public function setWeight($weight) {
+        $this->weight = $weight;
+    }
+
+    /**
+     * Gets the weight of this menu item
+     * @return integer
+     */
+    public function getWeight() {
+        return $this->weight;
     }
 
 }

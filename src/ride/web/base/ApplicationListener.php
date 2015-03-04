@@ -6,6 +6,7 @@ use ride\application\system\System;
 
 use ride\library\dependency\DependencyInjector;
 use ride\library\event\Event;
+use ride\library\http\Request;
 use ride\library\http\Response;
 use ride\library\i18n\translator\Translator;
 use ride\library\i18n\I18n;
@@ -220,10 +221,7 @@ class ApplicationListener {
                     $taskbar->setTitle($system->getName());
                 }
 
-                $translator = $i18n->getTranslator();
-                $baseUrl = $request->getBaseScript();
-
-                $app['taskbar'] = $this->handleTaskbar($taskbar, $dependencyInjector, $translator, $baseUrl, $securityManager);
+                $app['taskbar'] = $this->handleTaskbar($taskbar, $dependencyInjector, $i18n, $request, $securityManager);
             }
         }
 
@@ -235,14 +233,14 @@ class ApplicationListener {
      * @param \ride\web\base\menu\Taskbar $taskbar
      * @param \ride\library\dependency\DependencyInjector $dependencyInjector
      * Instance of the dependency injector
-     * @param \ride\library\i18n\translator\Translator $translator Instance of
-     * the translator in the current locale
-     * @param string $baseUrl Base script of the request
+     * @param \ride\library\i18n\I18n $i18n Instance of I18n
+     * @param \ride\library\http\Request $request Instance of the request
      * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
      * @return null
      */
-    protected function handleTaskbar(Taskbar $taskbar, DependencyInjector $dependencyInjector, Translator $translator, $baseUrl, SecurityManager $securityManager) {
+    protected function handleTaskbar(Taskbar $taskbar, DependencyInjector $dependencyInjector, I18n $i18n, Request $request, SecurityManager $securityManager) {
+        // build default menus
         $applicationsMenu = $taskbar->getApplicationsMenu();
         if (!$applicationsMenu->hasItems()) {
             $applicationsMenu = $dependencyInjector->get('ride\\web\\base\\menu\\Menu', 'applications');
@@ -270,15 +268,48 @@ class ApplicationListener {
             $taskbar->setSettingsMenu($settingsMenu);
         }
 
-        $eventManager = $dependencyInjector->get('ride\\library\\event\\EventManager');
-        $eventManager->triggerEvent(self::EVENT_TASKBAR_PRE, array('taskbar' => $taskbar));
+        // prepare needed variables
+        $translator = $i18n->getTranslator();
+        $baseUrl = $request->getBaseScript();
+        $route = $request->getRoute();
 
+        $locale = null;
+        if ($route) {
+            $locale = $route->getArgument('locale');
+        }
+        if (!$locale) {
+            $locale = $i18n->getLocale()->getCode();
+        }
+
+        $eventArguments = array(
+            'taskbar' => $taskbar,
+            'locale' => $locale,
+        );
+
+        // pre hook
+        $eventManager = $dependencyInjector->get('ride\\library\\event\\EventManager');
+        $eventManager->triggerEvent(self::EVENT_TASKBAR_PRE, $eventArguments);
+
+        // process menus
         $router = $dependencyInjector->get('ride\\library\\router\\Router');
         $routeContainer = $router->getRouteContainer();
 
+        // process application menu
         $applicationsMenu = $taskbar->getApplicationsMenu();
         $applicationsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
+        $applicationsMenu->orderItems(false);
 
+        $contentMenu = $applicationsMenu->getItem('content.menu');
+        if ($contentMenu) {
+            $contentMenu->orderItems();
+        }
+
+        $toolsMenu = $applicationsMenu->getItem('tools.menu');
+        if ($toolsMenu) {
+            $toolsMenu->orderItems();
+        }
+
+        // process settings menu
         $settingsMenu = $taskbar->getSettingsMenu();
         $settingsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
 
@@ -287,7 +318,8 @@ class ApplicationListener {
             $systemMenu->orderItems();
         }
 
-        $eventManager->triggerEvent(self::EVENT_TASKBAR_POST, array('taskbar' => $taskbar));
+        // post hook
+        $eventManager->triggerEvent(self::EVENT_TASKBAR_POST, $eventArguments);
 
         return $taskbar;
     }
