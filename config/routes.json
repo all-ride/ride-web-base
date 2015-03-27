@@ -36,6 +36,20 @@
             "methods": ["GET", "HEAD", "POST"]
         },
         {
+            "path": "/admin/system/log",
+            "controller": "ride\\web\\base\\controller\\LogController",
+            "action": "indexAction",
+            "id": "system.log",
+            "methods": ["GET", "HEAD"]
+        },
+        {
+            "path": "/admin/system/log/%id%",
+            "controller": "ride\\web\\base\\controller\\LogController",
+            "action": "detailAction",
+            "id": "system.log.detail",
+            "methods": ["GET", "HEAD"]
+        },
+        {
             "path": "/admin/system/preferences",
             "controller": "ride\\web\\base\\controller\\PreferenceController",
             "action": "indexAction",

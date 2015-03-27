@@ -242,6 +242,36 @@
         },
         {
             "class": "ride\\web\\base\\menu\\MenuItem",
+            "id": "system.log",
+            "calls": [
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.log"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.log"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\MenuItem",
             "id": "system.preferences",
             "calls": [
                 {
@@ -367,6 +397,19 @@
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\MenuItem",
                                 "id": "system.details"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenuItem",
+                    "arguments": [
+                        {
+                            "name": "menuItem",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\MenuItem",
+                                "id": "system.log"
                             }
                         }
                     ]
