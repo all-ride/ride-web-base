@@ -66,7 +66,7 @@ class SecurityController extends AbstractController {
         $detailAction = $this->getUrl('system.security.user.edit', array('id' => '%id%'));
         $detailAction .= '?referer=' . urlencode($this->request->getUrl());
 
-        $detailDecorator = new DataDecorator($reflectionHelper, $detailAction, $imageUrlGenerator);
+        $detailDecorator = new DataDecorator($reflectionHelper, $detailAction, $imageUrlGenerator, $this->getTheme() . '/img/data.png');
         $detailDecorator->mapProperty('title', 'displayName');
         $detailDecorator->mapProperty('teaser', 'userName');
         $detailDecorator->mapProperty('image', 'image');
