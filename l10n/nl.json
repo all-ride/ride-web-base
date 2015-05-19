@@ -78,6 +78,8 @@
     "label.environment": "Omgeving",
     "label.id": "Id",
     "label.image": "Afbeelding",
+    "label.image.library": "Afbeeldingsbibliotheek",
+    "label.image.library.description": "Bibliotheek die gebruikt wordt om de afbeeldingen te verwerken. GD zou overal beschikbaar moeten zijn, Imagick daarentegen heeft betere qualiteit.",
     "label.image.profile.description": "Een afbeelding dat je representeerd",
     "label.key": "Sleutel",
     "label.locked": "Beveiligd",
