@@ -339,13 +339,16 @@ class ApplicationListener {
         $route = $routeContainer->getRouteById('login');
 
         $request = $web->getRequest();
-        $request->setRoute($route);
+        $loginRequest = clone $request;
+        $loginRequest->setRoute($route);
 
         $response->setView(null);
         $response->clearRedirect();
 
         $dispatcher = $web->getDispatcher();
-        $dispatcher->dispatch($request, $response);
+        $dispatcher->dispatch($loginRequest, $response);
+
+        $web->setRequest($request);
     }
 
 }
