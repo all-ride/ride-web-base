@@ -7,6 +7,7 @@ use ride\library\form\exception\FormException;
 use ride\library\form\row\factory\GenericRowFactory;
 use ride\library\form\Form;
 use ride\library\html\table\FormTable;
+use ride\library\http\Header;
 use ride\library\http\Response;
 use ride\library\mvc\message\Message;
 use ride\library\validation\exception\ValidationException;
@@ -18,6 +19,25 @@ use ride\web\mvc\controller\AbstractController as WebAbstractController;
  * Abstract implementation of a controller with base application support
  */
 abstract class AbstractController extends WebAbstractController {
+
+    /**
+     * Gets the referer of the current request
+     * @param string $default Default referer to return when there is no
+     * referer set
+     * @return string URL to the last page displayed
+     */
+    protected function getReferer($default = null) {
+        $referer = $this->request->getQueryParameter('referer');
+        if (!$referer) {
+            $referer = $this->request->getHeader(Header::HEADER_REFERER);
+        }
+
+        if (!$referer) {
+            return $default;
+        }
+
+        return $referer;
+    }
 
     /**
      * Gets the i18n facade

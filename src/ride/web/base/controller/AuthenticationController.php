@@ -2,7 +2,6 @@
 
 namespace ride\web\base\controller;
 
-use ride\library\http\Header;
 use ride\library\http\Response;
 use ride\library\security\exception\AuthenticationException;
 use ride\library\security\exception\EmailAuthenticationException;
@@ -18,18 +17,6 @@ use ride\library\validation\ValidationError;
 class AuthenticationController extends AbstractController {
 
     /**
-     * Session key for the referer when cancelling the login action
-     * @var string
-     */
-    const SESSION_REFERER_CANCEL = 'authentication.referer.cancel';
-
-    /**
-     * Session key for the referer when submitting the login action
-     * @var string
-     */
-    const SESSION_REFERER_REQUEST = 'authentication.referer.request';
-
-    /**
      * Action to login a user with username and password authentication
      * @param \ride\library\security\SecurityManager $securityManager Instance
      * of the security manager
@@ -39,6 +26,7 @@ class AuthenticationController extends AbstractController {
         $translator = $this->getTranslator();
 
         $form = $this->createFormBuilder();
+        $form->setAction('login');
         $form->setId('form-login');
         $form->addRow('username', 'string', array(
             'label' => $translator->translate('label.username'),
@@ -58,7 +46,12 @@ class AuthenticationController extends AbstractController {
                 'required' => array(),
             )
         ));
-        $form->setRequest($this->request);
+
+        if ($this->response->isForbidden()) {
+            $referer = $this->request->getUrl();
+        } else {
+            $referer = $this->getReferer($this->request->getBaseUrl());
+        }
 
         $form = $form->build();
         if ($form->isSubmitted()) {
@@ -69,7 +62,7 @@ class AuthenticationController extends AbstractController {
 
                 $securityManager->login($data['username'], $data['password']);
 
-                $this->response->setRedirect($this->getSessionReferer(self::SESSION_REFERER_REQUEST));
+                $this->response->setRedirect($referer);
 
                 return;
             } catch (InactiveAuthenticationException $exception) {
@@ -78,7 +71,7 @@ class AuthenticationController extends AbstractController {
                 $this->addError('error.authentication.inactive');
             } catch (EmailAuthenticationException $exception) {
                 $this->response->setStatusCode(Response::STATUS_CODE_UNPROCESSABLE_ENTITY);
-                
+
                 $username = $this->request->getBodyParameter('username');
 
                 $url = $this->getUrl('profile.email') . '?username=' . urlencode($username) . '&referer=' . urlencode($this->request->getUrl());
@@ -102,18 +95,16 @@ class AuthenticationController extends AbstractController {
 
                 $this->addError('error.validation');
             }
-        } else {
-            $this->setReferers();
         }
 
         $urls = $this->config->get('system.login.url', array());
         foreach ($urls as $index => $id) {
-            $urls[$index] = $this->getUrl($id);
+            $urls[$index] = $this->getUrl($id) . '?logout=true&referer=' . urlencode($referer);
         }
 
         $this->setTemplateView('base/login', array(
             'form' => $form->getView(),
-            'referer' => $this->getSessionReferer(self::SESSION_REFERER_CANCEL),
+            'referer' => $referer,
             'urls' => $urls,
         ));
     }
@@ -128,86 +119,6 @@ class AuthenticationController extends AbstractController {
         $securityManager->logout();
 
         $this->response->setRedirect($this->request->getBaseUrl());
-    }
-
-    /**
-     * Sets the referer to redirect to when performing a login action
-     * @return null
-     */
-    private function setReferers() {
-        $loginUrl = $this->getUrl('login');
-
-        $cancelUrl = $this->getRequestReferer();
-        if ($cancelUrl == $loginUrl) {
-            $cancelUrl = $this->request->getBaseUrl();
-        }
-
-        $requestUrl = $this->request->getUrl();
-        if ($requestUrl == $loginUrl) {
-            if ($cancelUrl) {
-                $requestUrl = $cancelUrl;
-            } else {
-                $requestUrl = null;
-            }
-        }
-
-        $session = $this->request->getSession();
-        $session->set(self::SESSION_REFERER_CANCEL, $cancelUrl);
-        $session->set(self::SESSION_REFERER_REQUEST, $requestUrl);
-    }
-
-    /**
-     * Gets the referer of the current request
-     * @param string $default Default referer to return when there is no
-     * referer set
-     * @return string URL to the last page displayed
-     */
-    private function getRequestReferer($default = null) {
-        $referer = $this->request->getQueryParameter('referer');
-        if (!$referer) {
-            $referer = $this->request->getHeader(Header::HEADER_REFERER);
-        }
-
-        if ($referer) {
-            return $referer;
-        }
-
-        return $default;
-    }
-
-    /**
-     * Gets the referer to redirect to, when not set the base URL will be
-     * returned
-     * @return string URL to redirect to
-     */
-    private function getSessionReferer($name) {
-        $referer = null;
-
-        if ($this->request->hasSession()) {
-            $session = $this->request->getSession();
-
-            $referer = $session->get($name);
-        }
-
-        if (!$referer) {
-            $referer = $this->request->getBaseUrl();
-        }
-
-        return $referer;
-    }
-
-    /**
-     * Clears the referers from the session
-     * @return null
-     */
-    private function clearReferers() {
-        if (!$this->request->hasSession()) {
-            return;
-        }
-
-        $session = $this->request->getSession();
-        $session->set(self::SESSION_REFERER_CANCEL, null);
-        $session->set(self::SESSION_REFERER_REQUEST, null);
     }
 
 }
