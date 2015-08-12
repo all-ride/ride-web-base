@@ -16,6 +16,7 @@ use ride\library\router\RouteContainer;
 use ride\library\router\Router;
 use ride\library\security\exception\AuthenticationException;
 use ride\library\security\exception\UnauthorizedException;
+use ride\library\security\model\User;
 use ride\library\security\SecurityManager;
 use ride\library\template\TemplateFacade;
 
@@ -50,14 +51,14 @@ class ApplicationListener {
      * @param \ride\library\event\Event $event
      * @return null
      */
-    public function handleException(Event $event, I18n $i18n) {
+    public function handleException(Event $event, I18n $i18n, SecurityManager $securityManager) {
         $exception = $event->getArgument('exception');
         $web = $event->getArgument('web');
         $response = $web->getResponse();
 
         if ($exception instanceof UnauthorizedException) {
             if ($response) {
-                $this->showAuthenticationForm($web, $i18n->getTranslator());
+                $this->showAuthenticationForm($web, $i18n->getTranslator(), $securityManager->getUser());
             }
 
             return;
@@ -329,11 +330,13 @@ class ApplicationListener {
      * authentication form
      * @return null
      */
-    protected function showAuthenticationForm(WebApplication $web, Translator $translator) {
-        $message = $translator->translate('error.unauthorized');
-
+    protected function showAuthenticationForm(WebApplication $web, Translator $translator, User $user = null) {
         $response = $web->getResponse();
-        $response->addMessage(new Message($message, Message::TYPE_ERROR));
+        if ($user) {
+            $message = $translator->translate('error.unauthorized');
+
+            $response->addMessage(new Message($message, Message::TYPE_ERROR));
+        }
 
         $routeContainer = $web->getRouter()->getRouteContainer();
         $route = $routeContainer->getRouteById('login');
