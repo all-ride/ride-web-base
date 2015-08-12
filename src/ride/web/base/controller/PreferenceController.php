@@ -7,6 +7,8 @@ use ride\library\http\Response;
 use ride\library\template\theme\ThemeModel;
 use ride\library\validation\exception\ValidationException;
 
+use \Exception;
+
 /**
  * Controller to manage the configuration parameters
  */
