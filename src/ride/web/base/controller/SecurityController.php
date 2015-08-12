@@ -172,7 +172,7 @@ class SecurityController extends AbstractController {
         $roleOptions = array();
 
         foreach ($roles as $role) {
-            if ($role->getWeight() > $userWeight) {
+            if ($userWeight != -1 && $role->getWeight() > $userWeight) {
                 continue;
             }
 
