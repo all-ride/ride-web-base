@@ -21,6 +21,12 @@ use ride\web\mvc\controller\AbstractController as WebAbstractController;
 abstract class AbstractController extends WebAbstractController {
 
     /**
+     * Session variable for the locale of the content
+     * @var string
+     */
+    const SESSION_LOCALE_CONTENT = 'locale.content';
+
+    /**
      * Gets the referer of the current request
      * @param string $default Default referer to return when there is no
      * referer set
@@ -61,6 +67,28 @@ abstract class AbstractController extends WebAbstractController {
      */
     protected function getTranslator($locale = null) {
         return $this->getI18n()->getTranslator($locale);
+    }
+
+    /**
+     * Gets the last used content locale from the session
+     * @return string
+     */
+    public function getContentLocale() {
+        $session = $this->request->getSession();
+        $locale = $session->get(self::SESSION_LOCALE_CONTENT);
+        if ($locale) {
+            return $locale;
+        }
+
+        return $this->getLocale();
+    }
+
+    /**
+     * Stores the content locale in the session for later use
+     * @return null
+     */
+    public function setContentLocale($locale) {
+        $this->request->getSession()->set(self::SESSION_LOCALE_CONTENT, $locale);
     }
 
     /**

@@ -18,7 +18,9 @@ class TranslationController extends AbstractController {
      */
     public function indexAction(I18n $i18n, $locale = null, $key = null) {
         if (!$locale) {
-            $this->response->setRedirect($this->getUrl('system.translations.locale', array('locale' => $this->getLocale())));
+            $locale = $this->getContentLocale();
+
+            $this->response->setRedirect($this->getUrl('system.translations.locale', array('locale' => $locale)));
 
             return;
         } elseif (!$i18n->hasLocale($locale)) {
@@ -26,6 +28,8 @@ class TranslationController extends AbstractController {
 
             return;
         }
+
+        $this->setContentLocale($locale);
 
         $referer = $this->request->getQueryParameter('referer');
         $dataTranslator = $this->getTranslator($locale);
