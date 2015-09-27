@@ -29,6 +29,13 @@
             "methods": ["GET", "HEAD", "POST"]
         },
         {
+            "path": "/admin/system/cache/warm",
+            "controller": "ride\\web\\base\\controller\\CacheController",
+            "action": "warmAction",
+            "id": "system.cache.warm",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
             "path": "/admin/system/dependencies",
             "controller": "ride\\web\\base\\controller\\DependencyController",
             "action": "indexAction",

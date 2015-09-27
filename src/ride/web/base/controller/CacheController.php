@@ -18,7 +18,7 @@ class CacheController extends AbstractController {
      * @return boolean
      */
     public function preAction() {
-        $this->controls = $this->dependencyInjector->getAll('ride\\application\\cache\\control\\CacheControl');
+        $this->controls = $this->dependencyInjector->getAll('ride\\library\\cache\\control\\CacheControl');
 
         return true;
     }
@@ -45,7 +45,7 @@ class CacheController extends AbstractController {
 
             $this->addSuccess('success.cache.enabled');
 
-            $this->response->setRedirect($this->request->getUrl());
+            $this->response->setRedirect($this->getUrl('system.cache.warm') . '?referer=' . urlencode($this->request->getUrl()));
 
             return;
         }
@@ -81,7 +81,7 @@ class CacheController extends AbstractController {
 
             $this->addSuccess('success.cache.cleared');
 
-            $this->response->setRedirect($this->getUrl('system.cache'));
+            $this->response->setRedirect($this->getUrl('system.cache.warm'));
 
             return;
         }
@@ -91,6 +91,18 @@ class CacheController extends AbstractController {
             'controls' => $this->controls,
             'action' => 'clear',
         ));
+    }
+
+    /**
+     * Action to warm up the caches
+     * @return null
+     */
+    public function warmAction() {
+        foreach ($this->controls as $control) {
+            $control->warm();
+        }
+
+        $this->response->setRedirect($this->getUrl('system.cache'));
     }
 
     /**
