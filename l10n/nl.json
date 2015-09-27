@@ -20,6 +20,7 @@
     "cache.control.image": "Image cache",
     "cache.control.orm": "ORM cache",
     "cache.control.parameters": "Parameter cache",
+    "cache.control.pool": "Toepassingscache",
     "cache.control.router": "Route cache",
     "cache.control.security": "Security model cache",
     "cache.control.translations": "Translation cache",
