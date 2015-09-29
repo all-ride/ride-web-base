@@ -99,6 +99,27 @@
             "methods": ["GET", "HEAD", "POST"]
         },
         {
+            "path": "/admin/system/security/permissions",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "permissionsAction",
+            "id": "system.security.permission",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/permissions/add",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "permissionFormAction",
+            "id": "system.security.permission.add",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/admin/system/security/permissions/%id%/edit",
+            "controller": "ride\\web\\base\\controller\\SecurityController",
+            "action": "permissionFormAction",
+            "id": "system.security.permission.edit",
+            "methods": ["GET", "HEAD", "POST"]
+        },
+        {
             "path": "/admin/system/security/roles",
             "controller": "ride\\web\\base\\controller\\SecurityController",
             "action": "rolesAction",

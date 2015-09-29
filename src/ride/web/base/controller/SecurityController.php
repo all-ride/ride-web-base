@@ -17,6 +17,7 @@ use ride\library\validation\exception\ValidationException;
 use ride\library\validation\ValidationError;
 
 use ride\web\base\table\decorator\UserLockDecorator;
+use ride\web\base\table\PermissionTable;
 use ride\web\base\table\RoleTable;
 use ride\web\base\table\UserTable;
 
@@ -481,6 +482,139 @@ class SecurityController extends AbstractController {
     }
 
     /**
+     * Action to get an overview of the permissions
+     * @return null
+     */
+    public function permissionsAction(ReflectionHelper $reflectionHelper) {
+        $translator = $this->getTranslator();
+
+        // $detailAction = $this->getUrl('system.security.permission.edit', array('id' => '%id%'));
+        // $detailAction .= '?referer=' . urlencode($this->request->getUrl());
+
+        $detailDecorator = new DataDecorator($reflectionHelper); //, $detailAction);
+        $detailDecorator->mapProperty('id', 'code');
+
+        $table = new PermissionTable($this->securityModel->getPermissions(), $reflectionHelper);
+        $table->addDecorator($detailDecorator);
+        $table->setPaginationOptions(array(5, 10, 25, 50, 100, 250, 500));
+        $table->addAction(
+            $translator->translate('button.delete'),
+            array($this, 'deletePermissions'),
+            $translator->translate('label.table.confirm.delete')
+        );
+
+        $baseUrl = $this->getUrl('system.security.permission');
+        $rowsPerPage = 10;
+
+        $form = $this->processTable($table, $baseUrl, $rowsPerPage);
+        if ($this->response->willRedirect() || $this->response->getView()) {
+            return;
+        }
+
+        $this->setTemplateView('base/permissions', array(
+            'form' => $form->getView(),
+            'table' => $table,
+        ));
+    }
+
+    /**
+     * Action to delete the data from the model
+     * @param array $data Array of primary keys
+     * @return null
+     */
+    public function deletePermissions($data) {
+        if (!$data) {
+            return;
+        }
+
+        $referer = $this->request->getHeader(Header::HEADER_REFERER);
+        if (!$referer) {
+            $referer = $this->request->getUrl();
+        }
+
+        $this->response->setRedirect($referer);
+
+        foreach ($data as $code) {
+            if (!$this->securityModel->hasPermission($code)) {
+                continue;
+            }
+
+            $this->securityModel->deletePermission($code);
+
+            $this->addSuccess('success.data.deleted', array('data' => $code));
+        }
+    }
+
+    /**
+     * Action to add or edit a role
+     * @param string $id If of the role to edit
+     * @return null
+          */
+    public function permissionFormAction($id = null) {
+        if ($id) {
+            $permissions = $this->securityModel->getPermissions();
+            if (!isset($permissions[$id])) {
+                $this->response->setStatusCode(Response::STATUS_CODE_NOT_FOUND);
+
+                return;
+            }
+
+            $data = array(
+                'code' => $id,
+            );
+        } else {
+            $data = array();
+        }
+
+        $referer = $this->request->getQueryParameter('referer');
+        $translator = $this->getTranslator();
+
+        $form = $this->createFormBuilder($data);
+        $form->setId('form-permission');
+        $form->addRow('code', 'string', array(
+            'label' => $translator->translate('label.code'),
+            'filters' => array(
+                'trim' => array(),
+                'replace' => array(
+                    'search' => ' ',
+                    'replace' => '',
+                ),
+            ),
+            'validators' => array(
+                'required' => array(),
+            ),
+        ));
+        $form = $form->build();
+
+        if ($form->isSubmitted()) {
+            try {
+                $form->validate();
+
+                $data = $form->getData();
+
+                $this->securityModel->addPermission($data['code']);
+
+                $this->addSuccess('success.data.saved', array('data' => $data['code']));
+
+                if (!$referer) {
+                    $referer = $this->getUrl('system.security.permission');
+                }
+                $this->response->setRedirect($referer);
+
+                return;
+            } catch (ValidationException $exception) {
+                $this->setValidationException($exception, $form);
+            }
+        }
+
+        $this->setTemplateView('base/permission.form', array(
+            'form' => $form->getView(),
+            'permission' => $id,
+            'referer' => $referer,
+        ));
+    }
+
+    /**
      * Action to manage the secured paths
      * @return null
      */
@@ -488,6 +622,7 @@ class SecurityController extends AbstractController {
         $translator = $this->getTranslator();
 
         $roles = $this->securityModel->getRoles();
+        $permissions = $this->securityModel->getPermissions();
         $securedPaths = $this->securityModel->getSecuredPaths();
 
         $data = array(
@@ -497,9 +632,26 @@ class SecurityController extends AbstractController {
 
         foreach ($roles as $role) {
             $data['allowed-paths'][$role->getId()] = $this->getPathsString($role->getPaths());
+
+            $rolePermissions = $role->getPermissions();
+            foreach ($rolePermissions as $index => $permission) {
+                unset($rolePermissions[$index]);
+                $rolePermissions[$permission->getCode()] = $permission;
+            }
+
+            $data['role_' . $role->getId()] = $rolePermissions;
         }
 
         $form = $this->createFormBuilder($data);
+        if ($permissions) {
+            foreach ($roles as $role) {
+                $form->addRow('role_' . $role->getId(), 'option', array(
+                    'label' => $role->getName(),
+                    'multiple' => true,
+                    'options' => $permissions,
+                ));
+            }
+        }
         if ($data['allowed-paths']) {
             $form->addRow('allowed-paths', 'text', array(
                 'label' => $translator->translate('label.paths.allowed'),
@@ -530,7 +682,6 @@ class SecurityController extends AbstractController {
             ),
         ));
 
-
         $form = $form->build();
         if ($form->isSubmitted()) {
             try {
@@ -540,13 +691,23 @@ class SecurityController extends AbstractController {
 
                 foreach ($roles as $role) {
                     $roleId = $role->getId();
+
                     if (isset($data['allowed-paths'][$roleId])) {
                         $paths = explode("\n", str_replace("\r", "", $data['allowed-paths'][$roleId]));
                     } else {
                         $paths = array();
                     }
-
                     $this->securityModel->setAllowedPathsToRole($role, $paths);
+
+                    if ($permissions) {
+                        if (isset($data['role_' . $roleId])) {
+                            $permissions = array_keys($data['role_' . $roleId]);
+                        } else {
+                            $permissions = array();
+                        }
+
+                        $this->securityModel->setGrantedPermissionsToRole($role, $permissions);
+                    }
                 }
 
                 if ($data['secured-paths']) {
@@ -570,6 +731,7 @@ class SecurityController extends AbstractController {
         $this->setTemplateView('base/security', array(
             'form' => $form->getView(),
             'roles' => $roles,
+            'permissions' => $permissions,
         ));
     }
 
