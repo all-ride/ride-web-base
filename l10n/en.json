@@ -98,7 +98,7 @@
     "label.password.confirm": "Confirm Password",
     "label.password.confirm.description": "Repeat your new password to make sure you didn't make any typos",
     "label.path": "Path",
-    "label.path.security.description": "Each path expression should be on a different line. * can be used to match a path token, ** to match multiple tokens.",
+    "label.path.security.description": "Each path expression should be on a different line. * can be used to match a path token, ** to match multiple tokens. Optional request methods can be defined between square brackets as a comma separated list.<br />eg. <code>/admin</code> or <code>/admin/system** [GET,POST]</code>",
     "label.paths": "Paths",
     "label.paths.allowed": "Allowed Paths",
     "label.paths.allowed.description": "Override the secured paths on a role level. Click on the name of the role to modify the allowed paths thereof.",
