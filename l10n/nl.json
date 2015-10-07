@@ -99,7 +99,7 @@
     "label.password.confirm": "Bevestig wachtwoord",
     "label.password.confirm.description": "Repeat your new password to make sure you didn't make any typos",
     "label.path": "Pad",
-    "label.path.security.description": "Elke pad definitie moet op een aparte lijn. * kan gebruikt worden om één pad token te matchen, ** om meerdere tokens te matchen.",
+    "label.path.security.description": "Elke pad definitie moet op een aparte lijn. * kan gebruikt worden om één pad token te matchen, ** om meerdere tokens te matchen. Je kan optioneel een komma gescheiden lijst van request methodes tussen vierkante haakjes definiëren.<br />vb. <code>/admin</code> of <code>/admin/system** [GET,POST]</code>",
     "label.paths": "Paden",
     "label.paths.allowed": "Toegestane paden",
     "label.paths.allowed.description": "De volgende paden zijn toegestaan indien de gebruiker tot de betrokken rol behoort. Klik op de rolnaam om de paden ervan te bewerken.",

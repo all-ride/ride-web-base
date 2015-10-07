@@ -378,7 +378,7 @@ class Menu {
             }
 
             $path = str_replace($baseUrl, '', $url);
-            if (!$securityManager->isPathAllowed($path)) {
+            if (!$securityManager->isPathAllowed($path, 'GET')) {
                 $this->removeItem($item);
             }
         }
