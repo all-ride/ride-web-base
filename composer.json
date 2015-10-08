@@ -2,7 +2,7 @@
     "name": "ride/web-base",
     "description": "Base web application of the Ride framework",
     "license": "MIT",
-    "version": "0.12.0",
+    "version": "0.13.0",
     "authors": [
         {
             "name": "Joris Vandeweerd",
@@ -21,7 +21,7 @@
         "ride/lib-form": ">=0.10.0",
         "ride/lib-mvc": ">=0.2.0",
         "ride/lib-router": ">=0.1.0",
-        "ride/lib-security": ">=0.8.0",
+        "ride/lib-security": ">=0.9.0",
         "ride/lib-validation": ">=0.4.0",
         "ride/web": ">=0.8.0",
         "ride/web-form": ">=0.4.0",

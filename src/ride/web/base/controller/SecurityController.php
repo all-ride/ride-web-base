@@ -754,8 +754,6 @@ class SecurityController extends AbstractController {
      * @return string
      */
     protected function getPathsString(array $paths) {
-        sort($paths);
-
         $string = '';
         foreach ($paths as $path) {
             if (empty($path)) {
