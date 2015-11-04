@@ -139,6 +139,7 @@ class SecurityController extends AbstractController {
      */
     public function userFormAction(FileBrowser $fileBrowser, $id = null) {
         $userWeight = $this->getUserWeight();
+        $isSuperUserAllowed = $this->isSuperUserAllowed();
 
         if ($id) {
             $user = $this->securityModel->getUserById($id);
@@ -158,6 +159,7 @@ class SecurityController extends AbstractController {
                 'roles' => $user->getRoles(),
                 'email-confirmed' => $user->isEmailConfirmed(),
                 'active' => $user->isActive(),
+                'superuser' => $user->isSuperUser(),
             );
 
             $passwordValidators = array();
@@ -223,6 +225,12 @@ class SecurityController extends AbstractController {
             'label' => $translator->translate('label.active'),
             'description' => $translator->translate('label.active.user.description'),
         ));
+        if ($isSuperUserAllowed) {
+            $form->addRow('superuser', 'option', array(
+                'label' => $translator->translate('label.user.super'),
+                'description' => $translator->translate('label.user.super.description'),
+            ));
+        }
         $form->addRow('roles', 'option', array(
             'label' => $translator->translate('label.roles'),
             'multiple' => true,
@@ -242,6 +250,9 @@ class SecurityController extends AbstractController {
                 $user->setIsEmailConfirmed($data['email-confirmed']);
                 $user->setImage($data['image']);
                 $user->setIsActive($data['active']);
+                if ($isSuperUserAllowed) {
+                    $user->setIsSuperUser($data['superuser']);
+                }
 
                 if ($data['password']) {
                     $user->setPassword($data['password']);
@@ -746,6 +757,19 @@ class SecurityController extends AbstractController {
         }
 
         return $user->getRoleWeight();
+    }
+
+    /**
+     * Gets whether the superuser field is allowed
+     * @return boolean
+     */
+    protected function isSuperUserAllowed() {
+        $user = $this->getUser();
+        if (!$user) {
+            return true;
+        }
+
+        return $user->isSuperUser();
     }
 
     /**

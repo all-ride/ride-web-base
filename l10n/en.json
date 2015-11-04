@@ -120,6 +120,8 @@
     "label.type": "Type",
     "label.unregister": "To remove your account and all your profile data from our database, click unregister.",
     "label.user.anonymous": "Anonymous user",
+    "label.user.super": "Superuser",
+    "label.user.super.description": "This user is a superuser who is granted all permissions and who is allowed to access all paths",
     "label.username": "Username",
     "label.username.profile.description": "Your username to authenticate yourself",
     "label.value": "Value",
