@@ -244,6 +244,13 @@
             "action": "passwordResetAction",
             "id": "profile.password.reset",
             "methods": ["GET", "HEAD", "POST"]
+        },
+        {
+            "path": "/forbidden",
+            "controller": "ride\\web\\base\\controller\\AuthenticationController",
+            "action": "forbiddenAction",
+            "id": "forbidden",
+            "methods": "GET"
         }
     ]
 }

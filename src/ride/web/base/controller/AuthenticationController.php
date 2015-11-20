@@ -127,4 +127,12 @@ class AuthenticationController extends AbstractController {
         $this->response->setRedirect($this->request->getBaseUrl());
     }
 
+    /**
+     * Action that renders a forbidden template view
+     * @return null
+     */
+    public function forbiddenAction() {
+        $this->setTemplateView('base/forbidden');
+    }
+
 }

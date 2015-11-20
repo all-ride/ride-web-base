@@ -175,5 +175,7 @@
     "title.translations.query": "Translations Filtered By '%query%'",
     "title.user": "User",
     "title.users": "Users",
-    "warning.user.email.confirm": "A mail has been sent to you to confirm your email address."
+    "warning.user.email.confirm": "A mail has been sent to you to confirm your email address.",
+    "title.forbidden": "Access forbidden",
+    "label.forbidden.description": "You are not authorized to view this page."
 }
