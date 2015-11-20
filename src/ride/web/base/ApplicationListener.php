@@ -337,10 +337,14 @@ class ApplicationListener {
             $message = $translator->translate('error.unauthorized');
 
             $response->addMessage(new Message($message, Message::TYPE_ERROR));
+
+            $routeId = 'forbidden';
+        } else {
+            $routeId = 'login';
         }
 
         $routeContainer = $web->getRouter()->getRouteContainer();
-        $route = $routeContainer->getRouteById('login');
+        $route = $routeContainer->getRouteById($routeId);
 
         $request = $web->getRequest();
         $loginRequest = clone $request;
