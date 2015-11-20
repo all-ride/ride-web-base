@@ -23,6 +23,12 @@ class AuthenticationController extends AbstractController {
      * @return null
      */
     public function loginAction(SecurityManager $securityManager) {
+        if ($this->getUser() && !$this->response->isForbidden()) {
+            $this->response->setRedirect($this->getUrl('admin'));
+
+            return;
+        }
+
         $translator = $this->getTranslator();
 
         $form = $this->createFormBuilder();
