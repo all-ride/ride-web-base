@@ -176,5 +176,7 @@
     "title.translations.query": "Vertalingen gefilterd op '%query%'",
     "title.user": "Gebruiker",
     "title.users": "Gebruikers",
-    "warning.user.email.confirm": "Er werd een boodschap verstuurd naar je e-mailadres om het te bevestigen."
+    "warning.user.email.confirm": "Er werd een boodschap verstuurd naar je e-mailadres om het te bevestigen.",
+    "title.forbidden": "Verboden toegang",
+    "label.forbidden.description": "U heeft geen rechten om deze pagina te bekijken."
 }
