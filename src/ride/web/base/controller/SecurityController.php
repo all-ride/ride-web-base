@@ -391,8 +391,7 @@ class SecurityController extends AbstractController {
 
             $permissions = $role->getPermissions();
             foreach ($permissions as $index => $permission) {
-                unset($permissions[$index]);
-                $permissions[$permission->getCode()] = $permission->getCode();
+                $permissions[$index] = $this->getTranslator()->translate('permission.' . $permission->getCode());
             }
 
             $data = array(
@@ -409,6 +408,10 @@ class SecurityController extends AbstractController {
         $referer = $this->request->getQueryParameter('referer');
         $translator = $this->getTranslator();
         $permissions = $this->securityModel->getPermissions();
+
+        foreach ($permissions as $index => $permission) {
+            $permissions[$index] = $this->getTranslator()->translate('permission.' . $permission->getCode()) . ' (<small>' . $permission->getCode() . '</small>)';
+        }
 
         $form = $this->createFormBuilder($data);
         $form->setId('form-role');
