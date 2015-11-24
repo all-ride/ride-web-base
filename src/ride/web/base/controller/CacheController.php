@@ -45,7 +45,7 @@ class CacheController extends AbstractController {
 
             $this->addSuccess('success.cache.enabled');
 
-            $this->response->setRedirect($this->getUrl('system.cache.warm') . '?referer=' . urlencode($this->request->getUrl()));
+            $this->response->setRedirect($this->getUrl('system.cache.warm'));
 
             return;
         }
