@@ -343,8 +343,7 @@ class ApplicationListener {
             $routeId = 'login';
         }
 
-        $routeContainer = $web->getRouter()->getRouteContainer();
-        $route = $routeContainer->getRouteById($routeId);
+        $route = $web->getRouterService()->getRouteById($routeId);
 
         $request = $web->getRequest();
         $loginRequest = clone $request;
