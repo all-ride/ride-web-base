@@ -91,6 +91,7 @@
     "label.name.profile": "Naam",
     "label.name.profile.description": "The name used when mentioning your profile",
     "label.no": "Nee",
+    "label.optional": "Optioneel",
     "label.parameter": "Parameter",
     "label.password": "Wachtwoord",
     "label.password.confirm": "Bevestig wachtwoord",
