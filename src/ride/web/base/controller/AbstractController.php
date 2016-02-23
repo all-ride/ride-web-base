@@ -27,6 +27,31 @@ abstract class AbstractController extends WebAbstractController {
     const SESSION_LOCALE_CONTENT = 'locale.content';
 
     /**
+     * Gets the security manager
+     * @return \ride\library\security\SecurityManager
+     */
+    protected function getSecurityManager() {
+        return $this->dependencyInjector->get('ride\\library\\security\\SecurityManager');
+    }
+
+    /**
+     * Gets the current user
+     * @return \ride\library\security\model\User|null
+     */
+    protected function getUser() {
+        return $this->getSecurityManager()->getUser();
+    }
+
+    /**
+     * Checks if a permission is allowed by the current user
+     * @param string $permission Code of the permission
+     * @return boolean True if the permission is allowed, false otherwise
+     */
+    protected function isPermissionGranted($permission) {
+        return $this->getSecurityManager()->isPermissionGranted($permission);
+    }
+
+    /**
      * Gets the i18n facade
      * @return \ride\library\i18n\I18n
      */
@@ -220,39 +245,6 @@ abstract class AbstractController extends WebAbstractController {
      */
     protected function processTableForm(FormTable $table, Form $form) {
         $table->processForm($form);
-    }
-
-    /**
-     * Gets the log
-     * @return \ride\library\log\Log
-     */
-    protected function getLog() {
-        return $this->dependencyInjector->get('ride\\library\\log\\Log');
-    }
-
-    /**
-     * Gets the security manager
-     * @return \ride\library\security\SecurityManager
-     */
-    protected function getSecurityManager() {
-        return $this->dependencyInjector->get('ride\\library\\security\\SecurityManager');
-    }
-
-    /**
-     * Gets the current user
-     * @return \ride\library\security\model\User|null
-     */
-    protected function getUser() {
-        return $this->getSecurityManager()->getUser();
-    }
-
-    /**
-     * Checks if a permission is allowed by the current user
-     * @param string $permission Code of the permission
-     * @return boolean True if the permission is allowed, false otherwise
-     */
-    protected function isPermissionGranted($permission) {
-        return $this->getSecurityManager()->isPermissionGranted($permission);
     }
 
     /**
