@@ -40,12 +40,14 @@ class PreferenceController extends AbstractController {
             }
         }
 
+        $config = $this->getConfig();
+
         // build the form
         $data = array(
-            'title' => $this->config->get('system.name', 'Ride'),
-            'theme' => $this->config->get('template.theme'),
-            'session-timeout' => $this->config->get('system.session.timeout', 1800) / 60,
-            'image' => $this->config->get('system.image'),
+            'title' => $config->get('system.name', 'Ride'),
+            'theme' => $config->get('template.theme'),
+            'session-timeout' => $config->get('system.session.timeout', 1800) / 60,
+            'image' => $config->get('system.image'),
         );
 
         $form = $this->createFormBuilder($data);
@@ -85,10 +87,10 @@ class PreferenceController extends AbstractController {
 
                 $data = $form->getData();
 
-                $this->config->set('template.theme', $data['theme']);
-                $this->config->set('system.name', $data['title']);
-                $this->config->set('system.session.timeout', $data['session-timeout'] * 60);
-                $this->config->set('system.image', $data['image']);
+                $config->set('template.theme', $data['theme']);
+                $config->set('system.name', $data['title']);
+                $config->set('system.session.timeout', $data['session-timeout'] * 60);
+                $config->set('system.image', $data['image']);
 
                 $this->addSuccess('success.preferences.saved');
 
