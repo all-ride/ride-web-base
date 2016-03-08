@@ -122,9 +122,17 @@ class AuthenticationController extends AbstractController {
      * @return null
      */
     public function logoutAction(SecurityManager $securityManager) {
+        $isSwitchedUser = $securityManager->isSwitchedUser();
+
         $securityManager->logout();
 
-        $this->response->setRedirect($this->request->getBaseUrl());
+        if ($isSwitchedUser) {
+            $url = $this->getUrl('admin');
+        } else {
+            $url = $this->request->getBaseUrl();
+        }
+
+        $this->response->setRedirect($url);
     }
 
     /**
