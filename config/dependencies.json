@@ -586,6 +586,48 @@
         },
         {
             "class": "ride\\web\\base\\menu\\Menu",
+            "id": "submissions",
+            "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "submissions.menu"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setTranslation",
+                    "arguments": [
+                        {
+                            "name": "key",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "title.submissions"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": 0
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "class": "ride\\web\\base\\menu\\Menu",
             "id": "applications",
             "calls": [
                 {
@@ -610,6 +652,19 @@
                             "properties": {
                                 "interface": "ride\\web\\base\\menu\\Menu",
                                 "id": "tools"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "addMenu",
+                    "arguments": [
+                        {
+                            "name": "menu",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\web\\base\\menu\\Menu",
+                                "id": "submissions"
                             }
                         }
                     ]
