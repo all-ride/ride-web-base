@@ -619,7 +619,7 @@
                             "name": "weight",
                             "type": "scalar",
                             "properties": {
-                                "value": 0
+                                "value": -50
                             }
                         }
                     ]
