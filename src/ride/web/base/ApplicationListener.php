@@ -306,6 +306,11 @@ class ApplicationListener {
             $contentMenu->orderItems();
         }
 
+        $submissionsMenu = $applicationsMenu->getItem('submissions.menu');
+        if ($submissionsMenu) {
+            $submissionsMenu->orderItems();
+        }
+
         $toolsMenu = $applicationsMenu->getItem('tools.menu');
         if ($toolsMenu) {
             $toolsMenu->orderItems();
