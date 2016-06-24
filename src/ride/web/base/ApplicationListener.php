@@ -199,6 +199,7 @@ class ApplicationListener {
         $app = $template->get('app', array());
         $app['system'] = $system;
         $app['locale'] = $locale->getCode();
+        $app['locales'] = $i18n->getLocales();
         $app['security'] = $securityManager;
         try {
             $app['user'] = $securityManager->getUser();
