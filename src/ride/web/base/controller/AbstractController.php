@@ -268,6 +268,7 @@ abstract class AbstractController extends WebAbstractController {
         $this->response->setStatusCode($statusCode);
 
         $errors = $exception->getAllErrors();
+
         if (!$form) {
             foreach ($errors as $fieldName => $fieldErrors) {
                 foreach ($fieldErrors as $error) {
@@ -281,6 +282,13 @@ abstract class AbstractController extends WebAbstractController {
                     $row = $form;
 
                     $tokens = explode('[', $fieldName);
+
+                    // component form, skip first token
+                    $firstToken = reset($tokens);
+                    if ($firstToken == $form->getId()) {
+                        array_shift($tokens);
+                    }
+
                     foreach ($tokens as $token) {
                         $token = trim($token, ']');
 
