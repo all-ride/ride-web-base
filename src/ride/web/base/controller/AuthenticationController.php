@@ -108,11 +108,13 @@ class AuthenticationController extends AbstractController {
             $urls[$index] = $this->getUrl($id) . '?logout=true&referer=' . urlencode($referer);
         }
 
-        $this->setTemplateView('base/login', array(
+        $view = $this->setTemplateView('base/login', array(
             'form' => $form->getView(),
             'referer' => $referer,
             'urls' => $urls,
         ));
+
+        $form->processView($view);
     }
 
     /**
