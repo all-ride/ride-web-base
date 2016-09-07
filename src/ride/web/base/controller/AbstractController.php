@@ -168,6 +168,28 @@ abstract class AbstractController extends WebAbstractController {
         $formBuilder->setData($data);
         $formBuilder->setRequest($this->request, $method);
 
+        // TODO: should be in Form factory
+        // TODO: should use some kind of defaults definition
+        if (!isset($options['honeypot']) || $options['honeypot'] !== false) {
+            $options['honeypot'] = array();
+        }
+        if ($options['honeypot'] !== false) {
+            if (!isset($options['honeypot']['name'])) {
+                $options['honeypot']['name'] = 'honeypot';
+            }
+            if (!isset($options['honeypot']['options'])) {
+                $options['honeypot']['options'] = array();
+            }
+            if (!isset($options['honeypot']['options']['component'])) {
+                $honeyPotComponent = $this->dependencyInjector->get('ride\\web\\form\\component\\HoneyPotComponent');
+                $options['honeypot']['options']['component'] = $honeyPotComponent;
+            }
+            if (!isset($options['honeypot']['options']['embed'])) {
+                $options['honeypot']['options']['embed'] = true;
+            }
+            $formBuilder->addRow($options['honeypot']['name'], 'component', $options['honeypot']['options']);
+        }
+
         return $formBuilder;
     }
 
