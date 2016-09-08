@@ -52,6 +52,7 @@
     "error.validation.numeric": "%value% is not a numeric value",
     "error.validation.required": "Field is required",
     "error.validation.required.or": "One of these fields are required",
+    "error.validation.time": "%value% is not correct",
     "error.validation.password.match": "Your passwords do not match",
     "error.validation.password.old": "Incorrect password provided",
     "error.validation.username.exists": "This username is in use by another user",
