@@ -320,11 +320,12 @@ class ApplicationListener {
         // process settings menu
         $settingsMenu = $taskbar->getSettingsMenu();
         $settingsMenu->process($translator, $routeContainer, $baseUrl, $securityManager);
+        $settingsMenu->orderItems();
 
-        $systemMenu = $settingsMenu->getItem('system.menu');
-        if ($systemMenu) {
-            $systemMenu->orderItems();
-        }
+        // $systemMenu = $settingsMenu->getItem('system.menu');
+        // if ($systemMenu) {
+            // $systemMenu->orderItems();
+        // }
 
         // post hook
         $eventManager->triggerEvent(self::EVENT_TASKBAR_POST, $eventArguments);

@@ -117,6 +117,18 @@
                             }
                         }
                     ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": -99
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -124,6 +136,18 @@
             "class": "ride\\web\\base\\menu\\MenuItem",
             "id": "user.logout",
             "calls": [
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "user.logout"
+                            }
+                        }
+                    ]
+                },
                 {
                     "method": "setTranslation",
                     "arguments": [
@@ -144,6 +168,18 @@
                             "type": "scalar",
                             "properties": {
                                 "value": "logout"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": 99
                             }
                         }
                     ]
@@ -174,6 +210,18 @@
                             "type": "scalar",
                             "properties": {
                                 "value": "title.user"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": -99
                             }
                         }
                     ]
@@ -327,6 +375,18 @@
                             }
                         }
                     ]
+                },
+                {
+                    "method": "setId",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security.access"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -348,6 +408,18 @@
                 },
                 {
                     "method": "setRoute",
+                    "arguments": [
+                        {
+                            "name": "id",
+                            "type": "scalar",
+                            "properties": {
+                                "value": "system.security.user"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setId",
                     "arguments": [
                         {
                             "name": "id",
@@ -384,6 +456,18 @@
                             "type": "scalar",
                             "properties": {
                                 "value": "title.system"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "method": "setWeight",
+                    "arguments": [
+                        {
+                            "name": "weight",
+                            "type": "scalar",
+                            "properties": {
+                                "value": -50
                             }
                         }
                     ]

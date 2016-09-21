@@ -124,6 +124,7 @@
     "label.translation": "Vertaling",
     "label.type": "Type",
     "label.unregister": "Klik op 'Verwijderen' om je profiel en alle bijhorende data uit onze databank te verwijderen.",
+    "label.user": "Gebruiker",
     "label.user.anonymous": "Anonieme gebruiker",
     "label.user.super": "Superuser",
     "label.user.super.description": "Deze gebruiker is een superuser waardoor alle paden en rechten toegestaan zijn ongeacht zijn rollen",
