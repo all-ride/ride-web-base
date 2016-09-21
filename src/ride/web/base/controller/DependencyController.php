@@ -50,16 +50,16 @@ class DependencyController extends AbstractController {
 
         if ($query) {
             foreach ($dependencyInterfaces as $interface => $dependencies) {
-                if (strpos($interface, $query) !== false) {
+                if (stripos($interface, $query) !== false) {
                     continue;
                 }
 
                 foreach ($dependencies as $id => $dependency) {
-                    if (strpos($dependency->getClassName(), $query) !== false) {
+                    if (stripos($dependency->getClassName(), $query) !== false) {
                         continue;
                     }
 
-                    if (strpos($dependency->getId(), $query) !== false) {
+                    if (stripos($dependency->getId(), $query) !== false) {
                         continue;
                     }
 

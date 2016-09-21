@@ -20,6 +20,7 @@ class PreferenceController extends AbstractController {
      */
     public function indexAction(ThemeModel $themeModel) {
         $translator = $this->getTranslator();
+        $referer = $this->getReferer();
 
         // read the themes
         $themes = $themeModel->getThemes();
@@ -88,13 +89,17 @@ class PreferenceController extends AbstractController {
                 $data = $form->getData();
 
                 $config->set('template.theme', $data['theme']);
-                $config->set('system.name', $data['title']);
+                $config->set('system.name', $data['title'] == '' ? null : $data['title']);
                 $config->set('system.session.timeout', $data['session-timeout'] * 60);
                 $config->set('system.image', $data['image']);
 
                 $this->addSuccess('success.preferences.saved');
 
-                $this->response->setRedirect($this->getUrl('system.preferences'));
+                if (!$referer) {
+                    $referer = $this->getUrl('system.preferences');
+                }
+
+                $this->response->setRedirect($referer);
 
                 return;
             } catch (ValidationException $exception) {
@@ -104,6 +109,7 @@ class PreferenceController extends AbstractController {
 
         $this->setTemplateView('base/preferences', array(
             'form' => $form->getView(),
+            'referer' => $referer,
         ));
     }
 

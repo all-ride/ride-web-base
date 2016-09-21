@@ -37,6 +37,7 @@ class AuthenticationController extends AbstractController {
         $form->addRow('username', 'string', array(
             'label' => $translator->translate('label.username'),
             'attributes' => array(
+                'autofocus' => 'autofocus',
                 'placeholder' => $translator->translate('label.username'),
             ),
             'validators' => array(

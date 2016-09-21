@@ -3,6 +3,7 @@
 namespace ride\web\base\controller;
 
 use ride\library\html\table\decorator\DataDecorator;
+use ride\library\html\table\decorator\StaticDecorator;
 use ride\library\html\table\decorator\ValueDecorator;
 use ride\library\html\table\TableHelper;
 use ride\library\http\Header;
@@ -75,10 +76,10 @@ class SecurityController extends AbstractController {
         $translator = $this->getTranslator();
 
         $table = new UserTable($this->securityModel, $reflectionHelper);
-        $table->addDecorator($detailDecorator);
-        $table->addDecorator(new ValueDecorator('email', null, $reflectionHelper));
-        $table->addDecorator(new ValueDecorator('roles', null, $reflectionHelper));
-        $table->addDecorator(new UserLockDecorator($userWeight, $translator->translate('label.locked'), 'disabled'));
+        $table->addDecorator($detailDecorator, new StaticDecorator($translator->translate('label.user')));
+        $table->addDecorator(new ValueDecorator('email', null, $reflectionHelper), new StaticDecorator($translator->translate('label.email')));
+        $table->addDecorator(new ValueDecorator('roles', null, $reflectionHelper), new StaticDecorator($translator->translate('label.roles')));
+        $table->addDecorator(new UserLockDecorator($userWeight, $translator->translate('label.locked'), 'disabled'), new StaticDecorator($translator->translate('label.locked')));
         $table->setPaginationOptions(array(5, 10, 25, 50, 100, 250, 500));
         $table->addAction(
             $translator->translate('button.delete'),

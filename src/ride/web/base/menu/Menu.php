@@ -255,7 +255,7 @@ class Menu {
         $subMenus = array();
 
         foreach ($this->items as $index => $i) {
-            if ($i === $item) {
+            if ($i === $item || $i->getId() === $item) {
                 unset($this->items[$index]);
 
                 return true;
@@ -263,8 +263,8 @@ class Menu {
         }
 
         foreach ($subMenus as $subMenu) {
-            if ($subMenu->remoteItem($item)) {
-                return tru;
+            if ($subMenu->removeItem($item)) {
+                return true;
             }
         }
 
@@ -435,8 +435,8 @@ class Menu {
      * otherwise
      */
     public static function compareItems($a, $b) {
-        $aw = strtolower($a->getWeight());
-        $bw = strtolower($b->getWeight());
+        $aw = (integer) $a->getWeight();
+        $bw = (integer) $b->getWeight();
 
         if ($aw !== $bw) {
             return ($aw > $bw) ? +1 : -1;
