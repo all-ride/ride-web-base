@@ -255,7 +255,7 @@ class Menu {
         $subMenus = array();
 
         foreach ($this->items as $index => $i) {
-            if ($i === $item || $i->getId() === $item) {
+            if ($i === $item || (is_object($i) && $i->getId() === $item)) {
                 unset($this->items[$index]);
 
                 return true;
