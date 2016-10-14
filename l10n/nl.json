@@ -24,6 +24,7 @@
     "cache.control.router": "Route cache",
     "cache.control.security": "Security model cache",
     "cache.control.translations": "Translation cache",
+    "cache.control.system": "Systeem initialisatie cache",
     "error.403.title": "Je hebt geen toelating om deze pagina te bezichtigen.",
     "error.404.message": "Gelieve het adres na te kijken. Als alles OK is en het probleem blijft zich voordoen, contacteer dan onze webmaster.",
     "error.404.title": "Sorry, de opgevraagde pagina werd niet gevonden.",

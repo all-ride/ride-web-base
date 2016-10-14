@@ -24,6 +24,7 @@
     "cache.control.router": "Route cache",
     "cache.control.security": "Security model cache",
     "cache.control.translations": "Translation cache",
+    "cache.control.system": "System initialization cache",
     "error.403.title": "You are not allowed to view this page",
     "error.404.title": "Sorry, the page you are looking for could not be found",
     "error.404.message": "Please check your URL to ensure you are going where you intended. If everything looks OK and you still see this error page, please consider contacting the webmaster.",
