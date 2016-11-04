@@ -184,6 +184,10 @@ abstract class AbstractController extends WebAbstractController {
         $formBuilder = $this->createFormBuilder($data, $options, $method);
         $formBuilder->setComponent($component);
 
+        if (isset($options['action'])) {
+            $formBuilder->setAction($options['action']);
+        }
+
         return $formBuilder->build();
     }
 
