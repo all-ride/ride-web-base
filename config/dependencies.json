@@ -371,7 +371,7 @@
                             "name": "id",
                             "type": "scalar",
                             "properties": {
-                                "value": "system.security"
+                                "value": "system.security.access"
                             }
                         }
                     ]
