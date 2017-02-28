@@ -95,7 +95,7 @@
             "path": "/admin/system/security",
             "controller": "ride\\web\\base\\controller\\SecurityController",
             "action": "pathAction",
-            "id": "system.security",
+            "id": "system.security.access",
             "methods": ["GET", "HEAD", "POST"]
         },
         {

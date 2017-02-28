@@ -707,22 +707,22 @@ class SecurityController extends AbstractController {
                 foreach ($roles as $role) {
                     $roleId = $role->getId();
 
+                    if ($permissions) {
+                        if (isset($data['role_' . $roleId])) {
+                            $rolePermissions = array_keys($data['role_' . $roleId]);
+                        } else {
+                            $rolePermissions = array();
+                        }
+
+                        $this->securityModel->setGrantedPermissionsToRole($role, $rolePermissions);
+                    }
+
                     if (isset($data['allowed-paths'][$roleId])) {
                         $paths = explode("\n", str_replace("\r", "", $data['allowed-paths'][$roleId]));
                     } else {
                         $paths = array();
                     }
                     $this->securityModel->setAllowedPathsToRole($role, $paths);
-
-                    if ($permissions) {
-                        if (isset($data['role_' . $roleId])) {
-                            $permissions = array_keys($data['role_' . $roleId]);
-                        } else {
-                            $permissions = array();
-                        }
-
-                        $this->securityModel->setGrantedPermissionsToRole($role, $permissions);
-                    }
                 }
 
                 if ($data['secured-paths']) {
@@ -735,7 +735,7 @@ class SecurityController extends AbstractController {
 
                 $this->addSuccess('success.security.saved');
 
-                $this->response->setRedirect($this->getUrl('system.security'));
+                $this->response->setRedirect($this->getUrl('system.security.access'));
 
                 return;
             } catch (ValidationException $exception) {
