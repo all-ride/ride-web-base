@@ -262,10 +262,12 @@ abstract class AbstractController extends WebAbstractController {
      * @return null
      */
     protected function setValidationException(ValidationException $exception, Form $form = null, $error = 'error.validation', $statusCode = null) {
+        // add a general error
         if ($error) {
             $this->addError($error);
         }
 
+        // update the status code of the response
         if (!$statusCode) {
             $statusCode = Response::STATUS_CODE_UNPROCESSABLE_ENTITY;
         }
@@ -274,12 +276,14 @@ abstract class AbstractController extends WebAbstractController {
         $errors = $exception->getAllErrors();
 
         if (!$form) {
+            // no form, add errors as response messages
             foreach ($errors as $fieldName => $fieldErrors) {
                 foreach ($fieldErrors as $error) {
                     $this->addError($error->getCode(), $error->getParameters());
                 }
             }
         } else {
+            // a form provided, link the errors with their field
             foreach ($errors as $fieldName => $fieldErrors) {
                 // omit error if the form has the field
                 try {
@@ -313,6 +317,19 @@ abstract class AbstractController extends WebAbstractController {
             }
 
             $form->setValidationException($exception);
+        }
+
+        // log the errors
+        $trace = $exception->getTrace();
+        $source = array_shift($trace);
+
+        $log = $this->getLog();
+        $log->logDebug('Validation errors occured', $source['file'] . ':' . $source['line']);
+
+        foreach ($errors as $fieldName => $fieldErrors) {
+            foreach ($fieldErrors as $error) {
+                $log->logDebug('- ' . $fieldName, $error);
+            }
         }
     }
 
