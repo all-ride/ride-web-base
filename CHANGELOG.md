@@ -1,3 +1,7 @@
+## [1.3.0] - 2017-05-17
+### Added
+- log validation errors when setValidationException is called from a controller
+
 ## [1.2.0] - 2017-02-28
 ### Updated
 - fixed dutch translation for time
