@@ -77,6 +77,7 @@
     "label.email.profile.description": "Your email for password retrieval, notifications, ...",
     "label.enable": "Enable",
     "label.environment": "Environment",
+    "label.forbidden.description": "You are not authorized to view this page.",
     "label.id": "Id",
     "label.image": "Image",
     "label.image.profile.description": "A image to represent you",
@@ -156,6 +157,7 @@
     "title.dependencies": "Dependencies",
     "title.dependencies.query": "Dependencies Filtered By '%query%'",
     "title.details": "Details",
+    "title.forbidden": "Access forbidden",
     "title.general": "General",
     "title.http": "HTTP",
     "title.locales": "Locales",
@@ -181,7 +183,6 @@
     "title.translations.query": "Translations Filtered By '%query%'",
     "title.user": "User",
     "title.users": "Users",
-    "warning.user.email.confirm": "A mail has been sent to you to confirm your email address.",
-    "title.forbidden": "Access forbidden",
-    "label.forbidden.description": "You are not authorized to view this page."
+    "warning.image.library": "Image processing library %library% is not available on this server, please select another one.",
+    "warning.user.email.confirm": "A mail has been sent to you to confirm your email address."
 }
