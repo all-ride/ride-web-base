@@ -1,9 +1,10 @@
-## [unreleased]
+## [1.4.0]
 ### Added
 - added warning on preferences page when the set image library is not available
 
 ### Updated
 - fixed log of validation error when no source file is available
+- also allow username when requesting new password
 
 ## [1.3.0] - 2017-05-17
 ### Added
