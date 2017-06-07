@@ -184,5 +184,6 @@
     "title.translations.query": "Vertalingen gefilterd op '%query%'",
     "title.user": "Gebruiker",
     "title.users": "Gebruikers",
+    "warning.image.library": "De afbeeldingsbibliotheek %library% is niet beschikbaar op deze server, gelieve een andere te selecteren.",
     "warning.user.email.confirm": "Er werd een boodschap verstuurd naar je e-mailadres om het te bevestigen."
 }

@@ -128,7 +128,7 @@ class ProfileController extends AbstractController {
     public function passwordRequestAction(PasswordResetService $service) {
         $form = $this->createFormBuilder();
         $form->setId('form-password-request');
-        $form->addRow('email', 'email', array(
+        $form->addRow('email', 'string', array(
             'label' => $this->getTranslator()->translate('label.email'),
             'validators' => array(
                 'required' => array(),

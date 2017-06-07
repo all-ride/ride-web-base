@@ -322,9 +322,13 @@ abstract class AbstractController extends WebAbstractController {
         // log the errors
         $trace = $exception->getTrace();
         $source = array_shift($trace);
+        $description = null;
+        if (isset($source['file']) && isset($source['line'])) {
+            $description = $source['file'] . ':' . $source['line'];
+        }
 
         $log = $this->getLog();
-        $log->logDebug('Validation errors occured', $source['file'] . ':' . $source['line']);
+        $log->logDebug('Validation errors occured', $description);
 
         foreach ($errors as $fieldName => $fieldErrors) {
             foreach ($fieldErrors as $error) {

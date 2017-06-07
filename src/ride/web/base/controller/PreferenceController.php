@@ -51,6 +51,13 @@ class PreferenceController extends AbstractController {
             'image' => $config->get('system.image'),
         );
 
+        $hasImageLibrary = true;
+        if ($data['image'] && !isset($imageLibraries[$data['image']])) {
+            $imageLibraries[$data['image']] = $data['image'];
+
+            $hasImageLibrary = false;
+        }
+
         $form = $this->createFormBuilder($data);
         $form->addRow('title', 'string', array(
             'label' => $translator->translate('label.title'),
@@ -105,6 +112,10 @@ class PreferenceController extends AbstractController {
             } catch (ValidationException $exception) {
                 $this->setValidationException($exception, $form);
             }
+        }
+
+        if (!$hasImageLibrary) {
+            $this->addWarning('warning.image.library', array('library' => $data['image']));
         }
 
         $this->setTemplateView('base/preferences', array(
