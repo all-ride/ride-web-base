@@ -11,6 +11,7 @@
     "require": {
         "ride/app": "^1.0.0",
         "ride/app-mail": "^1.0.0",
+        "ride/app-template": "^1.1.0",
         "ride/app-validation": "^1.0.0",
         "ride/lib-config": "^1.0.0",
         "ride/lib-event": "^1.0.0",

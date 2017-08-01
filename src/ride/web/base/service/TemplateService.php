@@ -7,10 +7,18 @@ use ride\application\system\System;
 use ride\library\template\TemplateFacade;
 use ride\library\template\Template;
 
+use ride\service\TemplateService as AppTemplateService;
+
 /**
  * Service to render templates
  */
-class TemplateService {
+class TemplateService extends AppTemplateService {
+
+    /**
+     * Instance of the system
+     * @var \ride\application\system\System
+     */
+    protected $system;
 
     /**
      * Constructs a new template service
@@ -19,20 +27,9 @@ class TemplateService {
      * @return null
      */
     public function __construct(TemplateFacade $templateFacade, System $system) {
-        $this->templateFacade = $templateFacade;
-        $this->system = $system;
-    }
+        parent::__construct($templateFacade);
 
-    /**
-     * Creates a new template
-     * @param string $resource Resource name of the template
-     * @param array $variables Variables for the template
-     * @param string $theme Machine name of the template theme
-     * @param string $engine Machine name of the template engine
-     * @return \ride\library\template\Template
-     */
-    public function createTemplate($resource, array $variables = null, $theme = null, $engine = null) {
-        return $this->templateFacade->createTemplate($resource, $variables, $theme, $engine);
+        $this->system = $system;
     }
 
     /**
@@ -65,7 +62,7 @@ class TemplateService {
 
         $template->set('app', $app);
 
-        return $this->templateFacade->render($template);
+        return parent::render($template);
     }
 
 }

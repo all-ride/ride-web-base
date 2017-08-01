@@ -1,3 +1,7 @@
+## [1.5.0]
+### Updated
+- use app template service as base
+
 ## [1.4.0]
 ### Added
 - added warning on preferences page when the set image library is not available

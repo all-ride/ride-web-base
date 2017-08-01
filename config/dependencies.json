@@ -844,6 +844,10 @@
                     ]
                 }
             ]
+        },
+        {
+            "interfaces": ["ride\\service\\TemplateService", "ride\\web\\base\\service\\TemplateService"],
+            "class": "ride\\web\\base\\service\\TemplateService"
         }
     ]
 }
