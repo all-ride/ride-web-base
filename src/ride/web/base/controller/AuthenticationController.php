@@ -11,6 +11,8 @@ use ride\library\security\SecurityManager;
 use ride\library\validation\exception\ValidationException;
 use ride\library\validation\ValidationError;
 
+use \Exception;
+
 /**
  * Controller to authenticate a user with the system
  */
@@ -23,7 +25,13 @@ class AuthenticationController extends AbstractController {
      * @return null
      */
     public function loginAction(SecurityManager $securityManager) {
-        if ($this->getUser() && !$this->response->isForbidden()) {
+        try {
+            $user = $this->getUser();
+        } catch (Exception $exception) {
+            $user = null;
+        }
+
+        if ($user && !$this->response->isForbidden()) {
             $this->response->setRedirect($this->getUrl('admin'));
 
             return;
