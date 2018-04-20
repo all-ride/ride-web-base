@@ -26,6 +26,8 @@ use ride\web\mvc\view\ExceptionView;
 use ride\web\mvc\view\TemplateView;
 use ride\web\WebApplication;
 
+use \Exception;
+
 class ApplicationListener {
 
     /**
@@ -58,7 +60,13 @@ class ApplicationListener {
 
         if ($exception instanceof UnauthorizedException) {
             if ($response) {
-                $this->showAuthenticationForm($web, $i18n->getTranslator(), $securityManager->getUser());
+                try {
+                    $user = $securityManager->getUser();
+                } catch (Exception $exception) {
+                    $user = null;
+                }
+
+                $this->showAuthenticationForm($web, $i18n->getTranslator(), $user);
             }
 
             return;

@@ -1,3 +1,7 @@
+## [1.5.1]
+### Updated
+- catch exception when retrieving user when handling exceptions
+
 ## [1.5.0]
 ### Updated
 - use app template service as base
