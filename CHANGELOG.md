@@ -1,3 +1,7 @@
+## [1.6.0]
+### Updated
+- opened the processVariables of the mail renderer
+
 ## [1.5.1]
 ### Updated
 - catch exception when retrieving user when handling exceptions
