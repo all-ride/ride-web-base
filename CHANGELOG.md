@@ -1,3 +1,7 @@
+## [1.7.0]
+### Added
+- added required option to date time component
+
 ## [1.6.0]
 ### Updated
 - opened the processVariables of the mail renderer
