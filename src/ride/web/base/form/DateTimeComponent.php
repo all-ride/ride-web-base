@@ -10,6 +10,16 @@ use ride\library\form\FormBuilder;
  */
 class DateTimeComponent extends AbstractComponent {
 
+    private $isRequired;
+
+    /**
+     * Sets whether the date and time are required
+     * @param boolean $isRequired
+     */
+    public function setIsRequired($isRequired) {
+        $this->isRequired = $isRequired;
+    }
+
     /**
      * Parse the data to form values for the component rows
      * @param mixed $data
@@ -65,12 +75,19 @@ class DateTimeComponent extends AbstractComponent {
     public function prepareForm(FormBuilder $builder, array $options) {
         $translator = $options['translator'];
 
+        $validators = [];
+        if ($this->isRequired) {
+            $validators['required'] = array();
+        }
+
         $builder->addRow('date', 'date', array(
             'label' => $translator->translate('label.date'),
             'round' => true,
+            'validators' => $validators,
         ));
         $builder->addRow('time', 'time', array(
             'label' => $translator->translate('label.time'),
+            'validators' => $validators,
         ));
     }
 
