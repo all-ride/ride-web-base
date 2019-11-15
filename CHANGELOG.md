@@ -1,3 +1,8 @@
+## [1.7.1]
+### Added
+- added request to app variable in TemplateSerivice
+- escape variables passed to addSuccess, addError, addWarning ...
+
 ## [1.7.0]
 ### Added
 - added required option to date time component
