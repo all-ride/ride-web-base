@@ -145,6 +145,12 @@ abstract class AbstractController extends WebAbstractController {
      * @return null
      */
     protected function addMessage($translationKey, $type, $vars) {
+        if ($vars) {
+            foreach ($vars as $key => $value) {
+                $vars[$key] = htmlentities($value, ENT_QUOTES);
+            }
+        }
+
         $message = $this->getTranslator()->translate($translationKey, $vars);
         $message = new Message($message, $type);
 

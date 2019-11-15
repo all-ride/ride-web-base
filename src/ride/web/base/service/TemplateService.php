@@ -54,6 +54,8 @@ class TemplateService extends AppTemplateService {
         $app['user'] = $securityManager->getUser();
 
         $request = $dependencyInjector->get('ride\\library\\mvc\\Request');
+
+        $app['request'] = $request;
         $app['url'] = array(
             'base' => $request->getBaseUrl(),
             'request' => $request->getUrl(),
