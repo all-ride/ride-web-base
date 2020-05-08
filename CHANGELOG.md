@@ -1,3 +1,7 @@
+## [1.7.2]
+### Updated
+- check type for response message variables 
+
 ## [1.7.1]
 ### Added
 - added request to app variable in TemplateSerivice
