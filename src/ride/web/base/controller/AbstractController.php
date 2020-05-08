@@ -147,6 +147,10 @@ abstract class AbstractController extends WebAbstractController {
     protected function addMessage($translationKey, $type, $vars) {
         if ($vars) {
             foreach ($vars as $key => $value) {
+                if (!is_scalar($value)) {
+                    $value = gettype($value);
+                }
+
                 $vars[$key] = htmlentities($value, ENT_QUOTES);
             }
         }
