@@ -14,6 +14,8 @@ use ride\library\security\model\SecurityModel;
  * Table for a security overview
  */
 abstract class AbstractSecurityTable extends FormTable {
+    protected $securityModel;
+    protected $reflectionHelper;
 
     /**
      * Constructs a new security table

@@ -19,6 +19,7 @@ abstract class AbstractProfileHook implements ProfileHook {
      * @var \ride\ilbrary\security\SecurityManager
      */
     protected $securityManager;
+    protected $templateFacade;
 
     /**
      * Gets the machine name of this profile hook

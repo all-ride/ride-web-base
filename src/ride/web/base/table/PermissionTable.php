@@ -13,6 +13,7 @@ use ride\library\reflection\ReflectionHelper;
  * Table for a permission overview
  */
 class PermissionTable extends FormTable {
+    protected $reflectionHelper;
 
     /**
      * Constructs a new security table

@@ -54,6 +54,8 @@ class MenuItem {
      */
     private $weight;
 
+    private $routeId;
+
     /**
      * Construct a new menu item
      * @return null
