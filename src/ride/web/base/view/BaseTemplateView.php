@@ -11,6 +11,7 @@ use ride\web\mvc\view\TemplateView;
  * Base template view with a taskbar
  */
 class BaseTemplateView extends TemplateView {
+    public $taskbar;
 
     /**
      * Constructs a new template view

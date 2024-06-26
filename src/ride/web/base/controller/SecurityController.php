@@ -26,6 +26,7 @@ use ride\web\base\table\UserTable;
  * Controller to manage the security model
  */
 class SecurityController extends AbstractController {
+    private ?\ride\library\security\model\SecurityModel $securityModel;
 
     /**
      * Gets the security model and skips the action of no security model set

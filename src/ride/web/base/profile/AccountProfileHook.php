@@ -27,6 +27,8 @@ class AccountProfileHook extends AbstractProfileHook {
      * @var string
      */
     const TEMPLATE = 'base/profile.account';
+    protected $service;
+    protected $fileBrowser;
 
     /**
      * Constructs a new profile hook
