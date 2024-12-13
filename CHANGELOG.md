@@ -1,3 +1,6 @@
+## [1.7.3]
+### Updated
+- Fix date time component to work properly when the time is not filled in
 ## [1.7.2]
 ### Updated
 - check type for response message variables 
