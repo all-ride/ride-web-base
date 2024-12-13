@@ -52,7 +52,7 @@ class DateTimeComponent extends AbstractComponent {
     */
     public function parseGetData(array $data) {
         $date = isset($data['date']) ? $data['date'] : null;
-        $time = isset($data['time']) ? $data['time'] : null;
+        $time = isset($data['time']) && !empty(trim($data['time'])) ? $data['time'] : 0;
 
         if ($time && !$date) {
             $result = mktime(0, 0, 0, date('n'), date('j'), date('Y'));
