@@ -1,3 +1,9 @@
+## [1.8.1]
+- Fix date time component to work properly when the time is not filled in
+### Updated
+## [1.8.0]
+### Updated
+- Compatible with php 8.3
 ## [1.7.3]
 ### Updated
 - Fix date time component to work properly when the time is not filled in
